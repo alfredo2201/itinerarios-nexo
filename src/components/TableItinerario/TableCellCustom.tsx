@@ -3,7 +3,7 @@ import type { ItinerarioProps } from "./ItinerarioData";
 
 function TableCellCustom({hora, destino, autobusImg, numero, rastreo }: ItinerarioProps) {
     return (
-        <tr className="bg-[#171717] text-white">
+        <tr className="bg-[#171717] text-white even:bg-[#023672]">
             <td className="py-2 text-center">{hora}</td>
             <td className="py-2 text-center">{destino}</td>
             <td className="py-2 text-center">{autobusImg}</td>

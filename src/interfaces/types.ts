@@ -1,3 +1,34 @@
+import type { JSX } from "react"
+
 export interface RouterHandle{
     title?:string
+}
+
+export interface ItinerarioInterface{
+    horaSalida:string,
+    salida:string,
+    destino:string,
+    duracion:number
+}
+
+export interface EstadoAutobusInterface{
+    key:string,
+    numero:string,
+    estadoGps:string,
+    ultimaVista:string
+}
+
+export interface ItinerarioAutobusInterface{
+    key:string,
+    horaSalida:string,
+    origen:string,
+    destino:string,
+    duracion:string
+}
+
+export interface TableTitleProps{
+    title1:string,
+    title2:string,
+    title3:string,
+    rowArray:JSX.Element[],
 }

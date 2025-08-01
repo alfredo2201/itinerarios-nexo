@@ -7,7 +7,7 @@ interface TopBarProps {
 function TopBar({ pageName, busCentralName }: TopBarProps) {
     return (
 
-        <div className="w-full px-3 py-3 lg:px-8 lg:pl-8 overflow-hidden">
+        <div className="w-full px-3 py-3 lg:px-8 lg:pl-8">
             <div className="flex items-center justify-between">
                 <div className="flex items-center justify-start rtl:justify-end">
                     <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap text-[#023672]">{pageName} - {busCentralName}</span>
