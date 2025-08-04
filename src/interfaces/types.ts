@@ -11,11 +11,12 @@ export interface ItinerarioInterface{
     duracion:number
 }
 
-export interface EstadoAutobusInterface{
+export interface AutobusInterface{
     key:string,
     numero:string,
     estadoGps:string,
     ultimaVista:string
+    itinerario:ItinerarioAutobusInterface[]
 }
 
 export interface ItinerarioAutobusInterface{
@@ -32,3 +33,4 @@ export interface TableTitleProps{
     title3:string,
     rowArray:JSX.Element[],
 }
+

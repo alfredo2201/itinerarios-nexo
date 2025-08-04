@@ -5,6 +5,12 @@
 @import "tailwindcss/preflight.css" layer(base);
 @import "tailwindcss/utilities.css" layer(utilities);
 
+
 html{
     height: 100%;
+}
+
+
+@theme {
+  --font-roboto: "Roboto", sans-serif; 
 }

@@ -1,7 +1,7 @@
-import type { EstadoAutobusInterface } from "../../../interfaces/types";
-function RowAutobusesComponent({ numero, estadoGps, ultimaVista }: EstadoAutobusInterface) {
+import type { AutobusInterface } from "../../../interfaces/types";
+function RowAutobusesComponent({ numero, estadoGps, ultimaVista }: AutobusInterface) {
     return (
-        <tr className="bg-white text-black border-b-1 border-gray-100">
+        <tr className="bg-white text-black border-b-1 border-gray-100 hover:bg-gray-200 cursor-pointer">
             <td className="py-2 text-center">Num.{numero}</td>
             {estadoGps === "Activo" ?
                 <td className="flex py-1 text-center justify-center">

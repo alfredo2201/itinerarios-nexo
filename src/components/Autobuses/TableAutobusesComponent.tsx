@@ -5,7 +5,7 @@ function TableAutobusesComponent({title1,title2,title3,rowArray}:TableTitleProps
         <>
             <table className="table-auto md:table-fixed">
                 <thead>
-                    <tr className="bg-[#B1C7E2] text-black w-full">
+                    <tr className="bg-[#E9F0F8] text-black w-full">
                         <th className="w-2xs p-2 ">{title1}</th>
                         <th className="w-lg p-2 ">{title2}</th>
                         <th className="w-2xs p-2 ">{title3}</th>

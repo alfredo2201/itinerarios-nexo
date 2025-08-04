@@ -12,14 +12,17 @@ import AdvertismentPage from './pages/Admin/AdvertismentPage.tsx'
 import type { RouterHandle } from './interfaces/types.ts'
 import BusInfoPage from './pages/Admin/Buses/BusInfoDisplay.tsx'
 import ChildrenLayout from './layouts/ChildrenLayout.tsx'
+import BusAddPage from './pages/Admin/Buses/BusAddPage.tsx'
+import { Toaster } from 'react-hot-toast'
 const router = createBrowserRouter([
     {
         path: "/login",
         element: <LoginPage />
     },
     {
-        path: "",
+        path: "/",
         element: <MainLayout />,
+        handle: { title: 'Bienvenido/a' as RouterHandle },
         children: [
             {
                 path: "/home",
@@ -28,7 +31,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "/bus_info",
-                element: <ChildrenLayout/>,
+                element: <ChildrenLayout />,
                 handle: { title: 'Autobuses' as RouterHandle },
                 children: [
                     {
@@ -40,7 +43,11 @@ const router = createBrowserRouter([
                         path: "/bus_info/all",
                         element: <BusInfoPage />,
                         handle: { title: 'Autobuses' as RouterHandle }
-                    },
+                    }, {
+                        path: "/bus_info/add",
+                        element: <BusAddPage />,
+                        handle: { title: 'Autobuses' as RouterHandle }
+                    }
                 ]
             },
             {
@@ -72,7 +79,11 @@ const router = createBrowserRouter([
 
 function App() {
     return (
-        <RouterProvider router={router} />
+        <>
+        <Toaster position="top-right"/>
+            <RouterProvider router={router} />
+        </>
+
     );
 }
 

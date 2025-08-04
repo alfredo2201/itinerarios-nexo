@@ -1,14 +1,14 @@
 import RowAutobusesComponent from "../../../components/Autobuses/TableAutobuses/RowAutobusesComponent";
 import TableAutobusesComponent from "../../../components/Autobuses/TableAutobusesComponent";
-import RowAutobusesItinerarioComponent from "../../../components/Autobuses/TableAutobusesItinerario/RowAutobusesItinerarioComponentAutobusesItinerarioComponent";
+import RowAutobusesItinerarioComponent from "../../../components/Autobuses/TableAutobusesItinerario/RowAutobusesItinerarioComponent";
 import { EstadoAutobus, ItinerariosAutobus } from "../../../data/AutobusesData";
-import type { EstadoAutobusInterface, ItinerarioAutobusInterface } from "../../../interfaces/types";
+import type { AutobusInterface, ItinerarioAutobusInterface } from "../../../interfaces/types";
 import foto from '../../../img/albatros_logotipo.png'
-const data: EstadoAutobusInterface[] = EstadoAutobus.slice(0, 4);
+const data: AutobusInterface[] = EstadoAutobus.slice(0, 4);
 const dataItinerario: ItinerarioAutobusInterface[] = ItinerariosAutobus.slice(0,3)
 
 const rows = data.map(item =>
-    <RowAutobusesComponent key={item.key} numero={item.numero} estadoGps={item.estadoGps} ultimaVista={item.ultimaVista} />
+    <RowAutobusesComponent key={item.key} numero={item.numero} estadoGps={item.estadoGps} ultimaVista={item.ultimaVista} itinerario={[]} />
 )
 
 const rowsItinerario = dataItinerario.map(item => 
@@ -25,6 +25,7 @@ function BusInfoPage(){
                 <h2 className="text-base font-bold">Estado de Autobuses</h2>
                 <TableAutobusesComponent title1="Numero de Camion" title2="Estado del GPS" title3="Ultima vez visto" rowArray={rows}></TableAutobusesComponent>
             </div>
+            
             <div className="bg-white w-full rounded-lg p-8 shadow-xl/10">
                  <h2 className="text-base font-bold">Itinerarios de Hoy</h2>
                  <TableAutobusesComponent title1="Hora de Salida" title2="Ruta" title3="Duracion" rowArray={rowsItinerario}></TableAutobusesComponent>
