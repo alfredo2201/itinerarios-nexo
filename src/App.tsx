@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router'
 /*Imports */
-import LoginPage from './pages/LoginPage.tsx'
-import MainPage from './pages/MainPage.tsx'
+import LoginPage from './pages/Admin/LoginPage.tsx'
+import MainPage from './pages/Admin/Inicio/MainPage.tsx'
 import MainLayout from './layouts/MainLayout.tsx'
 import NotFoundPage from './pages/NotFoundPage.tsx'
 import AdminBusesPage from './pages/Admin/Buses/AdminBusPage.tsx'

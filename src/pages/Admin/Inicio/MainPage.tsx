@@ -1,4 +1,4 @@
-import TableItinerario from "../components/TableItinerario/TableComponent";
+import TableItinerario from "../../../components/TableItinerario/TableComponent";
 
 function MainPage() {
     return (

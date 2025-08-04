@@ -11,6 +11,12 @@ export interface ItinerarioInterface{
     duracion:number
 }
 
+export interface LineaAutobusInterface{
+    key:number,
+    nombreEmpresa:string,
+    imagen:string,
+    camiones:AutobusInterface[]
+}
 export interface AutobusInterface{
     key:string,
     numero:string,
@@ -33,4 +39,5 @@ export interface TableTitleProps{
     title3:string,
     rowArray:JSX.Element[],
 }
+
 
