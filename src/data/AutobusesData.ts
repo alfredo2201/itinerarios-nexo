@@ -1,76 +1,88 @@
-import type { EstadoAutobusInterface, ItinerarioAutobusInterface } from "../interfaces/types";
+import type { AutobusInterface, ItinerarioAutobusInterface } from "../interfaces/types";
 
-export const EstadoAutobus: EstadoAutobusInterface[] = [
+export const EstadoAutobus: AutobusInterface[] = [
     {
         key: "1",
         numero: "111",
         estadoGps: "Activo",
         ultimaVista: "20/07/2025 01:12:12",
+        itinerario:[]
     },
     {
         key: "2",
         numero: "102",
         estadoGps: "Inactivo",
         ultimaVista: "20/07/2025 01:12:12",
+        itinerario:[]
     }, {
         key: "3",
         numero: "103",
         estadoGps: "Activo",
         ultimaVista: "20/07/2025 01:12:12",
+        itinerario:[]
     },
     {
         key: "4",
         numero: "104",
         estadoGps: "Activo",
         ultimaVista: "20/07/2025 01:12:12",
+        itinerario:[]
     },
     {
         key: "5",
         numero: "104",
         estadoGps: "Activo",
         ultimaVista: "20/07/2025 01:12:12",
+        itinerario:[]
     },
     {
         key: "6",
         numero: "104",
         estadoGps: "Activo",
         ultimaVista: "20/07/2025 01:12:12",
+        itinerario:[]
     },
     {
         key: "7",
         numero: "104",
         estadoGps: "Activo",
         ultimaVista: "20/07/2025 01:12:12",
+        itinerario:[]
     },
     {
         key: "8",
         numero: "104",
         estadoGps: "Activo",
         ultimaVista: "20/07/2025 01:12:12",
+        itinerario:[]
     },
     {
         key: "9",
         numero: "104",
         estadoGps: "Activo",
         ultimaVista: "20/07/2025 01:12:12",
+        itinerario:[]
     },
     {
         key: "10",
         numero: "104",
         estadoGps: "Activo",
         ultimaVista: "20/07/2025 01:12:12",
+        itinerario:[]
     },
     {
         key: "11",
         numero: "104",
         estadoGps: "Activo",
         ultimaVista: "20/07/2025 01:12:12",
+        itinerario:[]
     },
     {
         key: "12",
         numero: "104",
         estadoGps: "Activo",
         ultimaVista: "20/07/2025 01:12:12",
+        itinerario:[]
     }
 ]
 

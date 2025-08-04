@@ -73,7 +73,7 @@ function MainLayout() {
             </div>
             <div className="w-full flex flex-col">
                 <TopBar pageName={currentTitle} busCentralName="Central Faustino Felix Serna" ></TopBar>
-                <div className="bg-[#F2F4F7] w-full h-full px-10 py-6 " >
+                <div className="bg-[#F2F4F7] w-full h-full overflow-scrool" >
                     <Outlet />
                 </div>
             </div>

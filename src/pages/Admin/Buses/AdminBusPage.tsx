@@ -32,7 +32,7 @@ function AdminBusesPage() {
                 <BoxBuses></BoxBuses>
                 <BoxBuses></BoxBuses>
             </div>
-            <div className="flex justify-end">
+            <div className="flex justify-end pr-10">
                 <button
                     className="bg-[#023672] text-white w-1/8 h-10 rounded-lg justify-end min-w-30 hover:bg-[#0251B3] cursor-pointer">
                     <Link to={"/bus_info/add"}>Agregar</Link>

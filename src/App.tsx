@@ -7,7 +7,7 @@ import NotFoundPage from './pages/NotFoundPage.tsx'
 import AdminBusesPage from './pages/Admin/Buses/AdminBusPage.tsx'
 import DisplayPage from './pages/DisplayPage.tsx'
 import DisplayExtendedPage from './pages/DisplayExtended.tsx'
-import TrackingPage from './pages/Admin/TrackingPage.tsx'
+import TrackingPage from './pages/Admin/Rastreo/TrackingPage.tsx'
 import AdvertismentPage from './pages/Admin/AdvertismentPage.tsx'
 import type { RouterHandle } from './interfaces/types.ts'
 import BusInfoPage from './pages/Admin/Buses/BusInfoDisplay.tsx'
@@ -52,8 +52,16 @@ const router = createBrowserRouter([
             },
             {
                 path: "/tracking",
-                element: <TrackingPage />,
-                handle: { title: 'Rastreo' as RouterHandle }
+                element: <ChildrenLayout />,
+                handle: { title: 'Rastreo' as RouterHandle },
+                children:[
+                    {
+                        path: "/tracking",
+                        element: <TrackingPage />,
+                        handle: { title: 'Autobuses' as RouterHandle }
+                    },
+
+                ]
             }, {
                 path: "/advertisement",
                 element: <AdvertismentPage />,
