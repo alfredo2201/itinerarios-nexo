@@ -14,14 +14,14 @@ function ItemListTrackingComponent({ imagen, nombreLinea, direccionOrigen, numer
             </div>
             <div className="w-4/6">
                 <h1 className="text-[16px] font-bold">{nombreLinea} - Linea #{numeroCamion}</h1>
-                <p className="text-[12px] text-[#E3E3E3]">{direccionOrigen}</p>
+                <p className="text-[12px] text-[#D4D4D4]">{direccionOrigen}</p>
             </div>
             <div className="flex flex-col w-2/8 items-stretch justify-between py-2">
                 {estado === 'Activo' ?
                     <div className="bg-green-500 w-5 h-5 self-end rounded-full "></div>
                     : <div className="bg-red-500 w-5 h-5 self-end rounded-full "></div>
                 }
-                <p className="text-[8px] text-[#E3E3E3] ">{ultimaVezVisto}</p>
+                <p className="text-[8px] text-[#D4D4D4] ">{ultimaVezVisto}</p>
             </div>
         </div>
     )

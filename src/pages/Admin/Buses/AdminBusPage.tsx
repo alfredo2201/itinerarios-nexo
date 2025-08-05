@@ -1,6 +1,9 @@
 import { Link } from "react-router";
 import BoxBuses from "../../../components/BoxBuses/BoxBuses";
 import { useEffect } from "react";
+import albatros from '../../../img/albatros_logotipo.png'
+import tufesa from '../../../img/tufesa_autobus.png'
+import elite from '../../../img/autobuses-elite.png'
 import toast from "react-hot-toast";
 
 function AdminBusesPage() {
@@ -25,12 +28,10 @@ function AdminBusesPage() {
 
     return (
         <div className="flex flex-col ">
-            <div className="flex flex-wrap h-180 p-15 gap-10 justify-center">
-                <BoxBuses>
-                </BoxBuses>
-                <BoxBuses></BoxBuses>
-                <BoxBuses></BoxBuses>
-                <BoxBuses></BoxBuses>
+            <div className="flex flex-wrap h-180 pt-15 px-15 gap-10 justify-center">
+                <BoxBuses foto={albatros}></BoxBuses>
+                <BoxBuses foto={tufesa}></BoxBuses>
+                <BoxBuses foto={elite}></BoxBuses>
             </div>
             <div className="flex justify-end pr-10">
                 <button

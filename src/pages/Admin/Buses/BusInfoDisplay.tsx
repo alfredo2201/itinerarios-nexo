@@ -16,7 +16,8 @@ const rowsItinerario = dataItinerario.map(item =>
         origen={item.origen} destino={item.destino} duracion={item.duracion} />
 )
 function BusInfoPage(){
-    return (<>
+    return (
+    <div className="p-10">
         <div className="mb-3">
             <img src={foto} alt="" className="h-15 "/>
         </div>
@@ -31,7 +32,7 @@ function BusInfoPage(){
                  <TableAutobusesComponent title1="Hora de Salida" title2="Ruta" title3="Duracion" rowArray={rowsItinerario}></TableAutobusesComponent>
             </div>
         </div>
-    </>)
+    </div>)
 }
 
 export default BusInfoPage;

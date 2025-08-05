@@ -1,12 +1,13 @@
 import type { ItinerarioProps } from "./ItinerarioData";
 import TableCellCustom from "./TableCellCustom";
+import foto from '../../img/tufesa_autobus.png'
 
 const FakeData: ItinerarioProps[] = [
     {
         key: "1",
         hora: "7:00 A.M",
         destino: "Tijuana",
-        autobusImg: "img",
+        autobusImg: foto,
         numero: "120",
         rastreo: "Numero de rastero random"
     },
@@ -14,14 +15,14 @@ const FakeData: ItinerarioProps[] = [
         key: "2",
         hora: "7:00 A.M",
         destino: "Tijuana",
-        autobusImg: "img",
+        autobusImg: foto,
         numero: "120",
         rastreo: "Numero de rastero random"
     }, {
         key: "3",
         hora: "7:00 A.M",
         destino: "Tijuana",
-        autobusImg: "img",
+        autobusImg: foto,
         numero: "120",
         rastreo: "Numero de rastero random"
     },
@@ -29,7 +30,7 @@ const FakeData: ItinerarioProps[] = [
         key: "4",
         hora: "7:00 A.M",
         destino: "Tijuana",
-        autobusImg: "img",
+        autobusImg: foto,
         numero: "120",
         rastreo: "Numero de rastero random"
     },
@@ -37,7 +38,7 @@ const FakeData: ItinerarioProps[] = [
         key: "5",
         hora: "7:00 A.M",
         destino: "Tijuana",
-        autobusImg: "img",
+        autobusImg: foto,
         numero: "120",
         rastreo: "Numero de rastero random"
     }
@@ -46,7 +47,7 @@ const FakeData: ItinerarioProps[] = [
         key: "6",
         hora: "7:00 A.M",
         destino: "Tijuana",
-        autobusImg: "img",
+        autobusImg: foto,
         numero: "120",
         rastreo: "Numero de rastero random"
     }
@@ -55,7 +56,7 @@ const FakeData: ItinerarioProps[] = [
         key: "7",
         hora: "7:00 A.M",
         destino: "Tijuana",
-        autobusImg: "img",
+        autobusImg: foto,
         numero: "120",
         rastreo: "Numero de rastero random"
     }
@@ -64,7 +65,7 @@ const FakeData: ItinerarioProps[] = [
         key: "8",
         hora: "7:00 A.M",
         destino: "Tijuana",
-        autobusImg: "img",
+        autobusImg: foto,
         numero: "120",
         rastreo: "Numero de rastero random"
     }
@@ -73,7 +74,7 @@ const FakeData: ItinerarioProps[] = [
         key: "9",
         hora: "7:00 A.M",
         destino: "Tijuana",
-        autobusImg: "img",
+        autobusImg: foto,
         numero: "120",
         rastreo: "Numero de rastero random"
     }
@@ -82,7 +83,7 @@ const FakeData: ItinerarioProps[] = [
         key: "10",
         hora: "7:00 A.M",
         destino: "Tijuana",
-        autobusImg: "img",
+        autobusImg: foto,
         numero: "120",
         rastreo: "Numero de rastero random"
     }
@@ -91,7 +92,7 @@ const FakeData: ItinerarioProps[] = [
         key: "11",
         hora: "7:00 A.M",
         destino: "Tijuana",
-        autobusImg: "img",
+        autobusImg: foto,
         numero: "120",
         rastreo: "Numero de rastero random"
     }
@@ -100,7 +101,7 @@ const FakeData: ItinerarioProps[] = [
         key: "12",
         hora: "7:00 A.M",
         destino: "Tijuana",
-        autobusImg: "img",
+        autobusImg: foto,
         numero: "120",
         rastreo: "Numero de rastero random"
     }
@@ -109,7 +110,7 @@ const FakeData: ItinerarioProps[] = [
         key: "13",
         hora: "7:00 A.M",
         destino: "Tijuana",
-        autobusImg: "img",
+        autobusImg: foto,
         numero: "120",
         rastreo: "Numero de rastero random"
     }
@@ -118,7 +119,7 @@ const FakeData: ItinerarioProps[] = [
         key: "14",
         hora: "7:00 A.M",
         destino: "Tijuana",
-        autobusImg: "img",
+        autobusImg: foto,
         numero: "120",
         rastreo: "Numero de rastero random"
     }
@@ -127,7 +128,7 @@ const FakeData: ItinerarioProps[] = [
         key: "15",
         hora: "7:00 A.M",
         destino: "Tijuana",
-        autobusImg: "img",
+        autobusImg: foto,
         numero: "120",
         rastreo: "Numero de rastero random"
     }
@@ -136,7 +137,7 @@ const FakeData: ItinerarioProps[] = [
         key: "16",
         hora: "7:00 A.M",
         destino: "Tijuana",
-        autobusImg: "img",
+        autobusImg: foto,
         numero: "120",
         rastreo: "Numero de rastero random"
     }
@@ -145,7 +146,7 @@ const FakeData: ItinerarioProps[] = [
         key: "17",
         hora: "7:00 A.M",
         destino: "Tijuana",
-        autobusImg: "img",
+        autobusImg: foto,
         numero: "120",
         rastreo: "Numero de rastero random"
     }
@@ -154,7 +155,7 @@ const FakeData: ItinerarioProps[] = [
         key: "18",
         hora: "7:00 A.M",
         destino: "Tijuana",
-        autobusImg: "img",
+        autobusImg: foto,
         numero: "120",
         rastreo: "Numero de rastero random"
     }
@@ -165,7 +166,7 @@ const FakeData: ItinerarioProps[] = [
 const data: ItinerarioProps[] = FakeData.slice(0, 10);
 
 const rows = data.map(item =>
-    <TableCellCustom key={item.key} hora={item.hora} destino={item.destino} autobusImg={item.autobusImg} numero={item.autobusImg} rastreo={item.rastreo} />
+    <TableCellCustom key={item.key} hora={item.hora} destino={item.destino} autobusImg={item.autobusImg} numero={item.numero} rastreo={item.rastreo} />
 )
 function TableItinerario() {
     return (

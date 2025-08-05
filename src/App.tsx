@@ -71,12 +71,12 @@ const router = createBrowserRouter([
 
     },
     {
-        path: "displays",
+        path: "/displays",
         element: <DisplayPage />
     },
 
     {
-        path: "displayExtended",
+        path: "/displayExtended",
         element: <DisplayExtendedPage />
     },
     {
