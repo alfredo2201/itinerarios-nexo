@@ -116,7 +116,7 @@ export const LineasAutobusesRastreo: LineaAutobusInterface[] = [
     {
         key: 1,
         nombreEmpresa: 'Tufesa',
-        imagen:tufesa,
+        imagen: tufesa,
         camiones: [
             {
                 key: "1",
@@ -128,14 +128,22 @@ export const LineasAutobusesRastreo: LineaAutobusInterface[] = [
                         key: "1",
                         horaSalida: "7:00 A.M",
                         origen: "Obregon",
+                        origenLargo:"Ciudad Obregon, Son",
+                        direccionOrigen: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
                         destino: "Navojoa",
+                        destinoLargo:'Navojoa, Son',
+                        direccionDestino: 'Hidalgo entre No Reeleccion y Pesqueira, Calle Gral. I. Pesqueira 515, Centro, Juárez, 85800 Navojoa, Son.',
                         duracion: "01h00m"
                     },
                     {
                         key: "2",
                         horaSalida: "9:00 A.M",
                         origen: "Obregon",
+                        origenLargo:"Ciudad Obregon, Son",
+                        direccionOrigen: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
                         destino: "Navojoa",
+                        destinoLargo:'Navojoa, Son',
+                        direccionDestino: 'Hidalgo entre No Reeleccion y Pesqueira, Calle Gral. I. Pesqueira 515, Centro, Juárez, 85800 Navojoa, Son.',
                         duracion: "01h00m"
                     }
                 ]
@@ -149,15 +157,23 @@ export const LineasAutobusesRastreo: LineaAutobusInterface[] = [
                     key: "1",
                     horaSalida: "7:00 A.M",
                     origen: "Obregon",
-                    destino: "Hermosillo",
-                    duracion: "03h40m"
+                    origenLargo:"Ciudad Obregon, Son",
+                    direccionOrigen: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
+                    destino: "Navojoa",
+                    destinoLargo:'Navojoa, Son',
+                    direccionDestino: 'Hidalgo entre No Reeleccion y Pesqueira, Calle Gral. I. Pesqueira 515, Centro, Juárez, 85800 Navojoa, Son.',
+                    duracion: "01h00m"
                 },
                 {
                     key: "2",
                     horaSalida: "12:00 P.M",
                     origen: "Obregon",
-                    destino: "Hermosillo",
-                    duracion: "03h40m"
+                    origenLargo:"Ciudad Obregon, Son",
+                    direccionOrigen: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
+                    destino: "Navojoa",
+                    destinoLargo:'Navojoa, Son',
+                    direccionDestino: 'Hidalgo entre No Reeleccion y Pesqueira, Calle Gral. I. Pesqueira 515, Centro, Juárez, 85800 Navojoa, Son.',
+                    duracion: "01h00m"
                 }]
             }, {
                 key: "3",
@@ -169,23 +185,31 @@ export const LineasAutobusesRastreo: LineaAutobusInterface[] = [
                         key: "1",
                         horaSalida: "7:00 A.M",
                         origen: "Obregon",
+                        origenLargo:"Ciudad Obregon, Son",
+                        direccionOrigen: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
                         destino: "Huatabampo",
-                        duracion: "02h40m"
+                        destinoLargo:"Huatabampo, Son",
+                        direccionDestino: '16 de Septiembre entre alfredo karam y allende, Centro Comercial, 85900 Huatabampo, Son.',
+                        duracion: "02h30m"
                     },
                     {
                         key: "2",
                         horaSalida: "11:00 A.M",
                         origen: "Obregon",
-                        destino: "Navojoa",
-                        duracion: "02h40m"
+                        origenLargo:"Ciudad Obregon, Son",
+                        direccionOrigen: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
+                        destino: "Huatabampo",
+                        destinoLargo:"Huatabampo, Son",
+                        direccionDestino: '16 de Septiembre entre alfredo karam y allende, Centro Comercial, 85900 Huatabampo, Son.',
+                        duracion: "02h30m"
                     }]
             }
         ]
     },
-     {
+    {
         key: 2,
         nombreEmpresa: 'Elite',
-        imagen:elite,
+        imagen: elite,
         camiones: [
             {
                 key: "1",
@@ -251,10 +275,10 @@ export const LineasAutobusesRastreo: LineaAutobusInterface[] = [
             }
         ]
     },
-     {
+    {
         key: 3,
         nombreEmpresa: 'Albatros',
-        imagen:albatros,
+        imagen: albatros,
         camiones: [
             {
                 key: "1",

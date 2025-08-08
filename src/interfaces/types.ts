@@ -29,7 +29,11 @@ export interface ItinerarioAutobusInterface{
     key:string,
     horaSalida:string,
     origen:string,
+    origenLargo?:string,
+    direccionOrigen?:string
     destino:string,
+    destinoLargo?:string,
+    direccionDestino?:string,
     duracion:string
 }
 
@@ -40,4 +44,12 @@ export interface TableTitleProps{
     rowArray:JSX.Element[],
 }
 
+export interface AnuncioInterface{
+    key:number,
+    nombreArchivo:string,
+    repeticiones:number,
+    vencimiento:Date,
+    formato:string,
+    estado:string
+}
 

@@ -1,4 +1,8 @@
 import { createBrowserRouter, RouterProvider } from 'react-router'
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 /*Imports */
 import LoginPage from './pages/Admin/LoginPage.tsx'
 import MainPage from './pages/Admin/Inicio/MainPage.tsx'
@@ -8,12 +12,14 @@ import AdminBusesPage from './pages/Admin/Buses/AdminBusPage.tsx'
 import DisplayPage from './pages/DisplayPage.tsx'
 import DisplayExtendedPage from './pages/DisplayExtended.tsx'
 import TrackingPage from './pages/Admin/Rastreo/TrackingPage.tsx'
-import AdvertismentPage from './pages/Admin/AdvertismentPage.tsx'
+import AdvertismentPage from './pages/Admin/Anuncios/AdvertismentPage.tsx'
 import type { RouterHandle } from './interfaces/types.ts'
 import BusInfoPage from './pages/Admin/Buses/BusInfoDisplay.tsx'
 import ChildrenLayout from './layouts/ChildrenLayout.tsx'
 import BusAddPage from './pages/Admin/Buses/BusAddPage.tsx'
 import { Toaster } from 'react-hot-toast'
+import AddAdsPage from './pages/Admin/Anuncios/AddAdsPage.tsx'
+import React from 'react';
 const router = createBrowserRouter([
     {
         path: "/login",
@@ -54,18 +60,30 @@ const router = createBrowserRouter([
                 path: "/tracking",
                 element: <ChildrenLayout />,
                 handle: { title: 'Rastreo' as RouterHandle },
-                children:[
+                children: [
                     {
                         path: "/tracking",
                         element: <TrackingPage />,
-                        handle: { title: 'Autobuses' as RouterHandle }
+                        handle: { title: 'Rastreo' as RouterHandle }
                     },
 
                 ]
             }, {
                 path: "/advertisement",
-                element: <AdvertismentPage />,
-                handle: { title: 'Anuncios' as RouterHandle }
+                element: <ChildrenLayout />,
+                handle: { title: 'Anuncios' as RouterHandle },
+                children: [
+                    {
+                        path: "/advertisement",
+                        element: <AdvertismentPage />,
+                        handle: { title: 'Anuncios' as RouterHandle }
+                    },
+                    {
+                        path: "/advertisement/add",
+                        element: <AddAdsPage />,
+                        handle: { title: 'Anuncios' as RouterHandle }
+                    }
+                ]
             },
         ]
 
@@ -86,11 +104,12 @@ const router = createBrowserRouter([
 ])
 
 function App() {
+
     return (
-        <>
-        <Toaster position="top-right"/>
+        <React.StrictMode>
+            <Toaster position="top-right" />
             <RouterProvider router={router} />
-        </>
+        </React.StrictMode>
 
     );
 }
