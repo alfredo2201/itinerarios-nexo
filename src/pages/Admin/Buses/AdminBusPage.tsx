@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import BoxBuses from "../../../components/BoxBuses/BoxBuses";
+import BoxBuses from "../../../components/Autobuses/BoxBuses/BoxBuses";
 import { useEffect } from "react";
 import albatros from '../../../img/albatros_logotipo.png'
 import tufesa from '../../../img/tufesa_autobus.png'

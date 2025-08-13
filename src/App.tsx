@@ -1,4 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router'
+import { Toaster } from 'react-hot-toast'
+import React from 'react';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
@@ -6,7 +8,7 @@ import '@fontsource/roboto/700.css';
 /*Imports */
 import LoginPage from './pages/Admin/LoginPage.tsx'
 import MainPage from './pages/Admin/Inicio/MainPage.tsx'
-import MainLayout from './layouts/MainLayout.tsx'
+import MainLayout from './pages/layouts/MainLayout.tsx'
 import NotFoundPage from './pages/NotFoundPage.tsx'
 import AdminBusesPage from './pages/Admin/Buses/AdminBusPage.tsx'
 import DisplayPage from './pages/DisplayPage.tsx'
@@ -15,23 +17,26 @@ import TrackingPage from './pages/Admin/Rastreo/TrackingPage.tsx'
 import AdvertismentPage from './pages/Admin/Anuncios/AdvertismentPage.tsx'
 import type { RouterHandle } from './interfaces/types.ts'
 import BusInfoPage from './pages/Admin/Buses/BusInfoDisplay.tsx'
-import ChildrenLayout from './layouts/ChildrenLayout.tsx'
+import ChildrenLayout from './pages/layouts/ChildrenLayout.tsx'
 import BusAddPage from './pages/Admin/Buses/BusAddPage.tsx'
-import { Toaster } from 'react-hot-toast'
 import AddAdsPage from './pages/Admin/Anuncios/AddAdsPage.tsx'
-import React from 'react';
+import { UserProvider } from './context/useAuth.tsx';
+
 const router = createBrowserRouter([
     {
         path: "/login",
-        element: <LoginPage />
+        element: <UserProvider><LoginPage /></UserProvider>,
+        handle: { title: 'Iniciar Sesión' as RouterHandle },
+        errorElement: <NotFoundPage />,
+        index: true
     },
     {
         path: "/",
-        element: <MainLayout />,
+        element:<UserProvider><MainLayout /></UserProvider>,
         handle: { title: 'Bienvenido/a' as RouterHandle },
         children: [
             {
-                path: "/home",
+                path: "/itinerary",
                 element: <MainPage />,
                 handle: { title: 'Itinerario' as RouterHandle }
             },
@@ -103,12 +108,13 @@ const router = createBrowserRouter([
     },
 ])
 
-function App() {
 
+
+function App() {
     return (
         <React.StrictMode>
-            <Toaster position="top-right" />
             <RouterProvider router={router} />
+            <Toaster position="top-right" />
         </React.StrictMode>
 
     );

@@ -1,7 +1,8 @@
 import { Outlet, useMatches } from "react-router";
-import BoxAsidebar from "../components/BoxSidebar/BoxAsidebar";
-import TopBar from "../components/Bar/TopBox";
-import type { RouterHandle } from "../interfaces/types";
+import BoxAsidebar from "../../components/BoxSidebar/BoxAsidebar";
+import type { RouterHandle } from "../../interfaces/types";
+import { ExitIcon } from "@radix-ui/react-icons";
+import { useAuth } from "../../context/userContext";
 interface BoxInfoProps {
     title: string,
     url: string
@@ -11,7 +12,7 @@ interface BoxInfoProps {
 const infoDisplay: BoxInfoProps[] = [
     {
         title: "Itinerario",
-        url: "home",
+        url: "itinerary",
         icon: "M1.5 5.25C1.91421 5.25 2.25 4.91421 2.25 4.5C2.25 4.08579 1.91421 3.75 1.5 3.75C1.08579 3.75 0.75 4.08579 0.75 4.5C0.75 4.91421 1.08579 5.25 1.5 5.25ZM4 4.5C4 4.22386 4.22386 4 4.5 4H13.5C13.7761 4 14 4.22386 14 4.5C14 4.77614 13.7761 5 13.5 5H4.5C4.22386 5 4 4.77614 4 4.5ZM4.5 7C4.22386 7 4 7.22386 4 7.5C4 7.77614 4.22386 8 4.5 8H13.5C13.7761 8 14 7.77614 14 7.5C14 7.22386 13.7761 7 13.5 7H4.5ZM4.5 10C4.22386 10 4 10.2239 4 10.5C4 10.7761 4.22386 11 4.5 11H13.5C13.7761 11 14 10.7761 14 10.5C14 10.2239 13.7761 10 13.5 10H4.5ZM2.25 7.5C2.25 7.91421 1.91421 8.25 1.5 8.25C1.08579 8.25 0.75 7.91421 0.75 7.5C0.75 7.08579 1.08579 6.75 1.5 6.75C1.91421 6.75 2.25 7.08579 2.25 7.5ZM1.5 11.25C1.91421 11.25 2.25 10.9142 2.25 10.5C2.25 10.0858 1.91421 9.75 1.5 9.75C1.08579 9.75 0.75 10.0858 0.75 10.5C0.75 10.9142 1.08579 11.25 1.5 11.25Z"
     },
     {
@@ -33,7 +34,7 @@ const infoAdmin: BoxInfoProps[] = [
         icon: "M0.877075 7.50207C0.877075 3.84319 3.84319 0.877075 7.50208 0.877075C11.1609 0.877075 14.1271 3.84319 14.1271 7.50207C14.1271 11.1609 11.1609 14.1271 7.50208 14.1271C3.84319 14.1271 0.877075 11.1609 0.877075 7.50207ZM1.84898 7.00003C2.0886 4.26639 4.26639 2.0886 7.00003 1.84898V4.50003C7.00003 4.77617 7.22388 5.00003 7.50003 5.00003C7.77617 5.00003 8.00003 4.77617 8.00003 4.50003V1.84862C10.7356 2.08643 12.9154 4.26502 13.1552 7.00003H10.5C10.2239 7.00003 10 7.22388 10 7.50003C10 7.77617 10.2239 8.00003 10.5 8.00003H13.1555C12.9176 10.7369 10.7369 12.9176 8.00003 13.1555V10.5C8.00003 10.2239 7.77617 10 7.50003 10C7.22388 10 7.00003 10.2239 7.00003 10.5V13.1552C4.26502 12.9154 2.08643 10.7356 1.84862 8.00003H4.50003C4.77617 8.00003 5.00003 7.77617 5.00003 7.50003C5.00003 7.22388 4.77617 7.00003 4.50003 7.00003H1.84898Z"
     },
     {
-        title: "Anuncios", 
+        title: "Anuncios",
         url: "advertisement",
         icon: "M14 2.58711L1.85163 13H13.5C13.7761 13 14 12.7761 14 12.5V2.58711ZM0.762879 13.8067L0.825396 13.8796L0.854717 13.8545C1.05017 13.9478 1.26899 14 1.5 14H13.5C14.3284 14 15 13.3284 15 12.5V2.5C15 1.93949 14.6926 1.45078 14.2371 1.19331L14.1746 1.12037L14.1453 1.1455C13.9498 1.05222 13.731 1 13.5 1H1.5C0.671573 1 0 1.67157 0 2.5V12.5C0 13.0605 0.307435 13.5492 0.762879 13.8067ZM1 12.4129L13.1484 2H1.5C1.22386 2 1 2.22386 1 2.5V12.4129Z"
     },
@@ -48,13 +49,20 @@ const navItinerario = infoAdmin.map(item =>
 )
 
 function MainLayout() {
+    const { logout } = useAuth();
+    const  busCentralName = localStorage.getItem("busCentralName") || "Central de Autobuses Faustino Félix Serna";
     const matches = useMatches();
+
+    const handleLogout = () => {
+        logout();
+    }
 
     const currentTitle = matches
         .filter((match) => (match.handle as RouterHandle)?.title)
         .map((match) => (match.handle as RouterHandle).title!)
         .pop();
     return (
+
         <div className="flex flex-row">
             <div className="bg-[#023672] transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-[#023672] dark:border-gray-700">
                 <aside id="logo-sidebar" className="top-0 left-0 z-40 w-80 h-dvh pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-[#023672] dark:border-gray-700" aria-label="Sidebar">
@@ -69,15 +77,42 @@ function MainLayout() {
                         </ul>
                         <hr className="h-px my-4 bg-white border-0 dark:bg-white" />
                     </div>
+                    <div className="flex h-1/2 items-end">
+                        <div onClick={handleLogout} className="flex flex-row justify-start items-center gap-2 p-2 w-1/3 ml-3 text-white rounded-full cursor-pointer hover:bg-[#4185D4] dark:hover:bg-[#4185D4] group transition duration-150 ease-in-out">
+                            <ExitIcon></ExitIcon>
+                            <p>Logout</p>
+                        </div>
+                    </div>
+
+
                 </aside>
             </div>
             <div className="w-full flex flex-col">
-                <TopBar pageName={currentTitle} busCentralName="Central Faustino Felix Serna" ></TopBar>
+
+                <div className="w-full px-3 py-3 lg:px-8 lg:pl-8">
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center justify-start rtl:justify-end">
+                            <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap text-[#023672]">{currentTitle} - {busCentralName}</span>
+                        </div>
+                        <div className="flex items-center">
+                            <div className="flex items-center ms-3">
+                                <div>
+                                    <button type="button" className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
+                                        <span className="sr-only">Open user menu</span>
+                                        <img className="w-8 h-8 rounded-full" alt="user photo" src="https://www.reshot.com/preview-assets/icons/F3N5JXHBEG/user-F3N5JXHBEG.svg" />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>            
                 <div className="bg-[#F2F4F7] w-full h-full overflow-scrool" >
                     <Outlet />
                 </div>
             </div>
         </div>
+
+
     )
 }
 

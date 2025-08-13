@@ -12,12 +12,23 @@ interface itemListProps {
 }
 function ItemListTrackingComponent({ imagen, nombreLinea, direccionOrigen, numeroCamion, estado, ultimaVezVisto, itinerario }: itemListProps) {
     const [isVisible, setIsVisible] = useState(false);
+    const [animate, setAnimate] = useState("animate-drop-in");
+
+    const handleToggle = () => {
+        if (isVisible) {
+            setAnimate("animate-drop-out");
+            setTimeout(() => setIsVisible(false), 500); // Espera a que acabe la animación
+        } else {
+            setAnimate("animate-drop-in");
+            setIsVisible(true);
+        }
+    };
 
     return (
         <>
-            <div className="flex flex-row border-b-1 border-[#E3E3E3] p-2 bg-white cursor-pointer hover:bg-[#F5F5F5] transition duration-150 ease-in-out" onClick={() => {
-                setIsVisible(!isVisible)
-            }}>
+            <div className="flex flex-row border-b-1 border-[#E3E3E3] p-2 bg-white cursor-pointer hover:bg-[#F5F5F5] transition duration-150 ease-in-out" onClick={
+                handleToggle
+            }>
                 <div className="flex items-center w-1/6 px-2">
                     <span className="flex bg-[#BFCDDB] rounded-full h-10 w-10 justify-center items-center"><img src={imagen} alt="" /></span>
                 </div>
@@ -34,7 +45,7 @@ function ItemListTrackingComponent({ imagen, nombreLinea, direccionOrigen, numer
                 </div>
             </div>
             {isVisible ?
-                <div className="flex flex-col min-h-55 shadow-md mb-2 justify-center items-center" >
+                <div className={`flex flex-col min-h-55 shadow-md mb-2 justify-center items-center ${animate}`} >
                     <div className="flex flex-row" >
                         <div className="flex flex-col justify-center">
                             <div className="flex flex-row">
@@ -64,7 +75,7 @@ function ItemListTrackingComponent({ imagen, nombreLinea, direccionOrigen, numer
                         <button className=" text-[11px] self-end px-4 p-1 bg-green-500 m-2 rounded-full cursor-pointer hover:bg-green-400">Rastrear</button>
                         : <button className="text-white text-[11px] self-end px-4 p-1 bg-red-500 m-2 rounded-full">Inactivo</button>
                     }
-                    
+
                 </div>
 
                 :

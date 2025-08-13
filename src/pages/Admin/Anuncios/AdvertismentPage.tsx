@@ -25,15 +25,15 @@ function AdvertismentPage() {
 
         if (formSuccess === 'true') {
             toast.success(
-            <span>
-                <b>Agregado correctamente</b>
-                <p>Se agrego un nuevo anuncio al sistema</p>
-            </span>,
-            {
-                duration:4000,
-                position:"bottom-right"
-            }
-               );
+                <span>
+                    <b>Agregado correctamente</b>
+                    <p>Se agrego un nuevo anuncio al sistema</p>
+                </span>,
+                {
+                    duration: 4000,
+                    position: "bottom-right"
+                }
+            );
             sessionStorage.removeItem('formSuccess');
         }
     }, []);
@@ -58,9 +58,12 @@ function AdvertismentPage() {
                     </table>
                 </div>
                 <div className="flex w-1/3 justify-center pt-10 ">
-                    <button className="bg-[#023672] h-10 w-60 rounded-full text-white hover:bg-[#4185D4] cursor-pointer transition duration-150 ease-in-out">
-                        <Link to={"/advertisement/add"}>Subir video</Link>
-                    </button>
+                    <Link to={"/advertisement/add"} className="h-10">
+                        <button className="bg-[#023672] h-10 w-60 rounded-full text-white hover:bg-[#4185D4] cursor-pointer transition duration-150 ease-in-out">
+                            Subir video
+                        </button>
+                    </Link>
+
                 </div>
 
 

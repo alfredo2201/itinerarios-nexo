@@ -1,7 +1,5 @@
-import type { ItinerarioProps } from "./ItinerarioData";
-
-
-function TableCellCustom({ hora, destino, autobusImg, numero, rastreo }: ItinerarioProps) {
+import type { ItinerarioProps } from '../../interfaces/types';
+function CellItineraryComponent({ hora, destino, autobusImg, numero, rastreo }: ItinerarioProps) {
     return (
         <tr className="bg-[#171717] text-white even:bg-[#023672]">
             <td className="py-2 text-center">{hora}</td>
@@ -18,4 +16,4 @@ function TableCellCustom({ hora, destino, autobusImg, numero, rastreo }: Itinera
         </tr>
     )
 }
-export default TableCellCustom;
+export default CellItineraryComponent;

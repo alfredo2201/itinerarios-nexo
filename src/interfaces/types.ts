@@ -53,3 +53,17 @@ export interface AnuncioInterface{
     estado:string
 }
 
+export interface User {
+    id?: number;
+    userName: string;
+    password?: string;
+}
+
+export interface ItinerarioProps {
+    key:string,
+    hora:string,
+    destino: string,
+    autobusImg: string,
+    numero: string,
+    rastreo: string
+}

@@ -58,7 +58,7 @@ function TrackingPage() {
                     </div>
                     <input className='w-1/2 border-[#E3E3E3] rounded-lg border-1 p-2' type="text" />
                 </div>
-                <div className='max-h-180 mix-h-100 overflow-auto'>
+                <div className='max-h-180 mix-h-100 overflow-y-scroll scrollbar-hide'>
                     {rows}
                 </div>
             </div>

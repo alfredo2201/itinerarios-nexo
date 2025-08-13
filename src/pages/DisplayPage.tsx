@@ -3,7 +3,6 @@ import ReactPlayer from "react-player";
 import TableDisplay from "../components/TableDisplay/TableDisplay";
 import spot from "../../videos/Spot-Cocacola.mp4"
 import DisplayTopBarComponent from "../components/DisplayTopBar/DisplayTopBarComponent";
-
 function DisplayPage() {
     const playerRef = useRef(null)
     const [mostrarVideo, setMostrarVideo] = useState(false);
@@ -13,8 +12,7 @@ function DisplayPage() {
 
     //UseEffect para cambiar entre componente de video y de la tabla de itinerarios
     useEffect(() => {
-        let timeout: number;
-
+        let timeout: ReturnType<typeof setTimeout>;
         if (!mostrarVideo) {
             // Mostrar componente Table durante cierto tiempo
             timeout = setTimeout(() => {
@@ -33,6 +31,7 @@ function DisplayPage() {
     };
 
     return (
+        
         <div className="fixed flex flex-col">
             <DisplayTopBarComponent></DisplayTopBarComponent>
             {mostrarVideo ?
@@ -50,11 +49,10 @@ function DisplayPage() {
                         }}
                         onEnded={() => {
                             handleVideoEnded()
-
                         }} />
                 </div>
                 :
-                <TableDisplay />
+                <TableDisplay />        
             }
         </div>
     )
