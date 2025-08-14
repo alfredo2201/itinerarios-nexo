@@ -19,7 +19,7 @@ function CellTableDisplay({ hora, destino, autobusImg, numero, estado }: Itinera
             <td className="text-[24px] font-semibold text-center">
                 <div className="flex items-center justify-center">
                     <span className="m">{estado}</span>
-                    {estado === 'A Tiempo' ?
+                    {estado === 'Activo' ?
                         <span className="bg-green-500 w-6 h-6 rounded-full mx-4"></span>
                         : <span className="bg-red-500 w-6 h-6 rounded-full mx-4"></span>
                     }

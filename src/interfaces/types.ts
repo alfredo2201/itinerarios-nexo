@@ -1,56 +1,56 @@
 import type { JSX } from "react"
 
-export interface RouterHandle{
-    title?:string
+export interface RouterHandle {
+    title?: string
 }
 
-export interface ItinerarioInterface{
-    horaSalida:string,
-    salida:string,
-    destino:string,
-    duracion:number
+export interface ItinerarioInterface {
+    horaSalida: string,
+    salida: string,
+    destino: string,
+    duracion: number
 }
 
-export interface LineaAutobusInterface{
-    key:number,
-    nombreEmpresa:string,
-    imagen:string,
-    camiones:AutobusInterface[]
+export interface TrasnportInterface {
+    key: string,
+    nombreEmpresa: string,
+    imagen: string,
+    camiones: AutobusInterface[]
 }
-export interface AutobusInterface{
-    key:string,
-    numero:string,
-    estadoGps:string,
-    ultimaVista:string
-    itinerario:ItinerarioAutobusInterface[]
-}
-
-export interface ItinerarioAutobusInterface{
-    key:string,
-    horaSalida:string,
-    origen:string,
-    origenLargo?:string,
-    direccionOrigen?:string
-    destino:string,
-    destinoLargo?:string,
-    direccionDestino?:string,
-    duracion:string
+export interface AutobusInterface {
+    key: string,
+    numero: string,
+    estadoGps: string,
+    ultimaVista: string
+    itinerario: ItinerarioAutobusInterface[]
 }
 
-export interface TableTitleProps{
-    title1:string,
-    title2:string,
-    title3:string,
-    rowArray:JSX.Element[],
+export interface ItinerarioAutobusInterface {
+    key: string,
+    horaSalida: string,
+    origen: string,
+    origenLargo?: string,
+    direccionOrigen?: string
+    destino: string,
+    destinoLargo?: string,
+    direccionDestino?: string,
+    duracion: string
 }
 
-export interface AnuncioInterface{
-    key:number,
-    nombreArchivo:string,
-    repeticiones:number,
-    vencimiento:Date,
-    formato:string,
-    estado:string
+export interface TableTitleProps {
+    title1: string,
+    title2: string,
+    title3: string,
+    rowArray: JSX.Element[],
+}
+
+export interface AnuncioInterface {
+    key: number,
+    nombreArchivo: string,
+    repeticiones: number,
+    vencimiento: Date,
+    formato: string,
+    estado: string
 }
 
 export interface User {
@@ -60,10 +60,20 @@ export interface User {
 }
 
 export interface ItinerarioProps {
-    key:string,
-    hora:string,
+    key: string,
+    hora: string,
     destino: string,
     autobusImg: string,
     numero: string,
     rastreo: string
+}
+
+export interface ItineraryTable {
+    UUID: string;
+    image: string;
+    code?: string;
+    departureTime:string;
+    origin: string;
+    destination:string;
+    gpsStatus: string;
 }

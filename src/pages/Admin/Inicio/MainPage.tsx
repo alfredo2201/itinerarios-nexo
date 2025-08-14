@@ -1,13 +1,15 @@
 import type { ItinerarioProps } from "../../../interfaces/types";
 import CellItineraryComponent from "../../../components/TableItinerario/CellItineraryComponent";
 import { FakeData } from "../../../data/ItinerariosData";
+import { useEffect, useState } from "react";
 const data: ItinerarioProps[] = FakeData.slice(0, 10);
 
-const rows = data.map(item =>
-    <CellItineraryComponent key={item.key} hora={item.hora} destino={item.destino} autobusImg={item.autobusImg} numero={item.numero} rastreo={item.rastreo} />
-)
-
 function MainPage() {
+    const [itineraries, setItineraries] = useState<ItinerarioProps[]>([])
+
+    useEffect(() => {
+        setItineraries(data)
+    }, [])
 
     return (
         <div className="w-full h-full px-10 py-6 overflow-scrool" >
@@ -24,7 +26,11 @@ function MainPage() {
                         </tr>
                     </thead>
                     <tbody>
-                        {rows}
+                        {
+                            itineraries?.map(item =>
+                                <CellItineraryComponent key={item.key} hora={item.hora} destino={item.destino} autobusImg={item.autobusImg} numero={item.numero} rastreo={item.rastreo} />
+                            )
+                        }
                     </tbody>
                 </table>
                 <div className="flex justify-between items-center px-4 py-6">

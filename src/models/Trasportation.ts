@@ -3,13 +3,13 @@ export type Company = {
     companyName: string;
     image: string;
     trasportation: Trasportation[];
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt?: Date;
+    updatedAt?: Date;
 }
 
 export type Trasportation = {
     UUID: string;
-    registration:string
+    registration?:string
     code?: string;
     gpsCode?: string;
     gpsStatus: string;
@@ -19,8 +19,8 @@ export type Trasportation = {
         longitude: number;
     };
     itinerary: ItineraryInterface[];
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt?: Date;
+    updatedAt?: Date;
 }
 
 export type ItineraryInterface = {
@@ -33,6 +33,6 @@ export type ItineraryInterface = {
     longTextDestination?: string;
     destinationAddress?: string;
     duration: string;
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt?: Date;
+    updatedAt?: Date;
 }

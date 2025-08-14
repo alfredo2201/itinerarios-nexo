@@ -1,0 +1,76 @@
+import { dataTrasporte } from "../data/AutobusesData";
+import { handleError } from "../helpers/ErrorHandler";
+import type { ItineraryTable } from "../interfaces/types";
+import { convertirHora24 } from "../utils/validations";
+
+//Servicio para obtener todos los nombres de las empresas con su logo
+export const getAllCompanies = async () => {
+    try {
+        return {
+            data: dataTrasporte
+        };
+
+    } catch (error) {
+        console.error("Error en CompaniesService:", error);
+        handleError(error);
+    }
+}
+
+export const getCompanyById = async (id: string) => {
+    try {
+        const company = dataTrasporte.find(item => item.UUID === id);
+        if (!company) {
+            throw new Error("Company not found");
+        }
+        return {
+            data: company
+        };
+    } catch (error) {
+        console.error("Error in getCompanyById:", error);
+        handleError(error);
+    }
+}
+//Servicio para obtener la compañia por su nombre
+export const getTransportByName = async (name: string) => {
+    try {
+        const company = dataTrasporte.find(item => item.companyName.toLowerCase() === name.toLowerCase());
+        if (!company) {
+            throw new Error("Company not found");
+        }
+        return {
+            data: company.trasportation
+        };
+    } catch (error) {
+        console.error("Error in getCompanyByName:", error);
+        handleError(error);
+    }
+}
+
+export const getAllItineraries = async () => {
+    try {
+        const lista:ItineraryTable[] = []
+        for (const company of dataTrasporte) {
+            for (const transporte of company.trasportation) {
+                for (const itinerary of transporte.itinerary) {
+                    lista.push({
+                        UUID: itinerary.UUID,
+                        image: company.image,
+                        code: transporte.code,
+                        departureTime: itinerary.departureTime,
+                        origin: itinerary.origin,
+                        destination: itinerary.destination,
+                        gpsStatus:transporte.gpsStatus
+                    });
+                }
+            }
+        }
+        //Ordenar por hora de salida
+        const data  = lista.sort((a, b) => convertirHora24(a.departureTime) - convertirHora24(b.departureTime));            
+        return {
+            data: data.slice(0,18)
+        };
+    } catch (error) {
+        console.error("Error in getAllItineraries:", error);
+        handleError(error);
+    }
+}

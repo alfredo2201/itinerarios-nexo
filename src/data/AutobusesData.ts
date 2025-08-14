@@ -1,345 +1,566 @@
-import type { AutobusInterface, ItinerarioAutobusInterface, LineaAutobusInterface } from "../interfaces/types";
 import tufesa from '../img/tufesa_autobus.png'
 import elite from '../img/autobuses-elite.png'
 import albatros from '../img/albatros_logotipo.png'
-export const EstadoAutobus: AutobusInterface[] = [
+import { v4 as uuidv4 } from 'uuid';
+import type { Company, ItineraryInterface, Trasportation } from "../models/Trasportation";
+export const EstadoAutobus: Trasportation[] = [
     {
-        key: "1",
-        numero: "111",
-        estadoGps: "Activo",
-        ultimaVista: "20/07/2025 01:12:12",
-        itinerario: []
+        UUID: "1",
+        code: "111",
+        gpsStatus: "Activo",
+        lastSeen: "20/07/2025 01:12:12",
+        itinerary: [
+            {
+                UUID: "1",
+                departureTime: "7:00 A.M",
+                origin: "Obregon",
+                longTextOrigin: "Ciudad Obregon, Son",
+                originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
+                destination: "Navojoa",
+                longTextDestination: 'Navojoa, Son',
+                destinationAddress: 'Hidalgo entre No Reeleccion y Pesqueira, Calle Gral. I. Pesqueira 515, Centro, Juárez, 85800 Navojoa, Son.',
+                duration: "01h00m"
+            },
+            {
+                UUID: "2",
+                departureTime: "9:00 A.M",
+                origin: "Obregon",
+                longTextOrigin: "Ciudad Obregon, Son",
+                originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
+                destination: "Navojoa",
+                longTextDestination: 'Navojoa, Son',
+                destinationAddress: 'Hidalgo entre No Reeleccion y Pesqueira, Calle Gral. I. Pesqueira 515, Centro, Juárez, 85800 Navojoa, Son.',
+                duration: "01h00m"
+            }
+        ],
     },
     {
-        key: "2",
-        numero: "102",
-        estadoGps: "Inactivo",
-        ultimaVista: "20/07/2025 01:12:12",
-        itinerario: []
+        UUID: "2",
+        code: "102",
+        gpsStatus: "Inactivo",
+        lastSeen: "20/07/2025 01:12:12",
+        itinerary: [
+                   {
+                        UUID: "1",
+                        departureTime: "7:00 A.M",
+                        origin: "Obregon",
+                        longTextOrigin:"Ciudad Obregon, Son",
+                        originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
+                        destination: "Huatabampo",
+                        longTextDestination:"Huatabampo, Son",
+                        destinationAddress: '16 de Septiembre entre alfredo karam y allende, Centro Comercial, 85900 Huatabampo, Son.',
+                        duration: "02h30m"
+                    },
+                    {
+                        UUID: "2",
+                        departureTime: "11:00 A.M",
+                        origin: "Obregon",
+                        longTextOrigin:"Ciudad Obregon, Son",
+                        originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
+                        destination: "Huatabampo",
+                        longTextDestination:"Huatabampo, Son",
+                        destinationAddress: '16 de Septiembre entre alfredo karam y allende, Centro Comercial, 85900 Huatabampo, Son.',
+                        duration: "02h30m"
+                    }
+                ]
     }, {
-        key: "3",
-        numero: "103",
-        estadoGps: "Activo",
-        ultimaVista: "20/07/2025 01:12:12",
-        itinerario: []
+        UUID: "3",
+        code: "103",
+        gpsStatus: "Activo",
+        lastSeen: "20/07/2025 01:12:12",
+        itinerary: [
+                    {
+                        UUID: "1",
+                        departureTime: "10:00 A.M",
+                        origin: "Obregon",
+                        longTextOrigin:"Ciudad Obregon, Son",
+                        originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
+                        destination: "Navojoa",
+                        longTextDestination:'Navojoa, Son',
+                        destinationAddress: 'Hidalgo entre No Reeleccion y Pesqueira, Calle Gral. I. Pesqueira 515, Centro, Juárez, 85800 Navojoa, Son.',
+                        duration: "01h00m"
+                    },
+                    {
+                        UUID: "2",
+                        departureTime: "2:00 P.M",
+                        origin: "Obregon",
+                        longTextOrigin:"Ciudad Obregon, Son",
+                        originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
+                        destination: "Navojoa",
+                        longTextDestination:'Navojoa, Son',
+                        destinationAddress: 'Hidalgo entre No Reeleccion y Pesqueira, Calle Gral. I. Pesqueira 515, Centro, Juárez, 85800 Navojoa, Son.',
+                        duration: "01h00m"
+                    }
+                ]
     },
     {
-        key: "4",
-        numero: "104",
-        estadoGps: "Activo",
-        ultimaVista: "20/07/2025 01:12:12",
-        itinerario: []
+        UUID: "4",
+        code: "104",
+        gpsStatus: "Activo",
+        lastSeen: "20/07/2025 01:12:12",
+        itinerary: [
+                   {
+                        UUID: "1",
+                        departureTime: "8:00 A.M",
+                        origin: "Obregon",
+                        longTextOrigin:"Ciudad Obregon, Son",
+                        originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
+                        destination: "Huatabampo",
+                        longTextDestination:"Huatabampo, Son",
+                        destinationAddress: '16 de Septiembre entre alfredo karam y allende, Centro Comercial, 85900 Huatabampo, Son.',
+                        duration: "02h30m"
+                    },
+                    {
+                        UUID: "2",
+                        departureTime: "1:00 P.M",
+                        origin: "Obregon",
+                        longTextOrigin:"Ciudad Obregon, Son",
+                        originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
+                        destination: "Huatabampo",
+                        longTextDestination:"Huatabampo, Son",
+                        destinationAddress: '16 de Septiembre entre alfredo karam y allende, Centro Comercial, 85900 Huatabampo, Son.',
+                        duration: "02h30m"
+                    }
+                ]
     },
     {
-        key: "5",
-        numero: "104",
-        estadoGps: "Activo",
-        ultimaVista: "20/07/2025 01:12:12",
-        itinerario: []
+        UUID: "5",
+        code: "104",
+        gpsStatus: "Activo",
+        lastSeen: "20/07/2025 01:12:12",
+        itinerary: [
+                    {
+                        UUID: "1",
+                        departureTime: "7:00 A.M",
+                        origin: "Obregon",
+                        longTextOrigin:"Ciudad Obregon, Son",
+                        originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
+                        destination: "Navojoa",
+                        longTextDestination:'Navojoa, Son',
+                        destinationAddress: 'Hidalgo entre No Reeleccion y Pesqueira, Calle Gral. I. Pesqueira 515, Centro, Juárez, 85800 Navojoa, Son.',
+                        duration: "01h00m"
+                    },
+                    {
+                        UUID: "2",
+                        departureTime: "9:00 A.M",
+                        origin: "Obregon",
+                        longTextOrigin:"Ciudad Obregon, Son",
+                        originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
+                        destination: "Navojoa",
+                        longTextDestination:'Navojoa, Son',
+                        destinationAddress: 'Hidalgo entre No Reeleccion y Pesqueira, Calle Gral. I. Pesqueira 515, Centro, Juárez, 85800 Navojoa, Son.',
+                        duration: "01h00m"
+                    }
+                ]
     },
     {
-        key: "6",
-        numero: "104",
-        estadoGps: "Activo",
-        ultimaVista: "20/07/2025 01:12:12",
-        itinerario: []
+        UUID: "6",
+        code: "104",
+        gpsStatus: "Activo",
+        lastSeen: "20/07/2025 01:12:12",
+        itinerary: [
+                    {
+                        UUID: "1",
+                        departureTime: "7:00 A.M",
+                        origin: "Obregon",
+                        longTextOrigin:"Ciudad Obregon, Son",
+                        originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
+                        destination: "Navojoa",
+                        longTextDestination:'Navojoa, Son',
+                        destinationAddress: 'Hidalgo entre No Reeleccion y Pesqueira, Calle Gral. I. Pesqueira 515, Centro, Juárez, 85800 Navojoa, Son.',
+                        duration: "01h00m"
+                    },
+                    {
+                        UUID: "2",
+                        departureTime: "9:00 A.M",
+                        origin: "Obregon",
+                        longTextOrigin:"Ciudad Obregon, Son",
+                        originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
+                        destination: "Navojoa",
+                        longTextDestination:'Navojoa, Son',
+                        destinationAddress: 'Hidalgo entre No Reeleccion y Pesqueira, Calle Gral. I. Pesqueira 515, Centro, Juárez, 85800 Navojoa, Son.',
+                        duration: "01h00m"
+                    }
+                ]
     },
     {
-        key: "7",
-        numero: "104",
-        estadoGps: "Activo",
-        ultimaVista: "20/07/2025 01:12:12",
-        itinerario: []
-    },
-    {
-        key: "8",
-        numero: "104",
-        estadoGps: "Activo",
-        ultimaVista: "20/07/2025 01:12:12",
-        itinerario: []
-    },
-    {
-        key: "9",
-        numero: "104",
-        estadoGps: "Activo",
-        ultimaVista: "20/07/2025 01:12:12",
-        itinerario: []
-    },
-    {
-        key: "10",
-        numero: "104",
-        estadoGps: "Activo",
-        ultimaVista: "20/07/2025 01:12:12",
-        itinerario: []
-    },
-    {
-        key: "11",
-        numero: "104",
-        estadoGps: "Activo",
-        ultimaVista: "20/07/2025 01:12:12",
-        itinerario: []
-    },
-    {
-        key: "12",
-        numero: "104",
-        estadoGps: "Activo",
-        ultimaVista: "20/07/2025 01:12:12",
-        itinerario: []
+        UUID: "7",
+        code: "104",
+        gpsStatus: "Activo",
+        lastSeen: "20/07/2025 01:12:12",
+        itinerary: [
+                    {
+                        UUID: "1",
+                        departureTime: "7:00 A.M",
+                        origin: "Obregon",
+                        longTextOrigin:"Ciudad Obregon, Son",
+                        originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
+                        destination: "Navojoa",
+                        longTextDestination:'Navojoa, Son',
+                        destinationAddress: 'Hidalgo entre No Reeleccion y Pesqueira, Calle Gral. I. Pesqueira 515, Centro, Juárez, 85800 Navojoa, Son.',
+                        duration: "01h00m"
+                    },
+                    {
+                        UUID: "2",
+                        departureTime: "9:00 A.M",
+                        origin: "Obregon",
+                        longTextOrigin:"Ciudad Obregon, Son",
+                        originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
+                        destination: "Navojoa",
+                        longTextDestination:'Navojoa, Son',
+                        destinationAddress: 'Hidalgo entre No Reeleccion y Pesqueira, Calle Gral. I. Pesqueira 515, Centro, Juárez, 85800 Navojoa, Son.',
+                        duration: "01h00m"
+                    }
+                ]
     }
 ]
 
-export const ItinerariosAutobus: ItinerarioAutobusInterface[] = [
+export const ItinerariosAutobus: ItineraryInterface[] = [
     {
-        key: "1",
-        horaSalida: "7:00 A.M",
-        origen: "Obregon",
-        destino: "Navojoa",
-        duracion: "01h00m"
+        UUID: "1",
+        departureTime: "7:00 A.M",
+        origin: "Obregon",
+        destination: "Navojoa",
+        duration: "01h00m"
     }
     , {
-        key: "2",
-        horaSalida: "11:30 A.M",
-        origen: "Obregon",
-        destino: "Navojoa",
-        duracion: "01h00m"
+        UUID: "2",
+        departureTime: "11:30 A.M",
+        origin: "Obregon",
+        destination: "Navojoa",
+        duration: "01h00m"
     },
     {
-        key: "3",
-        horaSalida: "3:00 P.M",
-        origen: "Obregon",
-        destino: "Navojoa",
-        duracion: "01h00m"
+        UUID: "3",
+        departureTime: "3:00 P.M",
+        origin: "Obregon",
+        destination: "Navojoa",
+        duration: "01h00m"
     }
 ]
 
-export const LineasAutobusesRastreo: LineaAutobusInterface[] = [
+
+
+export const dataTrasporte: Company[] = [
     {
-        key: 1,
-        nombreEmpresa: 'Tufesa',
-        imagen: tufesa,
-        camiones: [
+        UUID: uuidv4(),
+        companyName: 'Tufesa',
+        image: tufesa,
+        trasportation: [
             {
-                key: "1",
-                numero: "101",
-                estadoGps: "Activo",
-                ultimaVista: "20/07/2025 01:12:12",
-                itinerario: [
+                UUID: uuidv4(),
+                code: "101",
+                gpsStatus: "Activo",
+                lastSeen: "20/07/2025 01:12:12",
+                itinerary: [
                     {
-                        key: "1",
-                        horaSalida: "7:00 A.M",
-                        origen: "Obregon",
-                        origenLargo:"Ciudad Obregon, Son",
-                        direccionOrigen: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
-                        destino: "Navojoa",
-                        destinoLargo:'Navojoa, Son',
-                        direccionDestino: 'Hidalgo entre No Reeleccion y Pesqueira, Calle Gral. I. Pesqueira 515, Centro, Juárez, 85800 Navojoa, Son.',
-                        duracion: "01h00m"
+                        UUID: uuidv4(),
+                        departureTime: "7:00 A.M",
+                        origin: "Obregon",
+                        longTextOrigin:"Ciudad Obregon, Son",
+                        originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
+                        destination: "Navojoa",
+                        longTextDestination:'Navojoa, Son',
+                        destinationAddress: 'Hidalgo entre No Reeleccion y Pesqueira, Calle Gral. I. Pesqueira 515, Centro, Juárez, 85800 Navojoa, Son.',
+                        duration: "01h00m"
                     },
                     {
-                        key: "2",
-                        horaSalida: "9:00 A.M",
-                        origen: "Obregon",
-                        origenLargo:"Ciudad Obregon, Son",
-                        direccionOrigen: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
-                        destino: "Navojoa",
-                        destinoLargo:'Navojoa, Son',
-                        direccionDestino: 'Hidalgo entre No Reeleccion y Pesqueira, Calle Gral. I. Pesqueira 515, Centro, Juárez, 85800 Navojoa, Son.',
-                        duracion: "01h00m"
+                        UUID: uuidv4(),
+                        departureTime: "9:00 A.M",
+                        origin: "Obregon",
+                        longTextOrigin:"Ciudad Obregon, Son",
+                        originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
+                        destination: "Navojoa",
+                        longTextDestination:'Navojoa, Son',
+                        destinationAddress: 'Hidalgo entre No Reeleccion y Pesqueira, Calle Gral. I. Pesqueira 515, Centro, Juárez, 85800 Navojoa, Son.',
+                        duration: "01h00m"
+                    },
+                    {
+                        UUID: uuidv4(),
+                        departureTime: "11:00 A.M",
+                        origin: "Obregon",
+                        longTextOrigin:"Ciudad Obregon, Son",
+                        originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
+                        destination: "Navojoa",
+                        longTextDestination:'Navojoa, Son',
+                        destinationAddress: 'Hidalgo entre No Reeleccion y Pesqueira, Calle Gral. I. Pesqueira 515, Centro, Juárez, 85800 Navojoa, Son.',
+                        duration: "01h00m"
+                    },
+                    {
+                        UUID: uuidv4(),
+                        departureTime: "2:00 P.M",
+                        origin: "Obregon",
+                        longTextOrigin:"Ciudad Obregon, Son",
+                        originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
+                        destination: "Navojoa",
+                        longTextDestination:'Navojoa, Son',
+                        destinationAddress: 'Hidalgo entre No Reeleccion y Pesqueira, Calle Gral. I. Pesqueira 515, Centro, Juárez, 85800 Navojoa, Son.',
+                        duration: "01h00m"
                     }
                 ]
             },
             {
-                key: "2",
-                numero: "102",
-                estadoGps: "Inactivo",
-                ultimaVista: "20/07/2025 01:12:12",
-                itinerario: [{
-                    key: "1",
-                    horaSalida: "7:00 A.M",
-                    origen: "Obregon",
-                    origenLargo:"Ciudad Obregon, Son",
-                    direccionOrigen: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
-                    destino: "Navojoa",
-                    destinoLargo:'Navojoa, Son',
-                    direccionDestino: 'Hidalgo entre No Reeleccion y Pesqueira, Calle Gral. I. Pesqueira 515, Centro, Juárez, 85800 Navojoa, Son.',
-                    duracion: "01h00m"
-                },
-                {
-                    key: "2",
-                    horaSalida: "12:00 P.M",
-                    origen: "Obregon",
-                    origenLargo:"Ciudad Obregon, Son",
-                    direccionOrigen: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
-                    destino: "Navojoa",
-                    destinoLargo:'Navojoa, Son',
-                    direccionDestino: 'Hidalgo entre No Reeleccion y Pesqueira, Calle Gral. I. Pesqueira 515, Centro, Juárez, 85800 Navojoa, Son.',
-                    duracion: "01h00m"
-                }]
-            }, {
-                key: "3",
-                numero: "103",
-                estadoGps: "Activo",
-                ultimaVista: "20/07/2025 01:12:12",
-                itinerario: [
-                    {
-                        key: "1",
-                        horaSalida: "7:00 A.M",
-                        origen: "Obregon",
-                        origenLargo:"Ciudad Obregon, Son",
-                        direccionOrigen: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
-                        destino: "Huatabampo",
-                        destinoLargo:"Huatabampo, Son",
-                        direccionDestino: '16 de Septiembre entre alfredo karam y allende, Centro Comercial, 85900 Huatabampo, Son.',
-                        duracion: "02h30m"
+                UUID: uuidv4(),
+                code: "102",
+                gpsStatus: "Inactivo",
+                lastSeen: "20/07/2025 01:12:12",
+                itinerary: [{
+                        UUID: uuidv4(),
+                        departureTime: "7:00 A.M",
+                        origin: "Obregon",
+                        longTextOrigin:"Ciudad Obregon, Son",
+                        originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
+                        destination: "Huatabampo",
+                        longTextDestination:"Huatabampo, Son",
+                        destinationAddress: '16 de Septiembre entre alfredo karam y allende, Centro Comercial, 85900 Huatabampo, Son.',
+                        duration: "02h30m"
                     },
                     {
-                        key: "2",
-                        horaSalida: "11:00 A.M",
-                        origen: "Obregon",
-                        origenLargo:"Ciudad Obregon, Son",
-                        direccionOrigen: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
-                        destino: "Huatabampo",
-                        destinoLargo:"Huatabampo, Son",
-                        direccionDestino: '16 de Septiembre entre alfredo karam y allende, Centro Comercial, 85900 Huatabampo, Son.',
-                        duracion: "02h30m"
+                        UUID:uuidv4(),
+                        departureTime: "11:00 A.M",
+                        origin: "Obregon",
+                        longTextOrigin:"Ciudad Obregon, Son",
+                        originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
+                        destination: "Huatabampo",
+                        longTextDestination:"Huatabampo, Son",
+                        destinationAddress: '16 de Septiembre entre alfredo karam y allende, Centro Comercial, 85900 Huatabampo, Son.',
+                        duration: "02h30m"
+                    }]
+            }, {
+                UUID: uuidv4(),
+                code: "103",
+                gpsStatus: "Activo",
+                lastSeen: "20/07/2025 01:12:12",
+                itinerary: [
+                    {
+                        UUID: uuidv4(),
+                        departureTime: "7:00 A.M",
+                        origin: "Obregon",
+                        longTextOrigin:"Ciudad Obregon, Son",
+                        originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
+                        destination: "Huatabampo",
+                        longTextDestination:"Huatabampo, Son",
+                        destinationAddress: '16 de Septiembre entre alfredo karam y allende, Centro Comercial, 85900 Huatabampo, Son.',
+                        duration: "02h30m"
+                    },
+                    {
+                        UUID: uuidv4(),
+                        departureTime: "11:00 A.M",
+                        origin: "Obregon",
+                        longTextOrigin:"Ciudad Obregon, Son",
+                        originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
+                        destination: "Huatabampo",
+                        longTextDestination:"Huatabampo, Son",
+                        destinationAddress: '16 de Septiembre entre alfredo karam y allende, Centro Comercial, 85900 Huatabampo, Son.',
+                        duration: "02h30m"
                     }]
             }
         ]
     },
     {
-        key: 2,
-        nombreEmpresa: 'Elite',
-        imagen: elite,
-        camiones: [
+        UUID:uuidv4(),
+        companyName: 'Elite',
+        image: elite,
+        trasportation: [
             {
-                key: "1",
-                numero: "104",
-                estadoGps: "Activo",
-                ultimaVista: "20/07/2025 01:12:12",
-                itinerario: [
+                UUID: uuidv4(),
+                code: "104",
+                gpsStatus: "Activo",
+                lastSeen: "20/07/2025 01:12:12",
+                itinerary: [
                     {
-                        key: "1",
-                        horaSalida: "7:00 A.M",
-                        origen: "Obregon",
-                        destino: "Navojoa",
-                        duracion: "01h00m"
+                        UUID: uuidv4(),
+                        departureTime: "7:00 A.M",
+                        origin: "Obregon",
+                        longTextOrigin:"Ciudad Obregon, Son",
+                        originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
+                        destination: "Huatabampo",
+                        longTextDestination:"Huatabampo, Son",
+                        destinationAddress: '16 de Septiembre entre alfredo karam y allende, Centro Comercial, 85900 Huatabampo, Son.',
+                        duration: "02h30m"
                     },
                     {
-                        key: "2",
-                        horaSalida: "9:00 A.M",
-                        origen: "Obregon",
-                        destino: "Navojoa",
-                        duracion: "01h00m"
+                        UUID: uuidv4(),
+                        departureTime: "11:00 A.M",
+                        origin: "Obregon",
+                        longTextOrigin:"Ciudad Obregon, Son",
+                        originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
+                        destination: "Huatabampo",
+                        longTextDestination:"Huatabampo, Son",
+                        destinationAddress: '16 de Septiembre entre alfredo karam y allende, Centro Comercial, 85900 Huatabampo, Son.',
+                        duration: "02h30m"
+                    },
+                    {
+                        UUID: uuidv4(),
+                        departureTime: "3:00 P.M",
+                        origin: "Obregon",
+                        longTextOrigin:"Ciudad Obregon, Son",
+                        originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
+                        destination: "Huatabampo",
+                        longTextDestination:"Huatabampo, Son",
+                        destinationAddress: '16 de Septiembre entre alfredo karam y allende, Centro Comercial, 85900 Huatabampo, Son.',
+                        duration: "02h30m"
+                    },
+                    {
+                        UUID: uuidv4(),
+                        departureTime: "5:00 P.M",
+                        origin: "Obregon",
+                        longTextOrigin:"Ciudad Obregon, Son",
+                        originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
+                        destination: "Huatabampo",
+                        longTextDestination:"Huatabampo, Son",
+                        destinationAddress: '16 de Septiembre entre alfredo karam y allende, Centro Comercial, 85900 Huatabampo, Son.',
+                        duration: "02h30m"
                     }
                 ]
             },
             {
-                key: "2",
-                numero: "105",
-                estadoGps: "Inactivo",
-                ultimaVista: "20/07/2025 01:12:12",
-                itinerario: [{
-                    key: "1",
-                    horaSalida: "7:00 A.M",
-                    origen: "Obregon",
-                    destino: "Hermosillo",
-                    duracion: "03h40m"
-                },
-                {
-                    key: "2",
-                    horaSalida: "12:00 P.M",
-                    origen: "Obregon",
-                    destino: "Hermosillo",
-                    duracion: "03h40m"
-                }]
-            }, {
-                key: "3",
-                numero: "106",
-                estadoGps: "Activo",
-                ultimaVista: "20/07/2025 01:12:12",
-                itinerario: [
-                    {
-                        key: "1",
-                        horaSalida: "7:00 A.M",
-                        origen: "Obregon",
-                        destino: "Huatabampo",
-                        duracion: "02h40m"
+                UUID: uuidv4(),
+                code: "105",
+                gpsStatus: "Inactivo",
+                lastSeen: "20/07/2025 01:12:12",
+                itinerary: [{
+                        UUID: uuidv4(),
+                        departureTime: "7:00 A.M",
+                        origin: "Obregon",
+                        longTextOrigin:"Ciudad Obregon, Son",
+                        originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
+                        destination: "Huatabampo",
+                        longTextDestination:"Huatabampo, Son",
+                        destinationAddress: '16 de Septiembre entre alfredo karam y allende, Centro Comercial, 85900 Huatabampo, Son.',
+                        duration: "02h30m"
                     },
                     {
-                        key: "2",
-                        horaSalida: "11:00 A.M",
-                        origen: "Obregon",
-                        destino: "Navojoa",
-                        duracion: "02h40m"
+                        UUID:uuidv4(),
+                        departureTime: "11:00 A.M",
+                        origin: "Obregon",
+                        longTextOrigin:"Ciudad Obregon, Son",
+                        originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
+                        destination: "Huatabampo",
+                        longTextDestination:"Huatabampo, Son",
+                        destinationAddress: '16 de Septiembre entre alfredo karam y allende, Centro Comercial, 85900 Huatabampo, Son.',
+                        duration: "02h30m"
+                    }]
+            }, {
+                UUID: uuidv4(),
+                code: "106",
+                gpsStatus: "Activo",
+                lastSeen: "20/07/2025 01:12:12",
+                itinerary: [
+                    {
+                        UUID: uuidv4(),
+                        departureTime: "7:00 A.M",
+                        origin: "Obregon",
+                        longTextOrigin:"Ciudad Obregon, Son",
+                        originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
+                        destination: "Huatabampo",
+                        longTextDestination:"Huatabampo, Son",
+                        destinationAddress: '16 de Septiembre entre alfredo karam y allende, Centro Comercial, 85900 Huatabampo, Son.',
+                        duration: "02h30m"
+                    },
+                    {
+                        UUID: uuidv4(),
+                        departureTime: "11:00 A.M",
+                        origin: "Obregon",
+                        longTextOrigin:"Ciudad Obregon, Son",
+                        originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
+                        destination: "Huatabampo",
+                        longTextDestination:"Huatabampo, Son",
+                        destinationAddress: '16 de Septiembre entre alfredo karam y allende, Centro Comercial, 85900 Huatabampo, Son.',
+                        duration: "02h30m"
                     }]
             }
         ]
     },
     {
-        key: 3,
-        nombreEmpresa: 'Albatros',
-        imagen: albatros,
-        camiones: [
+        UUID:uuidv4(),
+        companyName: 'Albatros',
+        image: albatros,
+        trasportation: [
             {
-                key: "1",
-                numero: "107",
-                estadoGps: "Activo",
-                ultimaVista: "20/07/2025 01:12:12",
-                itinerario: [
-                    {
-                        key: "1",
-                        horaSalida: "7:00 A.M",
-                        origen: "Obregon",
-                        destino: "Navojoa",
-                        duracion: "01h00m"
+                UUID: uuidv4(),
+                code: "107",
+                gpsStatus: "Activo",
+                lastSeen: "20/07/2025 01:12:12",
+                itinerary: [
+                  {
+                        UUID: uuidv4(),
+                        departureTime: "7:00 A.M",
+                        origin: "Obregon",
+                        longTextOrigin:"Ciudad Obregon, Son",
+                        originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
+                        destination: "Huatabampo",
+                        longTextDestination:"Huatabampo, Son",
+                        destinationAddress: '16 de Septiembre entre alfredo karam y allende, Centro Comercial, 85900 Huatabampo, Son.',
+                        duration: "02h30m"
                     },
                     {
-                        key: "2",
-                        horaSalida: "9:00 A.M",
-                        origen: "Obregon",
-                        destino: "Navojoa",
-                        duracion: "01h00m"
+                        UUID: uuidv4(),
+                        departureTime: "11:00 A.M",
+                        origin: "Obregon",
+                        longTextOrigin:"Ciudad Obregon, Son",
+                        originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
+                        destination: "Huatabampo",
+                        longTextDestination:"Huatabampo, Son",
+                        destinationAddress: '16 de Septiembre entre alfredo karam y allende, Centro Comercial, 85900 Huatabampo, Son.',
+                        duration: "02h30m"
+                    },
+                    {
+                        UUID: uuidv4(),
+                        departureTime: "3:00 P.M",
+                        origin: "Obregon",
+                        longTextOrigin:"Ciudad Obregon, Son",
+                        originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
+                        destination: "Huatabampo",
+                        longTextDestination:"Huatabampo, Son",
+                        destinationAddress: '16 de Septiembre entre alfredo karam y allende, Centro Comercial, 85900 Huatabampo, Son.',
+                        duration: "02h30m"
                     }
                 ]
             },
             {
-                key: "2",
-                numero: "108",
-                estadoGps: "Inactivo",
-                ultimaVista: "20/07/2025 01:12:12",
-                itinerario: [{
-                    key: "1",
-                    horaSalida: "7:00 A.M",
-                    origen: "Obregon",
-                    destino: "Hermosillo",
-                    duracion: "03h40m"
-                },
-                {
-                    key: "2",
-                    horaSalida: "12:00 P.M",
-                    origen: "Obregon",
-                    destino: "Hermosillo",
-                    duracion: "03h40m"
-                }]
+                UUID: uuidv4(),
+                code: "108",
+                gpsStatus: "Activo",
+                lastSeen: "20/07/2025 01:12:12",
+                itinerary: [{
+                        UUID: uuidv4(),
+                        departureTime: "7:00 A.M",
+                        origin: "Obregon",
+                        longTextOrigin:"Ciudad Obregon, Son",
+                        originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
+                        destination: "Huatabampo",
+                        longTextDestination:"Huatabampo, Son",
+                        destinationAddress: '16 de Septiembre entre alfredo karam y allende, Centro Comercial, 85900 Huatabampo, Son.',
+                        duration: "02h30m"
+                    }]
             }, {
-                key: "3",
-                numero: "109",
-                estadoGps: "Activo",
-                ultimaVista: "20/07/2025 01:12:12",
-                itinerario: [
+                UUID: uuidv4(),
+                code: "109",
+                gpsStatus: "Activo",
+                lastSeen: "20/07/2025 01:12:12",
+                itinerary: [
                     {
-                        key: "1",
-                        horaSalida: "7:00 A.M",
-                        origen: "Obregon",
-                        destino: "Huatabampo",
-                        duracion: "02h40m"
+                        UUID: uuidv4(),
+                        departureTime: "7:00 A.M",
+                        origin: "Obregon",
+                        longTextOrigin:"Ciudad Obregon, Son",
+                        originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
+                        destination: "Huatabampo",
+                        longTextDestination:"Huatabampo, Son",
+                        destinationAddress: '16 de Septiembre entre alfredo karam y allende, Centro Comercial, 85900 Huatabampo, Son.',
+                        duration: "02h30m"
                     },
                     {
-                        key: "2",
-                        horaSalida: "11:00 A.M",
-                        origen: "Obregon",
-                        destino: "Navojoa",
-                        duracion: "02h40m"
+                        UUID: uuidv4(),
+                        departureTime: "11:00 A.M",
+                        origin: "Obregon",
+                        longTextOrigin:"Ciudad Obregon, Son",
+                        originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
+                        destination: "Huatabampo",
+                        longTextDestination:"Huatabampo, Son",
+                        destinationAddress: '16 de Septiembre entre alfredo karam y allende, Centro Comercial, 85900 Huatabampo, Son.',
+                        duration: "02h30m"
                     }]
             }
         ]

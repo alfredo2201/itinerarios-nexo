@@ -9,7 +9,6 @@ function DisplayPage() {
     const tiempoTabla = 5000; // 5 segundos
     const tiempoEsperaAntesDeRepetir = 5000; // 5 segundos
 
-
     //UseEffect para cambiar entre componente de video y de la tabla de itinerarios
     useEffect(() => {
         let timeout: ReturnType<typeof setTimeout>;

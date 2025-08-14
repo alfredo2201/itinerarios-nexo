@@ -28,6 +28,7 @@
     "react-router": "^7.7.1",
     "standard": "^17.1.2",
     "tailwindcss": "^4.1.11",
+    "uuid": "^11.1.0",
     "vite-plugin-pwa": "^1.0.1",
     "yup": "^1.7.0"
   },

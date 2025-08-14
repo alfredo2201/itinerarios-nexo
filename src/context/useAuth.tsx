@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import type { UserProfile } from "../models/User"
 import { useLocation, useNavigate } from "react-router";
 import toast from "react-hot-toast";
-import { registerAPI } from "../services/AuthService";
+import { loginAPI, registerAPI } from "../services/AuthService";
 import axios from "axios";
 import NotFoundPage from "../pages/NotFoundPage";
 import { UserContext } from "./userContext";
@@ -50,16 +50,7 @@ export function UserProvider({ children }: Props) {
     }
 
     const loginUser = async (username: string, password: string) => {
-        const userObj = { userName: username, email: "" };
-        localStorage.setItem("user", JSON.stringify(userObj));
-        localStorage.setItem("token", JSON.stringify(password));
-        setIsReady(!isReady);
-        setUser(userObj);
-        setToken('data?.data.token');
-        navigate("/itinerary");
-      
-        
-        /*await loginAPI({username, password }).then((data) => {
+        await loginAPI({username, password }).then((data) => {
                if (data) {
                    localStorage.setItem("token", JSON.stringify(data.data));
                    const userObj = {
@@ -70,12 +61,12 @@ export function UserProvider({ children }: Props) {
                    setUser(userObj);
                    setToken('data?.data.token');
                    toast.success("Usuario registrado correctamente");
-                   navigate("/home");
+                   navigate("/itinerary");
                }
            }).catch((error: unknown) => {
                console.error("Error en el registro:", error);
                toast.error("Error al registrar el usuario");
-           })*/
+           })
     }
 
     const isLoggedIn = () => {
@@ -85,6 +76,7 @@ export function UserProvider({ children }: Props) {
     const logout = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
+        localStorage.clear();
         setUser(null);
         setToken(null);
         navigate("/login");

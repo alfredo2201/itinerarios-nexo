@@ -1,16 +1,19 @@
-import type { ItinerarioAutobusInterface } from "../../interfaces/types";
+
 import GpsIcon from '../../img/marcador-de-posicion.png'
 import { useState } from "react";
+import type { ItineraryInterface } from "../../models/Trasportation";
 interface itemListProps {
+    id:string
     imagen: string,
     nombreLinea: string,
     direccionOrigen?: string
-    numeroCamion: string
+    numeroCamion?: string
     estado: string,
-    ultimaVezVisto: string,
-    itinerario: ItinerarioAutobusInterface[]
+    ultimaVezVisto: string,    
+    itinerario: ItineraryInterface[],
+    showTransport: (id:string,name:string,code?:string) => void
 }
-function ItemListTrackingComponent({ imagen, nombreLinea, direccionOrigen, numeroCamion, estado, ultimaVezVisto, itinerario }: itemListProps) {
+function ItemListTrackingComponent({ id, imagen, nombreLinea, direccionOrigen, numeroCamion, estado, ultimaVezVisto, itinerario, showTransport }: itemListProps) {
     const [isVisible, setIsVisible] = useState(false);
     const [animate, setAnimate] = useState("animate-drop-in");
 
@@ -49,30 +52,30 @@ function ItemListTrackingComponent({ imagen, nombreLinea, direccionOrigen, numer
                     <div className="flex flex-row" >
                         <div className="flex flex-col justify-center">
                             <div className="flex flex-row">
-                                <p className="px-3 text-[12px] self-center">{itinerario[0].horaSalida}</p>
+                                <p className="px-3 text-[12px] self-center">{itinerario[0].departureTime}</p>
                                 <img className="h-4 self-center" src={GpsIcon} alt="" />
                                 <div className="w-2/3">
-                                    <p className="text-[15px]">{itinerario[0].origenLargo}</p>
-                                    <p className="text-[10px] text-green-500 leading-tight">{itinerario[0].direccionOrigen}</p>
+                                    <p className="text-[15px]">{itinerario[0].longTextOrigin}</p>
+                                    <p className="text-[10px] text-green-500 leading-tight">{itinerario[0].originAddress}</p>
                                 </div>
 
                             </div>
                             <div className="flex py-2">
-                                <h1 className="px-6 text-[10px] text-[#B8B5B5]">{itinerario[0].duracion}</h1>
+                                <h1 className="px-6 text-[10px] text-[#B8B5B5]">{itinerario[0].duration}</h1>
                                 <h1 className="text-[11px] leading-tight>Escala">Escala:</h1>
                             </div>
                             <div className="flex flex-row">
-                                <p className="px-3 text-[12px] self-center">{itinerario[0].horaSalida}</p>
+                                <p className="px-3 text-[12px] self-center">{itinerario[0].departureTime}</p>
                                 <img className="h-4 self-center" src={GpsIcon} alt="" />
                                 <div className="w-2/3">
-                                    <p className="text-[15px]">{itinerario[0].destinoLargo}</p>
-                                    <p className="text-[10px] text-green-500 leading-tight">{itinerario[0].direccionDestino}</p>
+                                    <p className="text-[15px]">{itinerario[0].longTextDestination}</p>
+                                    <p className="text-[10px] text-green-500 leading-tight">{itinerario[0].destinationAddress}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     {estado === 'Activo' ?
-                        <button className=" text-[11px] self-end px-4 p-1 bg-green-500 m-2 rounded-full cursor-pointer hover:bg-green-400">Rastrear</button>
+                        <button className=" text-[11px] self-end px-4 p-1 bg-green-500 m-2 rounded-full cursor-pointer hover:bg-green-400" onClick={()=> showTransport(id,nombreLinea,numeroCamion)}>Rastrear</button>
                         : <button className="text-white text-[11px] self-end px-4 p-1 bg-red-500 m-2 rounded-full">Inactivo</button>
                     }
 
