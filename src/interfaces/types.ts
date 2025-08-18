@@ -64,7 +64,7 @@ export interface ItinerarioProps {
     hora: string,
     destino: string,
     autobusImg: string,
-    numero: string,
+    numero?: string,
     rastreo: string
 }
 

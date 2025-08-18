@@ -63,11 +63,11 @@ function BusInfoPage() {
     }, [nombreEmpresa]);
 
     return (
-        <div className="p-10">
+        <div className="h-full p-10 overflow-auto">
             <div className="mb-3">
                 <img src={foto} alt="" className="h-15 " />
             </div>
-            <div className="flex flex-row w-full h-100 gap-5 ">
+            <div className="flex flex-col sm:flex-row w-full h-100 gap-5 ">
                 <div className="w-full bg-white max-h-200 min-h-150 rounded-lg p-8 overflow-auto shadow-xl/10 ">
                     <h2 className="text-base font-bold">Estado de Autobuses</h2>
                     <table className="table-auto md:table-fixed">
@@ -86,7 +86,7 @@ function BusInfoPage() {
                             }
                         </tbody>
                     </table>
-                    <div className="flex justify-between items-center px-4 py-6">
+                    <div className="flex flex-col sm:flex-row justify-between items-center px-4 py-6">
                         <div className="text-sm text-slate-500">
                             Mostrando <b>1-10</b> de 50
                         </div>

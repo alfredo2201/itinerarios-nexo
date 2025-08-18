@@ -11,11 +11,11 @@ function RowAutobusesComponent({ id, numero, estadoGps, ultimaVista, toggleItine
             onClick={() => toggleItinerarios(id) }>
             <td className="py-2 text-center">Num.{numero}</td>
             {estadoGps === "Activo" ?
-                <td className="flex py-1 text-center justify-center transition-transform duration-500 hover:scale-110">
-                    <p className="bg-green-400 w-1/4 py-2 rounded-lg text-green-700">{estadoGps}</p>
+                <td className="flex py-1 text-center justify-center transition-transform duration-500 hover:scale-110 sm:w-60">
+                    <p className="bg-green-400 w-1/4 py-2 rounded-lg text-green-700 sm:text-[13px]">{estadoGps}</p>
                 </td> :
-                <td className="flex py-1 text-center justify-center">
-                    <p className="bg-red-300 text-red-700 w-1/4 py-2 rounded-lg">{estadoGps}</p>
+                <td className="flex py-1 text-center justify-center sm:w-60">
+                    <p className="bg-red-300 text-red-700 w-1/4 py-2 rounded-lg sm:text-[13px]">{estadoGps}</p>
                 </td>
             }
             <td className="py-2 text-center">{ultimaVista}</td>

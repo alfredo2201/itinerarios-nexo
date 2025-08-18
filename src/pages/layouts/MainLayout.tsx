@@ -50,7 +50,7 @@ const navItinerario = infoAdmin.map(item =>
 
 function MainLayout() {
     const { logout } = useAuth();
-    const  busCentralName = localStorage.getItem("busCentralName") || "Central de Autobuses Faustino Félix Serna";
+    const busCentralName = localStorage.getItem("busCentralName") || "Central Faustino Félix Serna";
     const matches = useMatches();
 
     const handleLogout = () => {
@@ -63,8 +63,8 @@ function MainLayout() {
         .pop();
     return (
 
-        <div className="flex flex-row">
-            <div className="bg-[#023672] transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-[#023672] dark:border-gray-700">
+        <div className="flex flex-row bg-blue-700 -10">
+            <div className="bg-[#023672] transition-transform -translate-x-full  sm:translate-x-0 dark:bg-[#023672] ">
                 <aside id="logo-sidebar" className="top-0 left-0 z-40 w-80 h-dvh pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-[#023672] dark:border-gray-700" aria-label="Sidebar">
                     <div className="w-80 px-3 pb-4 overflow-y-auto bg-white dark:bg-[#023672]">
                         <ul className="space-y-2 font-medium">
@@ -83,33 +83,34 @@ function MainLayout() {
                             <p>Logout</p>
                         </div>
                     </div>
-
-
                 </aside>
             </div>
-            <div className="w-full flex flex-col">
-
-                <div className="w-full px-3 py-3 lg:px-8 lg:pl-8">
+            {/* Contenedor de toda las segunda columna */}
+            <div className="w-full flex flex-col transition-transform -translate-x-80 bg-white sm:translate-x-0 tracking-wide">
+                {/*Contenedor del titulo */}
+                <div className="w-full h-25 lg:h-15 p-5 sm:p-3 lg:px-8 lg:pl-8 ">
                     <div className="flex items-center justify-between">
-                        <div className="flex items-center justify-start rtl:justify-end">
-                            <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap text-[#023672]">{currentTitle} - {busCentralName}</span>
+                        <div className="flex items-center justify-start rtl:justify-end ">
+                            <span className="self-center text-xl font-semibold sm:text-2xl text-[#023672]">{currentTitle} - {busCentralName}</span>
                         </div>
-                        <div className="flex items-center">
-                            <div className="flex items-center ms-3">
-                                <div>
-                                    <button type="button" className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
-                                        <span className="sr-only">Open user menu</span>
-                                        <img className="w-8 h-8 rounded-full" alt="user photo" src="https://www.reshot.com/preview-assets/icons/F3N5JXHBEG/user-F3N5JXHBEG.svg" />
-                                    </button>
-                                </div>
+
+                        <div className="flex items-center ms-3">
+                            <div>
+                                <button type="button" className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
+                                    <span className="sr-only">Open user menu</span>
+                                    <img className="w-7 h-7 sm:w-8 sm:h-8 rounded-full" alt="user photo" src="https://www.reshot.com/preview-assets/icons/F3N5JXHBEG/user-F3N5JXHBEG.svg" />
+                                </button>
                             </div>
                         </div>
+
                     </div>
-                </div>            
+                </div>
+                {/*Contenedor del Oulet donde se renderizara todo el sistema */}
                 <div className="bg-[#F2F4F7] w-full h-full overflow-scrool" >
                     <Outlet />
                 </div>
             </div>
+
         </div>
 
 

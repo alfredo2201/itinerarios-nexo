@@ -74,3 +74,48 @@ export const getAllItineraries = async () => {
         handleError(error);
     }
 }
+
+export const getItinerariesForPagination = async (from:number,to:number) => {
+    try {
+        const lista:ItineraryTable[] = []
+        for (const company of dataTrasporte) {
+            for (const transporte of company.trasportation) {
+                for (const itinerary of transporte.itinerary) {
+                    lista.push({
+                        UUID: itinerary.UUID,
+                        image: company.image,
+                        code: transporte.code,
+                        departureTime: itinerary.departureTime,
+                        origin: itinerary.origin,
+                        destination: itinerary.destination,
+                        gpsStatus:transporte.gpsStatus
+                    });
+                }
+            }
+        }
+        //Ordenar por hora de salida
+        const data  = lista.sort((a, b) => convertirHora24(a.departureTime) - convertirHora24(b.departureTime));            
+        return {
+            data: data.slice(from,to)
+        };
+    } catch (error) {
+        console.error("Error in getAllItineraries:", error);
+        handleError(error);
+    }
+}
+
+export const getItineraryNumbers = async () => {
+    try {
+        let itineraryLength:number = 0
+        for (const company of dataTrasporte) {
+            for (const transporte of company.trasportation) {
+                itineraryLength = itineraryLength + transporte.itinerary.length;
+            }
+        }
+        //Regresa la cantidad de itinerarios del dia
+        return {data:itineraryLength}
+    } catch (error) {
+        console.error("Error in getItineraryNumbers:", error);
+        handleError(error);
+    }
+}
