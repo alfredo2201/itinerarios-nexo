@@ -1,7 +1,7 @@
 import { dataTrasporte } from "../data/AutobusesData";
 import { handleError } from "../helpers/ErrorHandler";
 import type { ItineraryTable } from "../interfaces/types";
-import { convertirHora24 } from "../utils/validations";
+import { convertirHora24, validateShowItinerary } from "../utils/validations";
 
 //Servicio para obtener todos los nombres de las empresas con su logo
 export const getAllCompanies = async () => {
@@ -48,26 +48,25 @@ export const getTransportByName = async (name: string) => {
 
 export const getAllItineraries = async () => {
     try {
-        const lista:ItineraryTable[] = []
+        const lista: ItineraryTable[] = []
         for (const company of dataTrasporte) {
             for (const transporte of company.trasportation) {
                 for (const itinerary of transporte.itinerary) {
+                    if(validateShowItinerary(itinerary.departureTime))
                     lista.push({
-                        UUID: itinerary.UUID,
+                        UUID: transporte.UUID,
+                        itinerary: itinerary,
                         image: company.image,
                         code: transporte.code,
-                        departureTime: itinerary.departureTime,
-                        origin: itinerary.origin,
-                        destination: itinerary.destination,
-                        gpsStatus:transporte.gpsStatus
+                        gpsStatus: transporte.gpsStatus
                     });
                 }
             }
         }
         //Ordenar por hora de salida
-        const data  = lista.sort((a, b) => convertirHora24(a.departureTime) - convertirHora24(b.departureTime));            
+        const data = lista.sort((a, b) => convertirHora24(a.itinerary.departureTime) - convertirHora24(b.itinerary.departureTime));
         return {
-            data: data.slice(0,18)
+            data: data
         };
     } catch (error) {
         console.error("Error in getAllItineraries:", error);
@@ -75,28 +74,27 @@ export const getAllItineraries = async () => {
     }
 }
 
-export const getItinerariesForPagination = async (from:number,to:number) => {
+export const getItinerariesForPagination = async (from: number, to: number) => {
     try {
-        const lista:ItineraryTable[] = []
+        const lista: ItineraryTable[] = []
         for (const company of dataTrasporte) {
             for (const transporte of company.trasportation) {
                 for (const itinerary of transporte.itinerary) {
+                    if(validateShowItinerary(itinerary.departureTime))
                     lista.push({
-                        UUID: itinerary.UUID,
+                        UUID: transporte.UUID,
+                        itinerary: itinerary,
                         image: company.image,
                         code: transporte.code,
-                        departureTime: itinerary.departureTime,
-                        origin: itinerary.origin,
-                        destination: itinerary.destination,
-                        gpsStatus:transporte.gpsStatus
+                        gpsStatus: transporte.gpsStatus
                     });
                 }
             }
         }
         //Ordenar por hora de salida
-        const data  = lista.sort((a, b) => convertirHora24(a.departureTime) - convertirHora24(b.departureTime));            
+        const data = lista.sort((a, b) => convertirHora24(a.itinerary.departureTime) - convertirHora24(b.itinerary.departureTime));
         return {
-            data: data.slice(from,to)
+            data: data.slice(from, to)
         };
     } catch (error) {
         console.error("Error in getAllItineraries:", error);
@@ -106,14 +104,14 @@ export const getItinerariesForPagination = async (from:number,to:number) => {
 
 export const getItineraryNumbers = async () => {
     try {
-        let itineraryLength:number = 0
+        let itineraryLength: number = 0
         for (const company of dataTrasporte) {
-            for (const transporte of company.trasportation) {
+            for (const transporte of company.trasportation) {                
                 itineraryLength = itineraryLength + transporte.itinerary.length;
             }
         }
         //Regresa la cantidad de itinerarios del dia
-        return {data:itineraryLength}
+        return { data: itineraryLength }
     } catch (error) {
         console.error("Error in getItineraryNumbers:", error);
         handleError(error);

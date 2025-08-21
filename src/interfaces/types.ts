@@ -1,40 +1,8 @@
 import type { JSX } from "react"
+import type { ItineraryInterface } from "../models/Trasportation";
 
 export interface RouterHandle {
     title?: string
-}
-
-export interface ItinerarioInterface {
-    horaSalida: string,
-    salida: string,
-    destino: string,
-    duracion: number
-}
-
-export interface TrasnportInterface {
-    key: string,
-    nombreEmpresa: string,
-    imagen: string,
-    camiones: AutobusInterface[]
-}
-export interface AutobusInterface {
-    key: string,
-    numero: string,
-    estadoGps: string,
-    ultimaVista: string
-    itinerario: ItinerarioAutobusInterface[]
-}
-
-export interface ItinerarioAutobusInterface {
-    key: string,
-    horaSalida: string,
-    origen: string,
-    origenLargo?: string,
-    direccionOrigen?: string
-    destino: string,
-    destinoLargo?: string,
-    direccionDestino?: string,
-    duracion: string
 }
 
 export interface TableTitleProps {
@@ -59,21 +27,17 @@ export interface User {
     password?: string;
 }
 
-export interface ItinerarioProps {
-    key: string,
-    hora: string,
-    destino: string,
-    autobusImg: string,
-    numero?: string,
-    rastreo: string
-}
+
 
 export interface ItineraryTable {
-    UUID: string;
+    UUID:string
+    itinerary: ItineraryInterface;
     image: string;
     code?: string;
-    departureTime:string;
-    origin: string;
-    destination:string;
     gpsStatus: string;
+}
+
+export interface Hour{
+    hour:number;
+    minute:number
 }

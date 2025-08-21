@@ -11,8 +11,8 @@ import MainPage from './pages/Admin/Inicio/MainPage.tsx'
 import MainLayout from './pages/layouts/MainLayout.tsx'
 import NotFoundPage from './pages/NotFoundPage.tsx'
 import AdminBusesPage from './pages/Admin/Buses/AdminBusPage.tsx'
-import DisplayPage from './pages/DisplayPage.tsx'
-import DisplayExtendedPage from './pages/DisplayExtended.tsx'
+import DisplayPage from './pages/Display/DisplayPage.tsx'
+import DisplayExtendedPage from './pages/Display/DisplayExtended.tsx'
 import TrackingPage from './pages/Admin/Rastreo/TrackingPage.tsx'
 import AdvertismentPage from './pages/Admin/Anuncios/AdvertismentPage.tsx'
 import type { RouterHandle } from './interfaces/types.ts'
@@ -21,6 +21,7 @@ import ChildrenLayout from './pages/layouts/ChildrenLayout.tsx'
 import BusAddPage from './pages/Admin/Buses/BusAddPage.tsx'
 import AddAdsPage from './pages/Admin/Anuncios/AddAdsPage.tsx'
 import { UserProvider } from './context/useAuth.tsx';
+import DisplayVerticalPage from './pages/Display/DisplayVerticalPage.tsx';
 
 const router = createBrowserRouter([
     {
@@ -97,10 +98,13 @@ const router = createBrowserRouter([
         path: "/displays",
         element: <DisplayPage />
     },
-
     {
         path: "/displayExtended",
         element: <DisplayExtendedPage />
+    },
+    {
+        path: "/vertical-display",
+        element: <DisplayVerticalPage />
     },
     {
         path: "*",

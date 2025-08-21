@@ -1,12 +1,12 @@
 import ReactPlayer from "react-player";
 import AdsRow from "../../../components/Anuncios/AdsRow";
 import { AnunciosData } from '../../../data/AnunciosData'
-import type { AnuncioInterface } from "../../../interfaces/types";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
 import toast from "react-hot-toast";
+import type { Advertisment } from "../../../models/Advertisment";
 
-const data: AnuncioInterface[] = AnunciosData.slice(0, 3);
+const data: Advertisment[] = AnunciosData.slice(0, 5);
 
 function AdvertismentPage() {
     const playerRef = useRef(null)
@@ -17,7 +17,13 @@ function AdvertismentPage() {
     }
 
     const rows = data.map(item =>
-        <AdsRow key={item.key} nombreArchivo={item.nombreArchivo} estado={item.estado} repeticiones={item.repeticiones} onUrlChange={setURLVideo} />
+        <AdsRow
+            key={item.UUID}
+            nombreArchivo={item.fileName}
+            estado={item.status}
+            repeticiones={item.repetitions}
+            onUrlChange={setURLVideo}
+        />
     )
 
     useEffect(() => {

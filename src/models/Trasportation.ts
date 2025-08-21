@@ -1,3 +1,5 @@
+import type { Hour } from "../interfaces/types";
+
 export type Company = {
     UUID: string;
     companyName: string;
@@ -25,7 +27,7 @@ export type Trasportation = {
 
 export type ItineraryInterface = {
     UUID: string;
-    departureTime: string;
+    departureTime: Hour;
     origin: string;
     longTextOrigin?: string;
     originAddress?: string;

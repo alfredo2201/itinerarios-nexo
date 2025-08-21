@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import ReactPlayer from "react-player";
-import TableDisplay from "../components/TableDisplay/TableDisplay";
-import spot from "../../videos/Anuncio 21-9.mp4"
-import DisplayTopBarComponent from "../components/DisplayTopBar/DisplayTopBarComponent";
+import TableDisplay from "../../components/TableDisplay/TableDisplay";
+import spot from "../../../videos/Anuncio 21-9.mp4"
+import DisplayTopBarComponent from "../../components/DisplayTopBar/DisplayTopBarComponent";
 
 
 
@@ -15,7 +15,7 @@ function DisplayExtendedPage() {
 
     //UseEffect para cambiar entre componente de video y de la tabla de itinerarios
     useEffect(() => {
-        let timeout: number;
+        let timeout: ReturnType<typeof setTimeout>;
 
         if (!mostrarVideo) {
             // Mostrar componente Table durante cierto tiempo
@@ -63,7 +63,8 @@ function DisplayExtendedPage() {
                 </div>
                 :
                 <div className="flex flex-row">
-                    <TableDisplay /><TableDisplay />
+                    <TableDisplay/>
+                    <TableDisplay/>
                 </div>
             }
 

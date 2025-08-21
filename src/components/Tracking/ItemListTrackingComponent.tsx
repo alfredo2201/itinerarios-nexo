@@ -1,7 +1,6 @@
-
-import GpsIcon from '../../img/marcador-de-posicion.png'
 import { useState } from "react";
 import type { ItineraryInterface } from "../../models/Trasportation";
+import CardInfoItinerary from './CardInfoItinerary';
 interface itemListProps {
     id:string
     imagen: string,
@@ -10,7 +9,7 @@ interface itemListProps {
     numeroCamion?: string
     estado: string,
     ultimaVezVisto: string,    
-    itinerario: ItineraryInterface[],
+    itinerario: ItineraryInterface,
     showTransport: (id:string,name:string,code?:string) => void
 }
 function ItemListTrackingComponent({ id, imagen, nombreLinea, direccionOrigen, numeroCamion, estado, ultimaVezVisto, itinerario, showTransport }: itemListProps) {
@@ -48,39 +47,17 @@ function ItemListTrackingComponent({ id, imagen, nombreLinea, direccionOrigen, n
                 </div>
             </div>
             {isVisible ?
-                <div className={`flex flex-col min-h-55 shadow-md mb-2 justify-center items-center ${animate}`} >
-                    <div className="flex flex-row" >
-                        <div className="flex flex-col justify-center">
-                            <div className="flex flex-row">
-                                <p className="px-3 text-[12px] self-center">{itinerario[0].departureTime}</p>
-                                <img className="h-4 self-center" src={GpsIcon} alt="" />
-                                <div className="w-2/3">
-                                    <p className="text-[15px]">{itinerario[0].longTextOrigin}</p>
-                                    <p className="text-[10px] text-green-500 leading-tight">{itinerario[0].originAddress}</p>
-                                </div>
-
-                            </div>
-                            <div className="flex py-2">
-                                <h1 className="px-6 text-[10px] text-[#B8B5B5]">{itinerario[0].duration}</h1>
-                                <h1 className="text-[11px] leading-tight>Escala">Escala:</h1>
-                            </div>
-                            <div className="flex flex-row">
-                                <p className="px-3 text-[12px] self-center">{itinerario[0].departureTime}</p>
-                                <img className="h-4 self-center" src={GpsIcon} alt="" />
-                                <div className="w-2/3">
-                                    <p className="text-[15px]">{itinerario[0].longTextDestination}</p>
-                                    <p className="text-[10px] text-green-500 leading-tight">{itinerario[0].destinationAddress}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {estado === 'Activo' ?
-                        <button className=" text-[11px] self-end px-4 p-1 bg-green-500 m-2 rounded-full cursor-pointer hover:bg-green-400" onClick={()=> showTransport(id,nombreLinea,numeroCamion)}>Rastrear</button>
-                        : <button className="text-white text-[11px] self-end px-4 p-1 bg-red-500 m-2 rounded-full">Inactivo</button>
-                    }
-
-                </div>
-
+            <CardInfoItinerary 
+                itinerary={itinerario} 
+                animate={animate} 
+                uuid={id} 
+                code={numeroCamion} 
+                state={estado} 
+                bg="ffffff"
+                text="black"
+                showTransport={()=>showTransport(id,nombreLinea,numeroCamion)
+                }
+                companyName={nombreLinea}></CardInfoItinerary>
                 :
                 <></>}
         </>

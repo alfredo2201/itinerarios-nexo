@@ -107,7 +107,7 @@ function TrackingPage() {
                                     numeroCamion={camion.code}
                                     estado={camion.gpsStatus}
                                     ultimaVezVisto={camion.lastSeen}
-                                    itinerario={camion.itinerary}
+                                    itinerario={camion.itinerary[0]}
                                     showTransport={showTransportMap}
                                 />
                             )

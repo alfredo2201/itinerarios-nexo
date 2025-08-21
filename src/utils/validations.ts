@@ -1,28 +1,29 @@
+import type { Hour } from "../interfaces/types";
+
 export function validateEmail(email: string): boolean {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
 }
 
 export function validatePassword(password: string): boolean {
-    // Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    return passwordRegex.test(password);
-}   
-
-export function convertirHora24(hora12: string): number {
-  // Ej: "7:00 A.M" → [hora: 7, minutos: 0, periodo: "A.M"]
-  const [horaMin, periodo] = hora12.split(" ");
-  // eslint-disable-next-line prefer-const
-  let [hora, minutos] = horaMin.split(":").map(Number);
-
-  if (periodo.toUpperCase() === "P.M" && hora !== 12) {
-    hora += 12;
-  }
-  if (periodo.toUpperCase() === "A.M" && hora === 12) {
-    hora = 0;
-  }
-
-  return hora * 60 + minutos; // Total minutos desde medianoche
+  // Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  return passwordRegex.test(password);
 }
 
+export function convertirHora24(itemHour: Hour): number {
+
+  return itemHour.hour * 60 + itemHour.minute; // Total minutos desde medianoche
+}
+
+export function getMinutesFormat(time: Hour): string {
+  return time.minute < 10 ? '0' + time.minute : time.minute + ''
+}
+
+export function validateShowItinerary(hour: Hour): boolean {
+  const hora = new Date();
+  const currentTime =convertirHora24({hour:hora.getHours(),minute:hora.getMinutes()});
+  const itineraryHour =convertirHora24(hour);
+  return itineraryHour > currentTime
+}
 
