@@ -15,9 +15,6 @@ function BusInfoPage() {
     const [idSelected, setIdSelected] = useState<string | null>(null);
     //Estado para ver si hay que mostrar la tabla de itinerarios
     const [isVisibleItinerarios, setIsVisibleItinerarios] = useState(false);
-
-
-
     //Funcion para cambiar la visibilidad de la tabla de itinerarios
     const toggleItinerarios = (id: string) => {
         //So el id seleccionado es el mismo que el que ya esta seleccionado, se oculta la tabla
@@ -63,13 +60,13 @@ function BusInfoPage() {
     }, [nombreEmpresa]);
 
     return (
-        <div className="h-full p-10 overflow-auto">
-            <div className="mb-3">
+        <div className="h-auto py-4 overflow-auto px-5">
+            <div className="mb-5 flex justify-center sm:justify-start px-7">
                 <img src={foto} alt="" className="h-15 " />
             </div>
-            <div className="flex flex-col sm:flex-row w-full h-100 gap-5 ">
+            <div className="flex flex-col sm:flex-row w-full h-auto gap-5 px-5 pb-5">
                 <div className="w-full bg-white max-h-200 min-h-150 rounded-lg p-8 overflow-auto shadow-xl/10 ">
-                    <h2 className="text-base font-bold">Estado de Autobuses</h2>
+                    <h2 className="text-base font-bold pb-2">Estado de Autobuses</h2>
                     <table className="table-auto md:table-fixed">
                         <thead>
                             <tr className="bg-[#E9F0F8] text-black w-full">
@@ -110,8 +107,8 @@ function BusInfoPage() {
                     </div>
                 </div>
 
-                <div className="bg-white w-full h-auto rounded-lg p-8 shadow-xl/10">
-                    <h2 className="text-base font-bold">Itinerarios de Hoy</h2>
+                <div className="bg-white w-full h-auto rounded-lg p-8 shadow-xl/10 mb-10">
+                    <h2 className="text-base font-bold pb-2">Itinerarios de Hoy</h2>
                     {
                         isVisibleItinerarios ?
                             <>
@@ -132,7 +129,7 @@ function BusInfoPage() {
                                         }
                                     </tbody>
                                 </table>
-                                <div className="flex justify-between items-center px-4 py-6">
+                                <div className="flex flex-col sm:flex-row justify-between items-center px-4 py-6">
                                     <div className="text-sm text-slate-500">
                                         Mostrando <b>1-10</b> de 50
                                     </div>

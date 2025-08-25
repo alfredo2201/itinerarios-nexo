@@ -16,7 +16,7 @@ export const ItineraryTableDisplay = ({ itineraries }: Props) => {
         <tr className="bg-[#4053AE] text-[#C3D000] w-full">
           <th className="w-2xs p-3">Hora</th>
           <th className="w-lg p-3">Destino</th>
-          <th className="w-2xs p-3">Autobus</th>
+          <th className="w-2xs p-3">Linea</th>
           <th className="w-xs p-3">Número</th>
           <th className="w-xs p-3">Localización</th>
         </tr>

@@ -63,10 +63,10 @@ function MainLayout() {
         .pop();
     return (
 
-        <div className="flex flex-row bg-blue-700 -10">
-            <div className="bg-[#023672] transition-transform -translate-x-full  sm:translate-x-0 dark:bg-[#023672] ">
-                <aside id="logo-sidebar" className="top-0 left-0 z-40 w-80 h-dvh pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-[#023672] dark:border-gray-700" aria-label="Sidebar">
-                    <div className="w-80 px-3 pb-4 overflow-y-auto bg-white dark:bg-[#023672]">
+        <div className="flex h-dvh flex-row ">
+            <div className="w-70 transition-transform -translate-x-full md:translate-x-0 hidden lg:block">
+                <aside id="logo-sidebar" className="top-0 left-0 z-40 w-60 h-dvh pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-[#023672] dark:border-gray-700" aria-label="Sidebar">
+                    <div className="w-auto px-3 pb-4 overflow-y-auto bg-white dark:bg-[#023672]">
                         <ul className="space-y-2 font-medium">
                             {navAdmin}
                         </ul>
@@ -86,9 +86,9 @@ function MainLayout() {
                 </aside>
             </div>
             {/* Contenedor de toda las segunda columna */}
-            <div className="w-full flex flex-col transition-transform -translate-x-80 bg-white sm:translate-x-0 tracking-wide">
+            <div className="w-full h-full flex flex-col grow ">
                 {/*Contenedor del titulo */}
-                <div className="w-full h-25 lg:h-15 p-5 sm:p-3 lg:px-8 lg:pl-8 ">
+                <div className="w-full h-25 lg:h-15 p-5 sm:p-3 lg:px-8 lg:pl-8 bg-white">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center justify-start rtl:justify-end ">
                             <span className="self-center text-xl font-semibold sm:text-2xl text-[#023672]">{currentTitle} - {busCentralName}</span>
@@ -106,7 +106,7 @@ function MainLayout() {
                     </div>
                 </div>
                 {/*Contenedor del Oulet donde se renderizara todo el sistema */}
-                <div className="bg-[#F2F4F7] w-full h-full overflow-scrool" >
+                <div className="w-full h-full" >
                     <Outlet />
                 </div>
             </div>

@@ -1,3 +1,4 @@
+import { useLocation } from 'react-router';
 import GpsIcon from '../../img/marcador-de-posicion.png'
 import type { ItineraryInterface } from '../../models/Trasportation';
 import { getMinutesFormat } from '../../utils/validations';
@@ -7,8 +8,8 @@ interface Props {
     state: string;
     uuid: string,
     companyName: string
-    bg:string
-    text:string
+    bg: string
+    text: string
     code?: string
     showTransport: (id: string, name: string, code?: string) => void
 }
@@ -25,6 +26,7 @@ function CardInfoItinerary(
         bg,
         text
     }: Props) {
+    const location = useLocation();
     return (
         <div className={`flex flex-col min-h-55 bg-[#${bg}] text-${text} justify-center items-center ${animate}`} >
             <div className="flex flex-row" >
@@ -61,14 +63,28 @@ function CardInfoItinerary(
                     </div>
                 </div>
             </div>
-            {state === 'Activo' ?
-                <button className=" text-[11px] self-end px-4 p-1 bg-green-500 m-2 rounded-full cursor-pointer hover:bg-green-400"
-                    onClick={
-                        () => showTransport(uuid, companyName, code)
+            {location.pathname == '/vertical-display' ? <>
+                {state === 'Activo' ?
+                    <button className=" text-[11px] self-end px-4 p-1 bg-green-500 m-2 rounded-full cursor-pointer hover:bg-green-400"
+                        onClick={
+                            () => showTransport(uuid, companyName, code)
+                        }
+                    >A tiempo</button>
+                    : <button className="text-white text-[11px] self-end px-4 p-1 bg-red-500 m-2 rounded-full">Retrasado</button>
+                }
+            </>
+                : <>
+                    {state === 'Activo' ?
+                        <button className=" text-[11px] self-end px-4 p-1 bg-green-500 m-2 rounded-full cursor-pointer hover:bg-green-400"
+                            onClick={
+                                () => showTransport(uuid, companyName, code)
+                            }
+                        >Rastrear</button>
+                        : <button className="text-white text-[11px] self-end px-4 p-1 bg-red-500 m-2 rounded-full">Inactivo</button>
                     }
-                >Rastrear</button>
-                : <button className="text-white text-[11px] self-end px-4 p-1 bg-red-500 m-2 rounded-full">Inactivo</button>
+                </>
             }
+
 
         </div>
 

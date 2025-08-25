@@ -28,7 +28,7 @@ function CellTableDisplay({ departureTime, destino, autobusImg, numero, estado }
             {estado != null || estado != undefined ?
                 <td className="sm:text-[24px] font-semibold text-center">
                     <div className="flex items-center justify-center">
-                        <span className="m">{estado}</span>
+                        <span className="m">{estado === 'Activo'? 'A tiempo':'Retrasado'}</span>
                         {estado === 'Activo' ?
                             <span className="bg-green-500 sm:w-6 sm:h-6 rounded-full mx-4"></span>
                             : <span className="bg-red-500 sm:w-6 sm:h-6 rounded-full mx-4"></span>

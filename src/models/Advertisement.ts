@@ -1,7 +1,8 @@
-export type Advertisment = {
+export type Advertisement = {
     UUID:string,
     companyName:string,
     fileName:string,
+    URL:string;
     repetitions:number,
     expiration:Date,
     format:string,

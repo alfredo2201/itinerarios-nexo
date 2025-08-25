@@ -19,7 +19,7 @@ export const dataTrasporte: Company[] = [
                 itinerary: [
                     {
                         UUID: uuidv4(),
-                        departureTime: {hour:7, minute:0},
+                        departureTime: {hour:17, minute:0},
                         origin: "Obregon",
                         longTextOrigin:"Ciudad Obregon, Son",
                         originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
@@ -41,7 +41,7 @@ export const dataTrasporte: Company[] = [
                     },
                     {
                         UUID: uuidv4(),
-                        departureTime: {hour:11, minute:0},
+                        departureTime: {hour:13, minute:30},
                         origin: "Obregon",
                         longTextOrigin:"Ciudad Obregon, Son",
                         originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
@@ -70,7 +70,7 @@ export const dataTrasporte: Company[] = [
                 lastSeen: "20/07/2025 01:12:12",
                 itinerary: [{
                         UUID: uuidv4(),
-                        departureTime: {hour:8, minute:0},
+                        departureTime: {hour:18, minute:0},
                         origin: "Obregon",
                         longTextOrigin:"Ciudad Obregon, Son",
                         originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
@@ -81,10 +81,7 @@ export const dataTrasporte: Company[] = [
                     },
                     {
                         UUID:uuidv4(),
-                        departureTime:{hour:11, minute:56
-                        
-
-                        },
+                        departureTime:{hour:14, minute:45},
                         origin: "Obregon",
                         longTextOrigin:"Ciudad Obregon, Son",
                         originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
@@ -101,7 +98,7 @@ export const dataTrasporte: Company[] = [
                 itinerary: [
                     {
                         UUID: uuidv4(),
-                        departureTime:{hour:9, minute:50},
+                        departureTime:{hour:15, minute:50},
                         origin: "Obregon",
                         longTextOrigin:"Ciudad Obregon, Son",
                         originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
@@ -112,7 +109,7 @@ export const dataTrasporte: Company[] = [
                     },
                     {
                         UUID: uuidv4(),
-                        departureTime: {hour:9, minute:51},
+                        departureTime: {hour:15, minute:30},
                         origin: "Obregon",
                         longTextOrigin:"Ciudad Obregon, Son",
                         originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
@@ -132,12 +129,12 @@ export const dataTrasporte: Company[] = [
             {
                 UUID: uuidv4(),
                 code: "104",
-                gpsStatus: "Activo",
+                gpsStatus: "Inactivo",
                 lastSeen: "20/07/2025 01:12:12",
                 itinerary: [
                     {
                         UUID: uuidv4(),
-                        departureTime: {hour:10, minute:1},
+                        departureTime: {hour:16, minute:20},
                         origin: "Obregon",
                         longTextOrigin:"Ciudad Obregon, Son",
                         originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
@@ -148,7 +145,7 @@ export const dataTrasporte: Company[] = [
                     },
                     {
                         UUID: uuidv4(),
-                        departureTime: {hour:10, minute:2},
+                        departureTime: {hour:18, minute:20},
                         origin: "Obregon",
                         longTextOrigin:"Ciudad Obregon, Son",
                         originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
@@ -159,7 +156,7 @@ export const dataTrasporte: Company[] = [
                     },
                     {
                         UUID: uuidv4(),
-                        departureTime:{hour:10, minute:3},
+                        departureTime:{hour:20, minute:20},
                         origin: "Obregon",
                         longTextOrigin:"Ciudad Obregon, Son",
                         originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
@@ -170,7 +167,7 @@ export const dataTrasporte: Company[] = [
                     },
                     {
                         UUID: uuidv4(),
-                        departureTime:{hour:10, minute:4},
+                        departureTime:{hour:22, minute:20},
                         origin: "Obregon",
                         longTextOrigin:"Ciudad Obregon, Son",
                         originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
@@ -184,11 +181,11 @@ export const dataTrasporte: Company[] = [
             {
                 UUID: uuidv4(),
                 code: "105",
-                gpsStatus: "Inactivo",
+                gpsStatus: "Activo",
                 lastSeen: "20/07/2025 01:12:12",
                 itinerary: [{
                         UUID: uuidv4(),
-                        departureTime: {hour:10, minute:5},
+                        departureTime: {hour:10, minute:50},
                         origin: "Obregon",
                         longTextOrigin:"Ciudad Obregon, Son",
                         originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
@@ -199,7 +196,7 @@ export const dataTrasporte: Company[] = [
                     },
                     {
                         UUID:uuidv4(),
-                        departureTime:{hour:8, minute:40},
+                        departureTime:{hour:18, minute:40},
                         origin: "Obregon",
                         longTextOrigin:"Ciudad Obregon, Son",
                         originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
@@ -252,7 +249,7 @@ export const dataTrasporte: Company[] = [
                 itinerary: [
                   {
                         UUID: uuidv4(),
-                        departureTime: {hour:9, minute:30},
+                        departureTime: {hour:19, minute:30},
                         origin: "Obregon",
                         longTextOrigin:"Ciudad Obregon, Son",
                         originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',
@@ -292,7 +289,7 @@ export const dataTrasporte: Company[] = [
                 lastSeen: "20/07/2025 01:12:12",
                 itinerary: [{
                         UUID: uuidv4(),
-                        departureTime: {hour:9, minute:20},
+                        departureTime: {hour:19, minute:20},
                         origin: "Obregon",
                         longTextOrigin:"Ciudad Obregon, Son",
                         originAddress: 'Campeche 928, Cortinas 1 Secc, 85160 Cdad. Obregón, Son.',

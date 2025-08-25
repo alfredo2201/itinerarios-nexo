@@ -4,64 +4,69 @@ import video3 from '../../videos/Nescafe-spot.mp4'
 import video4 from '../../videos/Oldspice-spot.mp4'
 import video5 from '../../videos/Anuncio 21-9.mp4'
 import { v4 as uuidv4 } from 'uuid';
-import type { Advertisment } from '../models/Advertisment'
+import type { Advertisement } from '../models/Advertisement'
 
 
 
-export const AnunciosData: Advertisment[] = [
+export const AnunciosData: Advertisement[] = [
     {
         UUID: uuidv4(),
         companyName: 'Nescafe',
-        fileName: video3,
+        fileName: 'Publicidad Agosto Nescafe',
         repetitions: 100,
         expiration: new Date(),
         format: 'Full HD 16:9',
         status: 'Activo',
         createdAt: new Date(),
-        updatedAt: new Date()
+        updatedAt: new Date(),
+        URL: video3
     },
     {
         UUID: uuidv4(),
         companyName: 'Nike',
-        fileName: video1,
+        fileName: "Publicidad Agosto Nike",
         repetitions: 100,
         expiration: new Date(),
         format: 'Full HD 16:9',
         status: 'Activo',
         createdAt: new Date(),
-        updatedAt: new Date()
+        updatedAt: new Date(),
+        URL: video1
     },
     {
         UUID: uuidv4(),
         companyName: 'Coca Cola',
-        fileName: video2,
+        fileName: "Publicidad Agosto Coca-cola",
         repetitions: 100,
         expiration: new Date(),
         format: 'Full HD 16:9',
         status: 'Activo',
         createdAt: new Date(),
-        updatedAt: new Date()
+        updatedAt: new Date(),
+        URL: video2
     },
     {
         UUID: uuidv4(),
         companyName: 'Old Spice',
-        fileName: video4,
+        fileName: "Publicidad Agosto Old Spice",
         repetitions: 100,
         expiration: new Date(),
         format: 'Full HD 16:9',
         status: 'Activo',
         createdAt: new Date(),
-        updatedAt: new Date()
+        updatedAt: new Date(),
+        URL: video4
     },
     {
         UUID: uuidv4(),
         companyName: 'Unkwonw',
-        fileName: video5,
+        fileName: "Publicidad Agosto Desconocido",
         repetitions: 100,
         expiration: new Date(),
         format: 'Full HD 21:9',
         status: 'Activo',
         createdAt: new Date(),
-        updatedAt: new Date()
+        updatedAt: new Date(),
+        URL: video5
     }
 ]

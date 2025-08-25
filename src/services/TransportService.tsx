@@ -52,14 +52,14 @@ export const getAllItineraries = async () => {
         for (const company of dataTrasporte) {
             for (const transporte of company.trasportation) {
                 for (const itinerary of transporte.itinerary) {
-                    if(validateShowItinerary(itinerary.departureTime))
-                    lista.push({
-                        UUID: transporte.UUID,
-                        itinerary: itinerary,
-                        image: company.image,
-                        code: transporte.code,
-                        gpsStatus: transporte.gpsStatus
-                    });
+                    if (validateShowItinerary(itinerary.departureTime))
+                        lista.push({
+                            UUID: transporte.UUID,
+                            itinerary: itinerary,
+                            image: company.image,
+                            code: transporte.code,
+                            gpsStatus: transporte.gpsStatus
+                        });
                 }
             }
         }
@@ -80,14 +80,14 @@ export const getItinerariesForPagination = async (from: number, to: number) => {
         for (const company of dataTrasporte) {
             for (const transporte of company.trasportation) {
                 for (const itinerary of transporte.itinerary) {
-                    if(validateShowItinerary(itinerary.departureTime))
-                    lista.push({
-                        UUID: transporte.UUID,
-                        itinerary: itinerary,
-                        image: company.image,
-                        code: transporte.code,
-                        gpsStatus: transporte.gpsStatus
-                    });
+                    if (validateShowItinerary(itinerary.departureTime))
+                        lista.push({
+                            UUID: transporte.UUID,
+                            itinerary: itinerary,
+                            image: company.image,
+                            code: transporte.code,
+                            gpsStatus: transporte.gpsStatus
+                        });
                 }
             }
         }
@@ -106,8 +106,11 @@ export const getItineraryNumbers = async () => {
     try {
         let itineraryLength: number = 0
         for (const company of dataTrasporte) {
-            for (const transporte of company.trasportation) {                
-                itineraryLength = itineraryLength + transporte.itinerary.length;
+            for (const transporte of company.trasportation) {
+                for (const itinerary of transporte.itinerary) {
+                    if (validateShowItinerary(itinerary.departureTime))
+                        itineraryLength = itineraryLength + 1;
+                }
             }
         }
         //Regresa la cantidad de itinerarios del dia

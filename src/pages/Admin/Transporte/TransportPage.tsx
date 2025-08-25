@@ -48,7 +48,7 @@ function AdminBusesPage() {
 
     return (
         <div className="flex flex-col ">
-            <div className="flex flex-wrap h-180 pt-15 px-15 gap-10 justify-center">
+            <div className="flex flex-col md:flex-row md:flex-wrap items-center h-180 pt-15 px-5 gap-5 md:gap-10 justify-center">
                 {companies && companies.length > 0 ? (
                     companies.map((company) => (
                         <BoxBuses key={company.UUID} foto={company.image} nombreEmpresa={company.companyName}/>

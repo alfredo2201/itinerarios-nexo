@@ -10,16 +10,14 @@ interface Props {
 
 function RowAutobusesItinerarioComponent({ horaSalida, origen, destino, duracion }: Props) {
     return (
-        <tr className="bg-white text-black border-b-1 border-gray-100" onClick={() => {
-            console.log("Click en fila de itinerario");
-        }}>
+        <tr className="bg-white text-black border-b-1 border-gray-100">
             <td className="py-2 text-center">{
                 horaSalida.hour <= 12 ?
-                    <span>{horaSalida.hour}:{getMinutesFormat(horaSalida)} A.M</span> :
-                    <span>{horaSalida.hour - 12}:{getMinutesFormat(horaSalida)} P.M</span>
+                    <span className="text-[13px] sm:text-[14px]">{horaSalida.hour}:{getMinutesFormat(horaSalida)} A.M</span> :
+                    <span className="text-[13px] sm:text-[14px]">{horaSalida.hour - 12}:{getMinutesFormat(horaSalida)} P.M</span>
             }</td>
-            <td className="py-2 text-center">{origen} - {destino}</td>
-            <td className="py-2 text-center">{duracion}</td>
+            <td className="py-2 text-center text-[13px] sm:text-[14px]">{origen} - {destino}</td>
+            <td className="py-2 text-center text-[13px] sm:text-[14px]">{duracion}</td>
         </tr>
     )
 }

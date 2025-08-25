@@ -122,7 +122,7 @@ function AddAdsPage() {
                                 </div>
                             </div>
                             <div className="flex gap-15 h-full justify-center items-end">
-                                <button className="bg-gray-300 px-10 py-2 rounded-full shadow-lg hover:bg-gray-400 cursor-pointer transition duration-150 ease-in-out">Cancelar</button>
+                                <button className="bg-gray-300 px-10 py-2 rounded-full shadow-lg hover:bg-gray-400 cursor-pointer transition duration-150 ease-in-out" onClick={()=> navigate('/advertisement')}>Cancelar</button>
                                 <button className="text-white bg-[#023672] px-10 py-2 rounded-full shadow-lg hover:bg-[#4185D4] cursor-pointer transition duration-150 ease-in-out" type="submit">Subir archivo</button>
                             </div>
                         </Form>
