@@ -42,21 +42,21 @@ const router = createBrowserRouter([
                 handle: { title: 'Itinerario' as RouterHandle }
             },
             {
-                path: "/bus_info",
+                path: "/transports_info",
                 element: <ChildrenLayout />,
                 handle: { title: 'Autobuses' as RouterHandle },
                 children: [
                     {
-                        path: "/bus_info",
+                        path: "/transports_info",
                         element: <AdminBusesPage />,
                         handle: { title: 'Autobuses' as RouterHandle }
                     },
                     {
-                        path: "/bus_info/all",
+                        path: "/transports_info/all",
                         element: <BusInfoPage />,
                         handle: { title: 'Autobuses' as RouterHandle }
                     }, {
-                        path: "/bus_info/add",
+                        path: "/transports_info/add",
                         element: <BusAddPage />,
                         handle: { title: 'Autobuses' as RouterHandle }
                     }

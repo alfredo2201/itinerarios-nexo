@@ -46,15 +46,15 @@ function MainPage() {
     }, [numberPagination, page]);
 
     return (
-        <div className="w-full h-full px-10 py-6 overflow-scroll">
-            <div className="bg-white flex flex-col p-8 rounded-lg h-5/6">
+        <div className="w-full h-full sm:px-10 py-6 overflow-hidden">
+            <div className="bg-white flex flex-col p-8 rounded-lg h-3/4">
                 <h1 className="font-sans font-semibold text-xl pb-4 pl-3">
                     Vista Previa del Itinerario
                 </h1>
 
                 <ItineraryTableDisplay  itineraries={itineraries} />
 
-                <div className="flex justify-between items-center px-4 py-6">
+                <div className="flex flex-col sm:flex-row justify-between items-center px-4 py-6">
                     <div className="text-sm text-slate-500">
                         <span>Mostrando </span>
                         <b>

@@ -6,7 +6,7 @@ type Props = {
 
 export const Pagination = ({ page, setPage, numberPagination }: Props) => {
   return (
-    <div className="flex space-x-1">
+    <div className="flex flex-row space-x-1">
       <button
         className="px-3 py-1 min-w-9 min-h-9 text-sm font-normal text-slate-500 bg-white border border-slate-200 rounded hover:bg-slate-50 hover:border-slate-400 transition duration-200 ease"
         onClick={() => {

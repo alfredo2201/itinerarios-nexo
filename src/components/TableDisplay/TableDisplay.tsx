@@ -11,22 +11,22 @@ function TableDisplay() {
         getAllItineraries().then(response => {
             if (response && response.data) {
                 setItineraries(response.data)
-            }            
+            }
         })
-    }, []);
+    }, [itineraries]);
 
-     useEffect(() => {
-    // Actualiza cada 5 minutos (300000 ms)
-    const intervalo = setInterval(() => {      
-      getAllItineraries().then(response => {
-            if (response && response.data) {
-                setItineraries(response.data)
-            }            
-        })
-    }, 0.5 * 60 * 1000);
-    // limpiar el intervalo al desmontar el componente
-    return () => clearInterval(intervalo);
-  }, []);
+    useEffect(() => {
+        // Actualiza cada 5 minutos (300000 ms)
+        const intervalo = setInterval(() => {
+            getAllItineraries().then(response => {
+                if (response && response.data) {
+                    setItineraries(response.data)
+                }
+            })
+        }, 0.5 * 60 * 1000);
+        // limpiar el intervalo al desmontar el componente
+        return () => clearInterval(intervalo);
+    }, []);
 
 
     return (

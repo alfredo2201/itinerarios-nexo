@@ -33,12 +33,16 @@ export const getCompanyById = async (id: string) => {
 //Servicio para obtener la compañia por su nombre
 export const getTransportByName = async (name: string) => {
     try {
-        const company = dataTrasporte.find(item => item.companyName.toLowerCase() === name.toLowerCase());
+        console.log(name)
+        const company = dataTrasporte.find(item => '?query='+item.companyName.toLowerCase() === name.toLowerCase());
         if (!company) {
             throw new Error("Company not found");
         }
         return {
-            data: company.trasportation
+            data: {            
+                company:company.trasportation,
+                logo:company.image
+            }
         };
     } catch (error) {
         console.error("Error in getCompanyByName:", error);
@@ -66,7 +70,7 @@ export const getAllItineraries = async () => {
         //Ordenar por hora de salida
         const data = lista.sort((a, b) => convertirHora24(a.itinerary.departureTime) - convertirHora24(b.itinerary.departureTime));
         return {
-            data: data
+            data: data.slice(0,14)
         };
     } catch (error) {
         console.error("Error in getAllItineraries:", error);

@@ -7,10 +7,11 @@ import type { ItineraryInterface, Trasportation } from "../../../models/Trasport
 
 function BusInfoPage() {
     const location = useLocation();
-    const { foto, nombreEmpresa } = location.state || {};
+    const query = location.search;
     //Estado para guardar el itinerario del autobus seleccionado
     const [itinerario, setItinerario] = useState<ItineraryInterface[]>([]);
     const [trasportData, setTrasportData] = useState<Trasportation[]>([]);
+    const [logo, setLogo] = useState('');
     //Estado para guardar el id del autobus seleccionado
     const [idSelected, setIdSelected] = useState<string | null>(null);
     //Estado para ver si hay que mostrar la tabla de itinerarios
@@ -42,12 +43,13 @@ function BusInfoPage() {
 
     // useEffect para traer todo los datos de el autobus seleccionado
     useEffect(() => {
-        getTransportByName(nombreEmpresa).then(response => {
+        getTransportByName(query).then(response => {
             if (response && response.data) {
                 const companyData = response.data;
                 // Verificar que la empresa tenga camiones
-                if (companyData && companyData.length > 0) {
-                    setTrasportData(companyData);
+                if (companyData && companyData.company.length > 0) {
+                    setLogo(companyData.logo)
+                    setTrasportData(companyData.company);
                 } else {
                     console.error("No hay camiones disponibles para esta empresa.");
                 }
@@ -57,12 +59,12 @@ function BusInfoPage() {
         }).catch(error => {
             console.error("Error al obtener los datos de la empresa:", error);
         })
-    }, [nombreEmpresa]);
+    }, [query]);
 
     return (
         <div className="h-auto py-4 overflow-auto px-5">
             <div className="mb-5 flex justify-center sm:justify-start px-7">
-                <img src={foto} alt="" className="h-15 " />
+                <img src={logo} alt="" className="h-15 " />
             </div>
             <div className="flex flex-col sm:flex-row w-full h-auto gap-5 px-5 pb-5">
                 <div className="w-full bg-white max-h-200 min-h-150 rounded-lg p-8 overflow-auto shadow-xl/10 ">
