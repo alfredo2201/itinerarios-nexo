@@ -50,7 +50,7 @@ export const getTransportByName = async (name: string) => {
     }
 }
 
-export const getAllItineraries = async () => {
+export const getAllItineraries = async (from:number = 0, to:number = 14) => {
     try {
         const lista: ItineraryTable[] = []
         for (const company of dataTrasporte) {
@@ -70,7 +70,7 @@ export const getAllItineraries = async () => {
         //Ordenar por hora de salida
         const data = lista.sort((a, b) => convertirHora24(a.itinerary.departureTime) - convertirHora24(b.itinerary.departureTime));
         return {
-            data: data.slice(0,14)
+            data: data.slice(from,to)
         };
     } catch (error) {
         console.error("Error in getAllItineraries:", error);

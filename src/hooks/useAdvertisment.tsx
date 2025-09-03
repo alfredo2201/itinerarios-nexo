@@ -52,8 +52,21 @@ export const useAdvertisement = () => {
         setThirdGroup(groups.thirdBatch.sort(() => Math.random() - 0.5));
         setFourthGroup(groups.fourthBatch.sort(() => Math.random() - 0.5))
     };
-    useEffect(() => {
 
+        // Función para obtener videos por grupo
+    const getVideosForStep = (step: number): Advertisement[] => {
+        switch (step) {
+            case 1: return firstGroup;      // Solo 200 repeticiones
+            case 2: return secondGroup;     // 200 + 100 repeticiones  
+            case 3: return thirdGroup;      // 200 + 50 repeticiones
+            case 4: return fourthGroup;     // 200 + 100 + 50 repeticiones
+            default: return [];
+        }
+    };
+
+    
+
+    useEffect(() => {
         if (location.pathname === '/displays') {
             getVideosByResolution('Full HD 16:9').then((data) => {
                 if (data != null || data != undefined) {
@@ -80,6 +93,7 @@ export const useAdvertisement = () => {
         secondGroup,
         thirdGroup,
         fourthGroup,
+        getVideosForStep,
         loading
     }
 }

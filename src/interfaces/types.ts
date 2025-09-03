@@ -41,3 +41,16 @@ export interface Hour{
     hour:number;
     minute:number
 }
+
+// ===== TIPOS DE TYPESCRIPT =====
+export interface GroupAvailability {
+    has200: boolean;
+    has100: boolean;  
+    has50: boolean;
+    hasAll: boolean;
+}
+
+export interface FlowStep {
+    group: number;
+    duration: number;
+}

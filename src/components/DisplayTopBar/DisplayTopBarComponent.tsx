@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-const title = 'Central de autobuses Faustino Felix Serna'
+const title = 'Estacion de autobuses Faustino Felix Serna'
 function DisplayTopBarComponent() {
     const [currentTime, setCurrentTime] = useState(new Date());
     // UseEffect para cambiar dinamicamente la hora 
