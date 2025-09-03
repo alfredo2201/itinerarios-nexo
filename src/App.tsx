@@ -112,8 +112,6 @@ const router = createBrowserRouter([
     },
 ])
 
-
-
 function App() {
     return (
         <React.StrictMode>
