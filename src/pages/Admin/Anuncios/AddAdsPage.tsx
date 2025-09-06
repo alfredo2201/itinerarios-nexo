@@ -1,22 +1,54 @@
 import { useCallback, useRef, useState } from "react";
 import ReactPlayer from "react-player";
-
 import { useDropzone } from "react-dropzone";
 import { Form, useNavigate } from "react-router";
+import { addNewVideo, createAdvertisement, deleteVideo } from "../../../services/AdvertismentsService";
+import type { VideoData, Video, SelectOption } from "../../../interfaces/types";
+import Swal from 'sweetalert2'
+import type { Advertisement } from "../../../models/Advertisement";
 
 function AddAdsPage() {
     const [formVisible, setFormVisible] = useState(true)
     const playerRef = useRef(null)
-    const [videoName, setVideoName] = useState<File | undefined>();
-    const [videoUrl, setVideoUrl] = useState<string | undefined>();
+    const [isAvailable, setIsAvailable] = useState('pointer-events-none')
+
+    //Estados del formulario    
+    const [companyText, setCompanyText] = useState<string>('');
+    const [videoName, setVideoName] = useState<string | undefined>();
+    const [video, setVideo] = useState<Video | undefined>();
+    // Estado para el valor seleccionado
+    const [selectedValue, setSelectedValue] = useState<number>(0);
+    // Estado para almacenar la fecha seleccionada. Inicialmente vacío.
+    const [selectedDate, setSelectedDate] = useState<string>('');
+    // Estado para el valor seleccionado
+    const [selectedFormat, setSelectedFormat] = useState<string>('');
+
+    const options: SelectOption[] = [
+        { value: '50', label: '50' },
+        { value: '100', label: '100' },
+        { value: '200', label: '200' },
+    ];
+
+    const optionsFormat: SelectOption[] = [
+        { value: '16:9 Full-HD', label: '16:9 Full-HD' },
+        { value: '9:16 Full-HD', label: '9:16 Full-HD' },
+        { value: '32:9 Full-HD', label: '32:9 Full-HD' },
+    ];
     const navigate = useNavigate();
 
     const onDrop = useCallback((acceptedFiles: File[]) => {
-        setVideoName(acceptedFiles[0])
         setFormVisible(!formVisible)
+        setVideoName(acceptedFiles[0].name)
+        addNewVideo(acceptedFiles[0]).then((response: VideoData) => {
+            if (response != undefined) {
+                setVideo(response.video)
+                setIsAvailable('pointer-events-auto')
+            }
+
+        })
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
         accept: {
@@ -24,19 +56,79 @@ function AddAdsPage() {
         }
     })
 
+    // Función que maneja el cambio en el select de repeticiones
+    const handleChangeCompanyText = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setCompanyText(e.target.value); // Actualiza el estado con el nuevo valor
+    };
+    // Función que maneja el cambio en el select de repeticiones
+    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedValue(parseInt(e.target.value, 10)); // Actualiza el estado con el nuevo valor
+    };
+
+    // Función que maneja el cambio en el select de formatos
+    const handleFormatChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedFormat(e.target.value); // Actualiza el estado con el nuevo valor
+    };
+    // Manejador para el evento de cambio en el input de fecha.
+    const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        // event.target.value devuelve la fecha como un string "YYYY-MM-DD"
+        setSelectedDate(e.target.value);        
+    };
+
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-                if(videoName != undefined){
-               // const result = await uploadVideoToCloudinary(videoName);
-                //setVideoUrl(result?.secure_url);
-            }
-            navigate('/advertisement');
+            if (videoName != undefined) {
+                const ads: Advertisement = {
+                    companyName: companyText,
+                    fileName: videoName,
+                    URL: video?.url,
+                    repetitions: selectedValue,
+                    expiration: new Date(selectedDate),
+                    format: selectedFormat,
+                    status: 'active'
+                }
+                createAdvertisement(ads).then((result)=>{                    
+                    if(result) sessionStorage.setItem('formSuccess','true')
+                    navigate('/advertisement');
+                })
+            }            
         } catch (error) {
             // Puedes también agregar una notificación de error aquí
             console.error(error);
         }
 
+    }
+
+    const handleOnCancel = () => {
+        try {
+            Swal.fire({
+                title: "Estas seguro de salir?",
+                text: "No se guardaran los cambios hechos",
+                icon: "warning",
+                width: '24em',
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Si",
+                cancelButtonText: 'No'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    deleteVideo(video?.public_id).then(() => {
+                        navigate('/advertisement');
+                    })
+                }
+            });
+        } catch (error) {
+            console.error(error)
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Algo Salio Mal!",
+                footer: '<a href="#">Why do I have this issue?</a>'
+            });
+        }
     }
     return (
         <div className=" flex justify-center h-9/10 w-full px-10">
@@ -64,47 +156,70 @@ function AddAdsPage() {
                 :
                 <div className="flex flex-col bg-white w-full h-full rounded-lg mt-10">
 
-                    <Form onSubmit={handleSubmit} className="flex flex-col w-full h-full p-10">
+                    <Form onSubmit={handleSubmit} onAbort={handleOnCancel} className="flex flex-col w-full h-full p-10">
                         <div className="flex h-full">
                             <div className="w-1/2 px-3">
                                 <h1 className="text-[25px] font-bold mb-8">Informacion del Video-Anuncio</h1>
+                                <label htmlFor="">Nombre de la empresa</label>
+                                <br />
+                                <div className="border-2 border-[#0550AD] rounded-lg w-full h-10 ">
+                                    <input
+                                        type="text"
+                                        value={companyText} // Controla el valor del input
+                                        onChange={handleChangeCompanyText}
+                                        placeholder="Ej. City Express"
+                                        className="w-full h-full pl-4" />
+                                </div>
+                                <br />
                                 <label htmlFor="">Nombre del archivo</label>
                                 <br />
                                 <div className="border-2 border-[#0550AD] rounded-lg w-full h-10 ">
-                                    <input type="text" defaultValue={videoName?.name} id="" placeholder="Nombre del archivo" className="w-full h-full pl-4" />
+                                    <input type="text" defaultValue={videoName} placeholder="Nombre del archivo" className="w-full h-full pl-4" />
                                 </div>
                                 <br />
                                 <label htmlFor="">Repeticiones por dia</label>
                                 <br />
                                 <div className="border-2 border-[#0550AD] rounded-lg w-1/2 h-10 cursor-pointer">
-                                    <select name="" id="" className="w-full h-full border-[#0550AD] pl-4 cursor-pointer">
-                                        <option value="">50</option>
-                                        <option value="">100</option>
-                                        <option value="">150</option>
-                                        <option value="">200</option>
+                                    <select value={selectedValue} onChange={handleChange} className="w-full h-full border-[#0550AD] pl-4 cursor-pointer">
+                                        <option value="">Selecciona una opción...</option> {/* Opción por defecto */}
+                                        {options.map((option) => (
+                                            <option key={option.value} value={option.value}>
+                                                {option.label}
+                                            </option>
+                                        ))}
                                     </select>
                                 </div>
                                 <br />
-                                <label htmlFor="">Fecha de Vencimiento</label>
+                                <label htmlFor="dateInput">Fecha de Vencimiento</label>
                                 <br />
                                 <div className="border-2 border-[#0550AD] rounded-lg w-1/2 h-10">
-                                    <input type="date" name="" id="" className="w-full h-full pl-4 border border-gray-300 rounded-lg p-2 focus:outline-none" /></div>
+                                    <input
+                                        type="date"
+                                        value={selectedDate} // El valor del input está controlado por el estado
+                                        onChange={handleDateChange}
+                                        className="w-full h-full pl-4 border border-gray-300 rounded-lg p-2 focus:outline-none" /></div>
                                 <br />
                                 <label htmlFor="">Tipo de Formato</label>
                                 <br />
                                 <div className="border-2 border-[#0550AD] rounded-lg w-1/2 h-10">
-                                    <select name="" id="" className="w-full h-full pl-4">
-                                        <option value="">16:9 Full-HD</option>
-                                        <option value="">9:16 Full-HD</option>
-                                        <option value="">21:9 Full-HD</option>
+                                    <select
+                                        value={selectedFormat}
+                                        onChange={handleFormatChange}
+                                        className="w-full h-full pl-4">
+                                        <option value="">Selecciona una opción...</option> {/* Opción por defecto */}
+                                        {optionsFormat.map((option) => (
+                                            <option key={option.value} value={option.value}>
+                                                {option.label}
+                                            </option>
+                                        ))}
                                     </select></div>
                             </div>
 
                             <div className="flex flex-col w-1/2 h-full justify-center items-center p-10">
-                                {videoName?.name != '' ?
+                                {videoName != '' ?
                                     <ReactPlayer
                                         ref={playerRef}
-                                        src={videoUrl}
+                                        src={video?.url}
                                         playing={false}
                                         muted={false}
                                         controls={true}
@@ -119,9 +234,13 @@ function AddAdsPage() {
                                 <h1 className="pt-5 font-semibold">Previsualizacion del video</h1>
                             </div>
                         </div>
-                        <div className="flex gap-15 h-full justify-center items-end">
-                            <button className="bg-gray-300 px-10 py-2 rounded-full shadow-lg hover:bg-gray-400 cursor-pointer transition duration-150 ease-in-out" onClick={() => navigate('/advertisement')}>Cancelar</button>
-                            <button className="text-white bg-[#023672] px-10 py-2 rounded-full shadow-lg hover:bg-[#4185D4] cursor-pointer transition duration-150 ease-in-out" type="submit">Subir archivo</button>
+                        <div className="flex gap-15 h-full justify-center items-end">                       
+                            <button
+                                className={`bg-gray-300 px-10 py-2 rounded-full shadow-lg hover:bg-gray-400 cursor-pointer transition duration-150 ease-in-out ${isAvailable}`}
+                                type="button" onClick={handleOnCancel}>Cancelar</button>
+                            <button
+                                className="text-white bg-[#023672] px-10 py-2 rounded-full shadow-lg hover:bg-[#4185D4] cursor-pointer transition duration-150 ease-in-out"
+                                type="submit">Subir archivo</button>
                         </div>
                     </Form>
 

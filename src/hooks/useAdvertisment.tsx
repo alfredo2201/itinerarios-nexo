@@ -2,6 +2,8 @@ import { useEffect, useState } from "react"
 import type { Advertisement } from "../models/Advertisement"
 import { getVideosByResolution } from "../services/AdvertismentsService"
 import { useLocation } from "react-router"
+import { handleError } from "../helpers/ErrorHandler"
+import axios from "axios"
 //Custom Hook para para los anuncios del sistema
 export const useAdvertisement = () => {
 
@@ -16,16 +18,16 @@ export const useAdvertisement = () => {
 
     //Funcion para separar los anuncios por numero de repeticiones, y los almacena en el grupo que corresponden.
     const splitVideosForRepetitions = (data: Advertisement[]) => {
-        const groups: { 
+        const groups: {
             firstBatch: Advertisement[];
-             secondBatch: Advertisement[];
-              thirdBatch: Advertisement[];
-              fourthBatch:Advertisement[] 
-            } = {
+            secondBatch: Advertisement[];
+            thirdBatch: Advertisement[];
+            fourthBatch: Advertisement[]
+        } = {
             firstBatch: [],
             secondBatch: [],
             thirdBatch: [],
-            fourthBatch:[]
+            fourthBatch: []
         }
         data.map(
             (item) => {
@@ -35,14 +37,14 @@ export const useAdvertisement = () => {
                 }
                 else if (item.repetitions === 100) { // Agrega los videos que se repiten 100 veces en el dia
                     groups.secondBatch.push(item)
-                    groups.fourthBatch.push(item)                
+                    groups.fourthBatch.push(item)
                 }
                 else if (item.repetitions === 200) {// Agrega los videos que se repiten 200 en el dia
                     groups.firstBatch.push(item)
                     groups.secondBatch.push(item)
                     groups.thirdBatch.push(item)
                     groups.fourthBatch.push(item)
-                    
+
                 }
 
             }
@@ -53,7 +55,7 @@ export const useAdvertisement = () => {
         setFourthGroup(groups.fourthBatch.sort(() => Math.random() - 0.5))
     };
 
-        // Función para obtener videos por grupo
+    // Función para obtener videos por grupo
     const getVideosForStep = (step: number): Advertisement[] => {
         switch (step) {
             case 1: return firstGroup;      // Solo 200 repeticiones
@@ -64,28 +66,53 @@ export const useAdvertisement = () => {
         }
     };
 
-    
-
     useEffect(() => {
-        if (location.pathname === '/displays') {
-            getVideosByResolution('Full HD 16:9').then((data) => {
-                if (data != null || data != undefined) {
-                    setAdvertisements(data)
-                    splitVideosForRepetitions(data)
-                    setLoading(false)
+        const controller = new AbortController();
+        const fetchData = async () => {
+            try {
+                setLoading(true);
+                handleError(null);
+                if (advertisements.length === 0) {
+                    if (location.pathname === '/displays') {
+                        getVideosByResolution('16:9 Full-HD', controller.signal).then((data) => {
+                            if (data != null && data != undefined) {
+                                console.log(data);
+                                setAdvertisements(data);
+                                splitVideosForRepetitions(data);
+                                setLoading(false);
+                                return;
+                            }
+                        });
+                    } else if (location.pathname === '/displayExtended') {
+                        getVideosByResolution('21:9 Full-HD', controller.signal).then((data) => {
+                            if (data != null && data != undefined) {
+                                console.log(data);
+                                setAdvertisements(data);
+                                splitVideosForRepetitions(data);
+                                setLoading(false);
+                                return;
+                            }
+                        });
+                    }
                 }
-            })
-        } else if (location.pathname === '/displayExtended') {
-            getVideosByResolution('Full HD 21:9').then((data) => {
-                if (data != null || data != undefined) {
-                    setAdvertisements(data)
-                    splitVideosForRepetitions(data)
-                    setLoading(false)
+            } catch (error) {
+                if (!axios.isCancel(error)) {
+                    handleError(error);
                 }
-            })
-        }        
+            } finally {
+                if (!controller.signal.aborted) {
+                    setLoading(false);
+                }
+            }
+        };
+
+        fetchData();
+
+        return () => {
+            controller.abort();
+        };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [loading])
+    }, []);
 
     return {
         advertisements,

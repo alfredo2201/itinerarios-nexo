@@ -13,7 +13,7 @@ function DisplayVerticalPage() {
 
     const BASE_STEP = 0.1 * 60 * 1000; // 7 minutos en ms
 
-    const { adsWith50Rep, adsWith100Rep, adsWith200Rep } = useAdvertisement();
+    const { firstGroup, secondGroup,thirdGroup } = useAdvertisement();
 
     const playerRef = useRef(null);
     const [mostrarVideo, setMostrarVideo] = useState(false);
@@ -23,9 +23,9 @@ function DisplayVerticalPage() {
 
     // obtener el grupo que toca en este paso
     const getGroupForStep = (step: number): Advertisement[] | null => {
-        if (step % 4 === 0 && adsWith50Rep.length > 0) return adsWith50Rep; // cada 28 min
-        if (step % 2 === 0 && adsWith100Rep.length > 0) return adsWith100Rep; // cada 14 min
-        if (adsWith200Rep.length > 0) return adsWith200Rep; // cada 7 min
+        if (step % 4 === 0 && thirdGroup.length > 0) return thirdGroup; // cada 28 min
+        if (step % 2 === 0 && secondGroup.length > 0) return secondGroup; // cada 14 min
+        if (firstGroup.length > 0) return firstGroup; // cada 7 min
         return null;
     };
 

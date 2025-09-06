@@ -30,22 +30,22 @@ export interface User {
 
 
 export interface ItineraryTable {
-    UUID:string
+    UUID: string
     itinerary: ItineraryInterface;
     image: string;
     code?: string;
     gpsStatus: string;
 }
 
-export interface Hour{
-    hour:number;
-    minute:number
+export interface Hour {
+    hour: number;
+    minute: number
 }
 
 // ===== TIPOS DE TYPESCRIPT =====
 export interface GroupAvailability {
     has200: boolean;
-    has100: boolean;  
+    has100: boolean;
     has50: boolean;
     hasAll: boolean;
 }
@@ -53,4 +53,22 @@ export interface GroupAvailability {
 export interface FlowStep {
     group: number;
     duration: number;
+}
+
+export interface Video {
+    url: string
+    public_id: string,
+    duration: number,
+    format: string,
+    size: number
+}
+
+export interface VideoData {
+    message: string,
+    video: Video,
+}
+
+export interface SelectOption {
+  value: string;
+  label: string;
 }

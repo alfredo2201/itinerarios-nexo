@@ -5,6 +5,7 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
+import 'sweetalert2/src/sweetalert2.scss';
 /*Imports */
 import LoginPage from './pages/Admin/LoginPage.tsx'
 import MainPage from './pages/Admin/Inicio/MainPage.tsx'
@@ -21,6 +22,9 @@ import BusAddPage from './pages/Admin/Transporte/AddCompanyPage.tsx'
 import AddAdsPage from './pages/Admin/Anuncios/AddAdsPage.tsx'
 import { UserProvider } from './context/useAuth.tsx';
 import DisplayVerticalPage from './pages/Display/DisplayVerticalPage.tsx';
+import axios from 'axios';
+
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 const router = createBrowserRouter([
     {

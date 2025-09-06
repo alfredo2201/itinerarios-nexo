@@ -81,8 +81,6 @@ const DisplayPage: React.FC = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [mostrarVideo, loading]);
 
-
-
     // Detectar cambios en los arrays para reinicializar si es necesario
     useEffect(() => {
         if (!loading && flowManager.initialized) {
@@ -105,7 +103,7 @@ const DisplayPage: React.FC = () => {
             <div className="fixed flex flex-col">
                 <DisplayTopBarComponent />
 
-                <h1>CARGANDO PAGINA...</h1>
+                <h1 className="text-[30px] font-sans text-center font-semibold bg-gray-300 w-full h-screen">CARGANDO PAGINA...</h1>
             </div>
         );
     }

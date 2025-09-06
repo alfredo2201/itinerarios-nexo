@@ -1,30 +1,48 @@
-import { AnunciosData } from "../data/AnunciosData";
+import axios from "axios";
 import { handleError } from "../helpers/ErrorHandler";
 import type { Advertisement } from "../models/Advertisement";
+import type { VideoData } from "../interfaces/types";
 
-const data: Advertisement[] = AnunciosData
+const URL = import.meta.env.VITE_URL_BASE!
+const apiKey = import.meta.env.VITE_API_KEY!
+const uploadPreset = import.meta.env.VITE_UPLOAD_PRESET!
+
 
 export const getVideos = async () => {
     try {
-        return data
+        const response = await axios.get(`${URL}/ads`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'origin': 'x-requested-with',
+                'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
+            }
+        });
+        return response.data;
     } catch (error) {
         console.error("Error en Advertisments:", error);
         handleError(error);
+        // Return a default value or throw to satisfy the return type
+        throw error;
     }
 }
 
-export const getVideosByRepetitions = async (repetition: number) => {
+export const getVideosByRepetitions = async (resolution: number) => {
     try {
-        const auxData: Advertisement[] = []
-        data.map((item) => {
-            if (item.repetitions === repetition) auxData.push(item)
-        })
-        return auxData
-            ;
+        const response = await axios.get(`${URL}/ads/format/${resolution}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'origin': 'x-requested-with',
+                'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
+            }
+        });
+        return response.data;
 
     } catch (error) {
         console.error("Error en Advertisments:", error);
         handleError(error);
+        throw error;
     }
 }
 
@@ -36,21 +54,122 @@ export const getVideosByRepetitions = async (repetition: number) => {
  *          or `null` if the resolution is an empty string.
  * @throws Logs and handles any errors that occur during the process.
  */
-export const getVideosByResolution = async (resolution: string) => {
+export const getVideosByResolution = async (resolution: string,signal:AbortSignal) => {
+    
     try {
         if (resolution != '') {
-            const auxData: Advertisement[] = []
-            data.map((item) => {
-                if (item.format === resolution) auxData.push(item)
+            await axios.get(`${URL}/ads/format/${resolution}`, {
+                signal: signal,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'origin': 'x-requested-with',
+                    'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
+                }
+            }).then((data) => {
+                return data.data
             })
-            return auxData
         } else {
             return null
         }
         ;
 
     } catch (error) {
-        console.error("Error en Advertisments:", error);
-        handleError(error);
+        if (!axios.isCancel(error)) {
+            console.error('Error:', error);
+             handleError(error);;
+        }
     }
 }
+//Funcoin para subir videos a Cloudinary
+export async function addNewVideo(video: File): Promise<VideoData> {
+    try {
+        const formData = new FormData();
+        formData.append('file', video);
+        formData.append('upload_preset', uploadPreset);
+        formData.append('api_key', apiKey);
+        const response = await axios.post(`${URL}/upload`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'Access-Control-Allow-Origin': '*',
+                'origin': 'x-requested-with',
+                'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error en Advertisments:", error);
+        handleError(error);
+        // Return a default value or throw to satisfy the return type
+        throw error;
+    }
+}
+//Funcion para eliminar videos a Cloudinary
+export async function deleteVideo(publicId: string | undefined): Promise<string> {
+    try {
+        if (publicId == undefined) {
+            return "error";
+        }
+
+        await axios.delete(`${URL}/delete`, {
+            params: {
+                publicId: publicId
+            },
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'Access-Control-Allow-Origin': '*',
+                'origin': 'x-requested-with',
+                'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
+            }
+        });
+        return 'ok';
+    } catch (error) {
+        console.error("Error en Advertisments:", error);
+        handleError(error);
+        // Return a default value or throw to satisfy the return type
+        throw error;
+    }
+    //Funcoin para subir videos a Cloudinary
+}
+
+//Funcoin para subir videos a Cloudinary
+export async function createAdvertisement(data: Advertisement): Promise<VideoData> {
+    try {
+        const response = await axios.post(`${URL}/ads`, data, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'origin': 'x-requested-with',
+                'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error en Advertisments:", error);
+        handleError(error);
+        // Return a default value or throw to satisfy the return type
+        throw error;
+    }
+}
+
+//Funcoin para hacer la peticion para eliminar anuncios de la base de datos
+export async function deletAds(id: string): Promise<VideoData> {
+    try {
+        const response = await axios.delete(`${URL}/ads/${id}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'origin': 'x-requested-with',
+                'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error en Advertisments:", error);
+        handleError(error);
+        // Return a default value or throw to satisfy the return type
+        throw error;
+    }
+}
+
+

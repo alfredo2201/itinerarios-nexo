@@ -1,12 +1,12 @@
 export type Advertisement = {
-    UUID:string,
+    _id?:string,
     companyName:string,
     fileName:string,
-    URL:string;
+    URL?:string;
     repetitions:number,
     expiration:Date,
     format:string,
     status:string,
-    createdAt:Date,
-    updatedAt:Date
+    createdAt?:Date,
+    updatedAt?:Date
 }
