@@ -1,22 +1,13 @@
 import { useState } from "react";
 import CardInfoItinerary from "../Tracking/CardInfoItinerary";
-import type { ItineraryInterface } from "../../models/Trasportation";
-import type { Hour } from "../../interfaces/types";
-import { getMinutesFormat } from "../../utils/validations";
+import type { Itinerary } from '../../models/Trasportation'
+import { formatTimeInSonoraCustom } from "../../utils/validations";
 
 interface Props {
-    key: string,
-    companyName: string
-    departureTime: Hour,
-    destination: string,
-    image: string,
-    code: string,
-    state: string,
-    transport: ItineraryInterface,
-    //showTransport: (id:string,name:string,code?:string) => void
+    itinerary:Itinerary
 }
 
-function RowVerticalDisplay({ departureTime, companyName, destination, image, code, transport, state }: Props) {
+function RowVerticalDisplay({itinerary}: Props) {
     const [isVisible, setIsVisible] = useState(false);
     const [animate, setAnimate] = useState("animate-drop-in");
 
@@ -35,33 +26,30 @@ function RowVerticalDisplay({ departureTime, companyName, destination, image, co
         <>
             <tr className="bg-[#171717] text-white h-13 w-screen nth-[2n]:bg-[#023672]" onClick={handleToggle}>
                 <td className="text-[13px] text-[#C3D000] sm:text-[24px] font-bold py-2 text-center">
-                    {departureTime.hour < 12 ?
-                        <span>{departureTime.hour}:{getMinutesFormat(departureTime)} A.M</span> :
-                        <span>{departureTime.hour - 12}:{getMinutesFormat(departureTime)} P.M</span>
-                    }
+                    {formatTimeInSonoraCustom(itinerary.departureTime)}
                 </td>
-                <td className="text-[13px] sm:text-[24px] font-semibold py-2 text-center">{destination}</td>
+                <td className="text-[13px] sm:text-[24px] font-semibold py-2 text-center">{itinerary.destination.name}</td>
                 <td className="font-semibold pt-1 flex items-center justify-center pt-3">
-                    <img src={image} alt="Logotipo" className="h-6 sm:h-10 " />
+                    <img src={itinerary.company?.image} alt="Logotipo" className="h-6 sm:h-10 " />
                 </td>
-                <td className="text-[13px] sm:text-[24px] font-bold py-2 text-center" >{code}</td>
+                <td className="text-[13px] sm:text-[24px] font-bold py-2 text-center" >{itinerary.transport.code}</td>
             </tr>
             <tr></tr>
             <td colSpan={4}>
                 {isVisible ?
                     <CardInfoItinerary
-                        key={transport.UUID}
-                        itinerary={transport}
+                        key={itinerary._id}
+                        itinerary={itinerary}
                         animate={animate}
-                        uuid={transport.UUID}
-                        code={code}
-                        state={state}
+                        uuid={itinerary._id}
+                        code={itinerary.transport.code}
+                        state={itinerary.transport.gpsStatus}
                         bg='252525'
                         text="white"
                         showTransport={
                             () => console.log('Hola')//showTransport(transport.UUID,companyName,code)
                         }
-                        companyName={companyName}>
+                        companyName={itinerary.company?.companyName}>
                     </CardInfoItinerary>
                     :
                     <></>

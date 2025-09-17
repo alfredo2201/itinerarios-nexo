@@ -2,77 +2,108 @@ import { useEffect, useRef, useState } from "react";
 import ReactPlayer from "react-player";
 import spot from "../../../videos/Spot-Cocacola.mp4"
 import DisplayTopBarComponent from "../../components/DisplayTopBar/DisplayTopBarComponent";
-import type { ItineraryTable } from "../../interfaces/types";
-import { getAllItineraries } from "../../services/TransportService";
-import RowVerticalDisplay from "../../components/TableDisplay/RowVerticalDisplay";
 import type { Advertisement } from "../../models/Advertisement";
 import { useAdvertisement } from "../../hooks/useAdvertisment";
+import VideoFlowManager from "../../classes/VideoFlowManager";
+import TableVerticalDisplay from "../../components/TableDisplay/TableVerticalDisplay";
+
+// Instancia global del manager
+const flowManager: VideoFlowManager = new VideoFlowManager();
 function DisplayVerticalPage() {
-
-    const [itineraries, setItineraries] = useState<ItineraryTable[]>([]);
-
-    const BASE_STEP = 0.1 * 60 * 1000; // 7 minutos en ms
-
-    const { firstGroup, secondGroup,thirdGroup } = useAdvertisement();
-
     const playerRef = useRef(null);
-    const [mostrarVideo, setMostrarVideo] = useState(false);
-    const [totalReproducido, setTotalReproducido] = useState<number>(0);
+
+    const { loading, firstGroup, secondGroup, thirdGroup, fourthGroup, getVideosForStep } = useAdvertisement();
+
+    const [mostrarVideo, setMostrarVideo] = useState<boolean>(false);
     const [currentAds, setCurrentAds] = useState<Advertisement[]>([]);
-    const [step, setStep] = useState(0); // contador de pasos de 7 min
+    const [totalReproducido, setTotalReproducido] = useState<number>(0);
+    //const [currentStep, setCurrentStep] = useState<number>(0);
 
-    // obtener el grupo que toca en este paso
-    const getGroupForStep = (step: number): Advertisement[] | null => {
-        if (step % 4 === 0 && thirdGroup.length > 0) return thirdGroup; // cada 28 min
-        if (step % 2 === 0 && secondGroup.length > 0) return secondGroup; // cada 14 min
-        if (firstGroup.length > 0) return firstGroup; // cada 7 min
-        return null;
-    };
-
-    // efecto para alternar tabla / video cada 7 min
-    useEffect(() => {
-        let timeout: ReturnType<typeof setTimeout>;
-        if (!mostrarVideo) {
-            timeout = setTimeout(() => {
-                const grupo = getGroupForStep(step + 1);
-                if (grupo) {
-                    setCurrentAds(grupo);
-                    setTotalReproducido(0);
-                    setMostrarVideo(true);
-                } else {
-                    // si no hay nada, solo pasa a la siguiente tabla
-                    setStep(prev => prev + 1);
-                }
-            }, BASE_STEP);
-        }
-        return () => clearTimeout(timeout);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [mostrarVideo, step]);
-
-    // cuando termina un video
-    const handleVideoEnded = () => {
-        const siguienteVideo = totalReproducido + 1;
-
-        if (siguienteVideo < currentAds.length) {
-            setTotalReproducido(siguienteVideo);
+    // Cuando termina un video
+    const handleVideoEnded = (): void => {
+        if (totalReproducido + 1 < currentAds.length) {
+            setTotalReproducido(totalReproducido + 1);
         } else {
-            // terminó el grupo → volver a tabla y avanzar un "paso"
+            // console.log(`🏁 Grupo ${currentStep} completado, volviendo a tabla`);
             setMostrarVideo(false);
-            setStep(prev => prev + 1);
+            setTotalReproducido(0);
         }
     };
 
-
+    // useEffect principal - controla el flujo pantalla/video
     useEffect(() => {
-        getAllItineraries().then(response => {
-            if (response && response.data) {
-                setItineraries(response.data)
+        if (loading) return;
+
+        let timeout: ReturnType<typeof setTimeout>;
+
+        if (!mostrarVideo) {
+            // Inicializar el manager si es necesario
+            if (!flowManager.initialized) {
+                flowManager.initialize(getVideosForStep);
             }
-        })
-    }, []);
 
+            // Si no hay videos disponibles, mostrar solo tabla
+            if (flowManager.getCurrentState().pattern.length === 0) {
+                console.log('❌ No hay videos disponibles en ningún grupo');
+                return;
+            }
 
+            // ✨ CAMBIO PRINCIPAL: Ahora usa el tiempo específico del paso actual
+            const tiempo: number = flowManager.getCurrentTableTime();
+            timeout = setTimeout(() => {
+                const nextStep = flowManager.getNextStep();
 
+                if (nextStep !== null) {
+                    const videos: Advertisement[] = getVideosForStep(nextStep.group);
+                    if (videos.length > 0) {
+                        setCurrentAds(videos);
+                        //setCurrentStep(nextStep.group);
+                        setMostrarVideo(true);
+                        setTotalReproducido(0);
+                    } else {
+                        console.warn(`⚠️  Grupo ${nextStep.group} sin videos, reinicializando...`);
+                        flowManager.reset();
+                    }
+                } else {
+                    console.log('❌ No hay próximo grupo disponible');
+                }
+            }, tiempo);
+        }
+
+        return () => {
+            if (timeout) {
+                clearTimeout(timeout);
+            }
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [mostrarVideo, loading]);
+
+    // Detectar cambios en los arrays para reinicializar si es necesario
+    useEffect(() => {
+        if (!loading && flowManager.initialized) {
+            // Reinicializar si cambia la disponibilidad
+            const hasChanged =
+                (firstGroup.length > 0) !== flowManager.getCurrentState().available.has200 ||
+                (secondGroup.length > 0) !== flowManager.getCurrentState().available.has100 ||
+                (thirdGroup.length > 0) !== flowManager.getCurrentState().available.has50 ||
+                (fourthGroup.length > 0) !== flowManager.getCurrentState().available.hasAll;
+
+            if (hasChanged) {
+                console.log('🔄 Detectado cambio en disponibilidad, reinicializando...');
+                flowManager.reset();
+            }
+        }
+    }, [firstGroup, secondGroup, thirdGroup, fourthGroup, loading]);
+
+    if (loading) {
+        return (
+            <div className="fixed flex flex-col">
+                <DisplayTopBarComponent />
+
+                <h1 className="text-[30px] font-sans text-center font-semibold bg-gray-300 w-full h-screen">CARGANDO PAGINA...</h1>
+            </div>
+        );
+    }
     return (
 
         <div className="fixed flex flex-col bg-black">
@@ -95,30 +126,9 @@ function DisplayVerticalPage() {
                         }} />
                 </div>
                 :
-                <table className="table-wrp block max-h-213 overflow-y-auto ">
-                    <thead>
-                        <tr className="bg-[#4053AE] text-[#C3D000] w-full ">
-                            <th className="text-[13px] sm:text-[24px] w-3xs px-3 py-1">Hora</th>
-                            <th className="text-[13px] sm:text-[24px] w-lg px-3 py-1">Destino</th>
-                            <th className="text-[13px] sm:text-[24px] w-lg px-3 py-1">Linea</th>
-                            <th className="text-[13px] sm:text-[24px] w-xs px-3 py-1">Número</th>
-                        </tr>
-                    </thead>
-                    <tbody className="overflow-y-auto">
-                        {itineraries.map(item =>
-                            <RowVerticalDisplay
-                                key={item.UUID}
-                                departureTime={item.itinerary.departureTime}
-                                destination={item.itinerary.destination}
-                                image={item.image}
-                                code={item.code ? item.code : 'N/A'}
-                                companyName={item.gpsStatus}
-                                state={item.gpsStatus}
-                                transport={item.itinerary}
-                            />)}
 
-                    </tbody>
-                </table>
+                <TableVerticalDisplay></TableVerticalDisplay>
+
             }
         </div>
     )

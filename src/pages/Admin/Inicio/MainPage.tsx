@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-import type { ItineraryTable } from "../../../interfaces/types";
 import { Pagination } from "../../../components/Pagination/Pagination";
 import { usePagination } from "../../../hooks/usePagination";
-import { getItineraryNumbers } from "../../../services/TransportService";
 import ItineraryTableDisplay from "../../../components/Inicio/ItineraryTable";
 import { getItinerariesForPagination } from "../../../services/ItineraryService";
 import type { Itinerary, PaginatedResponse } from "../../../models/Trasportation";
@@ -10,7 +8,6 @@ import type { Itinerary, PaginatedResponse } from "../../../models/Trasportation
 
 function MainPage() {
     const { ITEMS_FOR_PAGE,
-        ItemsForPage,
         numberItineraries,
         numberPagination,
         calculatePagination,

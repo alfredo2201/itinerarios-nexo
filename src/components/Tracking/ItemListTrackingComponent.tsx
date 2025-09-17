@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { ItineraryInterface } from "../../models/Trasportation";
+import type { Itinerary } from "../../models/Trasportation";
 import CardInfoItinerary from './CardInfoItinerary';
 interface itemListProps {
     id:string
@@ -9,7 +9,7 @@ interface itemListProps {
     numeroCamion?: string
     estado: string,
     ultimaVezVisto: string,    
-    itinerario: ItineraryInterface,
+    itinerario: Itinerary,
     showTransport: (id:string,name:string,code?:string) => void
 }
 function ItemListTrackingComponent({ id, imagen, nombreLinea, direccionOrigen, numeroCamion, estado, ultimaVezVisto, itinerario, showTransport }: itemListProps) {

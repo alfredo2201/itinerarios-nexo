@@ -24,20 +24,20 @@ export const getAllCompanies = async (): Promise<Company[]> => {
     }
 }
 
-export const getCompanyById = async (id: string) => {
-    try {
-        // const company = dataTrasporte.find(item => item._id === id);
-        // if (!company) {
-        //     throw new Error("Company not found");
-        // }
-        // return {
-        //     data: company
-        // };
-    } catch (error) {
-        console.error("Error in getCompanyById:", error);
-        handleError(error);
-    }
-}
+// export const getCompanyById = async (id: string) => {
+//     try {
+//         // const company = dataTrasporte.find(item => item._id === id);
+//         // if (!company) {
+//         //     throw new Error("Company not found");
+//         // }
+//         // return {
+//         //     data: company
+//         // };
+//     } catch (error) {
+//         console.error("Error in getCompanyById:", error);
+//         handleError(error);
+//     }
+// }
 //Servicio para obtener la compañia por su id
 export const getTransportsByCompanyId = async (id: string): Promise<Trasport[] | undefined> => {
     try {
@@ -86,52 +86,6 @@ export const getAllItineraries = async (signal: AbortSignal) => {
     // }
 }
 
-export const getItinerariesForPagination = async (from: number, to: number) => {
-    // try {
-    //     const lista: ItineraryTable[] = []
-    //     for (const company of dataTrasporte) {
-    //         for (const transporte of company.trasportation) {
-    //             for (const itinerary of transporte.itinerary) {
-    //                 if (validateShowItinerary(itinerary.departureTime))
-    //                     lista.push({
-    //                         UUID: transporte.UUID,
-    //                         itinerary: itinerary,
-    //                         image: company.image,
-    //                         code: transporte.code,
-    //                         gpsStatus: transporte.gpsStatus
-    //                     });
-    //             }
-    //         }
-    //     }
-    //     //Ordenar por hora de salida
-    //     const data = lista.sort((a, b) => convertirHora24(a.itinerary.departureTime) - convertirHora24(b.itinerary.departureTime));
-    //     return {
-    //         data: data.slice(from, to)
-    //     };
-    // } catch (error) {
-    //     console.error("Error in getAllItineraries:", error);
-    //     handleError(error);
-    // }
-}
-
-export const getItineraryNumbers = async () => {
-    // try {
-    //     let itineraryLength: number = 0
-    //     for (const company of dataTrasporte) {
-    //         for (const transporte of company.trasportation) {
-    //             for (const itinerary of transporte.itinerary) {
-    //                 if (validateShowItinerary(itinerary.departureTime))
-    //                     itineraryLength = itineraryLength + 1;
-    //             }
-    //         }
-    //     }
-    //     //Regresa la cantidad de itinerarios del dia
-    //     return { data: itineraryLength }
-    // } catch (error) {
-    //     console.error("Error in getItineraryNumbers:", error);
-    //     handleError(error);
-    // }
-}
 
 export const createCompany = async (formData: FormData) => {
     try {

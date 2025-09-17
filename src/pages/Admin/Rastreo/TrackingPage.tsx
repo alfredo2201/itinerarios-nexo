@@ -2,65 +2,63 @@
 import { Menu, MenuButton, MenuItem, MenuRadioGroup } from '@szhsin/react-menu';
 import { useEffect, useState } from 'react';
 import '@szhsin/react-menu/dist/index.css';
-import ItemListTrackingComponent from "../../../components/Tracking/ItemListTrackingComponent";
-import { dataTrasporte } from "../../../data/AutobusesData";
-import type { Company } from '../../../models/Trasportation';
-import { MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet';
-import L, { LatLng } from 'leaflet';
+// //import type { Company } from '../../../models/Trasportation';
+// import { MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet';
+// import L, { LatLng } from 'leaflet';
 
 
-interface UpdateViewProps {
-    position: LatLng;
-}
+// interface UpdateViewProps {
+//     position: LatLng;
+// }
 
 // Este componente actualiza la vista del mapa
-const UpdateView: React.FC<UpdateViewProps> = ({ position }) => {
-    const map = useMap();
-    map.setView([position.lat, position.lng], map.getZoom());
-    return null;
-};
+// const UpdateView: React.FC<UpdateViewProps> = ({ position }) => {
+//     const map = useMap();
+//     map.setView([position.lat, position.lng], map.getZoom());
+//     return null;
+// };
 
 
 function TrackingPage() {
-    const [transport, setTransport] = useState<Company[] | undefined>([])
+    //const [transport, setTransport] = useState<Company[] | undefined>([])
     const [linea, setLinea] = useState('Autobuses')
-    const [ubicacion, setUbicacion] = useState<LatLng>(new LatLng(27.4824, -109.9467)); // Ubicación inicial (Obregon,Sonora)
+    //const [ubicacion, setUbicacion] = useState<LatLng>(new LatLng(27.4824, -109.9467)); // Ubicación inicial (Obregon,Sonora)
     const [gpsStatus, setGpsStatus] = useState("")
-    const [error, setError] = useState("");
-    const [markerName, setMarkerName] = useState("Central Camionera Ciudad Obregon")
+   // const [error, setError] = useState("");
+    //const [markerName, setMarkerName] = useState("Central Camionera Ciudad Obregon")
 
     // Ícono personalizado opcional
-    const customIcon = new L.Icon({
-        iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-    });
+    // const customIcon = new L.Icon({
+    //     iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
+    //     iconSize: [25, 41],
+    //     iconAnchor: [12, 41],
+    // });
 
-    const showTransportMap = (id: string, name: string, code?: string) => {   
-        setError('')     
-        setMarkerName(name + " Num:" + code)
-        setUbicacion(new LatLng(27.283239, -109.672311))
-    }
+    // const showTransportMap = (id: string, name: string, code?: string) => {   
+    //     setError('')     
+    //     setMarkerName(name + " Num:" + code)
+    //     setUbicacion(new LatLng(27.283239, -109.672311))
+    // }
 
     const changeStatus = (status:string) => {
         setGpsStatus(status)
     }
 
     useEffect(() => {
-        const data: Company[] = dataTrasporte.slice(0, 10)    
-        setTransport(data)
-        if (gpsStatus != '') {
-            if (transport == undefined) return
-            const aux: Company[] = data
-                .map(company => ({
-                    ...company,
-                    trasportation: company.trasportation.filter(
-                        transport => transport.gpsStatus.toLowerCase() === gpsStatus
-                    )
-                }))
-                .filter(company => company.trasportation.length > 0);
-            setTransport(aux)
-        }
+        // const data: Company[] = dataTrasporte.slice(0, 10)    
+        // setTransport(data)
+        // if (gpsStatus != '') {
+        //     if (transport == undefined) return
+        //     const aux: Company[] = data
+        //         .map(company => ({
+        //             ...company,
+        //             trasportation: company.trasportation.filter(
+        //                 transport => transport.gpsStatus.toLowerCase() === gpsStatus
+        //             )
+        //         }))
+        //         .filter(company => company.trasportation.length > 0);
+        //     setTransport(aux)
+        // }
     }, [gpsStatus])
 
     return (
@@ -95,6 +93,7 @@ function TrackingPage() {
                     <input className='w-1/2 border-[#E3E3E3] rounded-lg border-1 p-2' type="text" />
                 </div>
                 <div className='max-h-180 mix-h-100 overflow-y-scroll scrollbar-hide'>
+                    {/*
                     {
                         transport?.map(linea =>
                             linea.trasportation.map(camion =>
@@ -112,11 +111,12 @@ function TrackingPage() {
                                 />
                             )
                         )}
+                        */}
                 </div>
             </div>
-            <div className="w-5/7 h-full">
+            {/* <div className="w-5/7 h-full">
                 {error && <p>Error: {error}</p>}
-                {/* Este es contenedor del mapa, donde puedo colocar el ping de cada autobus */}
+                
                 <MapContainer center={ubicacion} zoom={15} scrollWheelZoom={false} doubleClickZoom={true} >
                     <TileLayer
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -129,7 +129,8 @@ function TrackingPage() {
                         </Popup>
                     </Marker>
                 </MapContainer>
-            </div>
+            </div> 
+            */}
         </div>
     )
 }

@@ -67,3 +67,11 @@ export interface PaginatedResponse {
   };
   error?: string;
 }
+
+export interface ItineraryInterface {
+    id: string;
+    origin: string;
+    destination: string;
+    stops: string[];
+    // Add other properties as needed for your itinerary
+}
