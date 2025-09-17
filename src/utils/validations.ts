@@ -22,8 +22,19 @@ export function getMinutesFormat(time: Hour): string {
 
 export function validateShowItinerary(hour: Hour): boolean {
   const hora = new Date();
-  const currentTime =convertirHora24({hour:hora.getHours(),minute:hora.getMinutes()});
-  const itineraryHour =convertirHora24(hour);
+  const currentTime = convertirHora24({ hour: hora.getHours(), minute: hora.getMinutes() });
+  const itineraryHour = convertirHora24(hour);
   return itineraryHour > currentTime
 }
+
+export const formatTimeInSonoraCustom = (date: Date): string => {
+  const formatter = new Intl.DateTimeFormat('es-MX', {
+    timeZone: 'America/Hermosillo',
+    hour12: true,
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+
+  return formatter.format(new Date(date));
+};
 

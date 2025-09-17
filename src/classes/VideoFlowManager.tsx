@@ -2,9 +2,9 @@ import type { FlowStep, GroupAvailability } from '../interfaces/types'
 import type { Advertisement } from '../models/Advertisement';
 
 // ===== SISTEMA DE PROGRAMACIÓN DE VIDEOS =====
-const BASE_SCREEN_TIME: number = 5 * 1000;     // 5 segundos
-const DOUBLE_SCREEN_TIME: number = 10 * 1000;  // 10 segundos  
-const TRIPLE_SCREEN_TIME: number = 15 * 1000;  // 15 segundos
+const BASE_SCREEN_TIME: number = 30 * 1000;     // 30 segundos
+const DOUBLE_SCREEN_TIME: number = 60 * 1000;  // 1 minuto  
+const TRIPLE_SCREEN_TIME: number = 90 * 1000;  // 1 minuto 1/2
 
 export default class VideoFlowManager {
     public initialized: boolean;

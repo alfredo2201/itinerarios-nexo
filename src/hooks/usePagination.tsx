@@ -19,13 +19,8 @@ export const usePagination = () => {
 
     //Se encarga de calcular el numero de paginacion que habra
     const calculatePagination = (data: number) => {
-        if (data === 0) return;
-        let numberForPage = data / ITEMS_FOR_PAGE;
-        const residue = numberForPage % 1;     
-        if (residue > 0) { 
-            numberForPage = (numberForPage - residue) + 1 
-        };
-        setNumberPagination(numberForPage);
+       if (data)setNumberPagination(data);
+       else return
     };
 
     const setNumberItinerariesState = (number: number) => {

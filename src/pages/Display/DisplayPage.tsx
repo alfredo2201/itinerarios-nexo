@@ -135,7 +135,7 @@ const DisplayPage: React.FC = () => {
 
                     </div>
                 ) : (
-                    <TableDisplay typeDisplay={2}/>
+                    <TableDisplay typeDisplay={1}/>
                 )}
             </> : <>
                 {/*En caso de esta el el videowall */}
@@ -165,8 +165,8 @@ const DisplayPage: React.FC = () => {
                     </div>
                 ) : (
                     <div className="flex flex-row w-full gap-2 justify-center bg-black">
-                        <TableDisplay typeDisplay={2}/>
                         <TableDisplay typeDisplay={1}/>
+                        <TableDisplay typeDisplay={2}/>
                     </div>
                 )}
             </>}

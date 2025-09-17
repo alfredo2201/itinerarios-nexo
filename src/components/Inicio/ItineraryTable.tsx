@@ -1,9 +1,10 @@
 
-import type { ItineraryTable } from "../../interfaces/types";
+
+import type { Itinerary } from "../../models/Trasportation";
 import CellItineraryComponent from "../TableItinerario/CellItineraryComponent";
 
 type Props = {
-  itineraries: ItineraryTable[];
+  itineraries: Itinerary[];
 };
 
 export const ItineraryTableDisplay = ({ itineraries }: Props) => {
@@ -24,12 +25,12 @@ export const ItineraryTableDisplay = ({ itineraries }: Props) => {
       <tbody>
         {itineraries?.map((item) => (
           <CellItineraryComponent
-            key={item.itinerary.UUID}
-            departureTime={item.itinerary.departureTime}
-            destino={item.itinerary.destination}
-            autobusImg={item.image}
-            numero={item.code}
-            rastreo={item.gpsStatus}
+            key={item._id}
+            departureTime={item.departureTime}
+            destino={item.destination.longText}
+            autobusImg={item.company?.image}
+            numero={item.transport.code}
+            rastreo={item.transport.gpsStatus}
           />
         ))}
       </tbody>

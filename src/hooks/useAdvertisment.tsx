@@ -68,35 +68,31 @@ export const useAdvertisement = () => {
 
     useEffect(() => {
         const controller = new AbortController();
+
         const fetchData = async () => {
             try {
-                setLoading(true);
-                handleError(null);
+                setLoading(true);                
                 if (advertisements.length === 0) {
+                    let resolution = '';
+
                     if (location.pathname === '/displays') {
-                        getVideosByResolution('16:9 Full-HD', controller.signal).then((data) => {
-                            if (data != null && data != undefined) {
-                                console.log(data);
-                                setAdvertisements(data);
-                                splitVideosForRepetitions(data);
-                                setLoading(false);
-                                return;
-                            }
-                        });
+                        resolution = '16:9 Full-HD';
                     } else if (location.pathname === '/displayExtended') {
-                        getVideosByResolution('21:9 Full-HD', controller.signal).then((data) => {
-                            if (data != null && data != undefined) {
-                                console.log(data);
-                                setAdvertisements(data);
-                                splitVideosForRepetitions(data);
-                                setLoading(false);
-                                return;
-                            }
-                        });
+                        resolution = '21:9 Full-HD';
+                    }
+
+                    if (resolution) {
+                        const data = await getVideosByResolution(resolution, controller.signal);
+
+                        // Verificar si la petición no fue cancelada antes de actualizar el estado
+                        if (!controller.signal.aborted && data && data.length > 0) {
+                            setAdvertisements(data);
+                            splitVideosForRepetitions(data);
+                        }
                     }
                 }
             } catch (error) {
-                if (!axios.isCancel(error)) {
+                if (!axios.isCancel(error) && !controller.signal.aborted) {                    
                     handleError(error);
                 }
             } finally {
@@ -111,9 +107,8 @@ export const useAdvertisement = () => {
         return () => {
             controller.abort();
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
     return {
         advertisements,
         firstGroup,

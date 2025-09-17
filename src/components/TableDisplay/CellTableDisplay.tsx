@@ -1,12 +1,10 @@
-import type { Hour } from "../../interfaces/types";
-import { getMinutesFormat } from "../../utils/validations";
+import { formatTimeInSonoraCustom} from "../../utils/validations";
 
-interface ItinerarioDisplayProps {
-    key: string,
-    departureTime: Hour,
-    destino: string,
-    autobusImg: string,
-    numero: string,
+interface ItinerarioDisplayProps {    
+    departureTime: Date,
+    destino?: string,
+    autobusImg?: string,
+    numero?: string,
     estado?: string
 }
 
@@ -15,10 +13,7 @@ function CellTableDisplay({ departureTime, destino, autobusImg, numero, estado }
     return (
         <tr className="bg-[#171717] text-white h-13 w-screen even:bg-[#023672] ">
             <td className="text-[#C3D000] sm:text-[36px] font-bold  text-center">
-                {departureTime.hour <= 12 ?
-                    <span>{departureTime.hour}:{getMinutesFormat(departureTime)} A.M</span> :
-                    <span>{departureTime.hour - 12}:{getMinutesFormat(departureTime)} P.M</span>
-                }
+                {formatTimeInSonoraCustom(departureTime)}
             </td>
             <td className="sm:text-[36px] font-semibold  text-center">{destino}</td>
             <td className="flex flex-col font-semibold items-center justify-center h-full ">
