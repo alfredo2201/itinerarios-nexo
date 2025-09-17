@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import ReactPlayer from "react-player";
-import spot from "../../../videos/Spot-Cocacola.mp4"
 import DisplayTopBarComponent from "../../components/DisplayTopBar/DisplayTopBarComponent";
 import type { Advertisement } from "../../models/Advertisement";
 import { useAdvertisement } from "../../hooks/useAdvertisment";
@@ -111,19 +110,19 @@ function DisplayVerticalPage() {
             {mostrarVideo ?
                 <div className="w-screen justify-center">
                     <ReactPlayer
-                        ref={playerRef}
-                        src={spot}
-                        playing={true}
-                        muted={false}
-                        controls={false}
-                        style={{
-                            width: "100%",
-                            height: "100%",
-                            aspectRatio: "16/9",
-                        }}
-                        onEnded={() => {
-                            handleVideoEnded()
-                        }} />
+                            ref={playerRef}
+                            src={currentAds[totalReproducido].URL}
+                            playing={true}
+                            muted={true}
+                            volume={0.5}
+                            controls={false}
+                            style={{
+                                width: "100%",
+                                height: "100%",
+                                aspectRatio:"32:9"
+                            }}
+                            onEnded={() => handleVideoEnded()}
+                        />
                 </div>
                 :
 
