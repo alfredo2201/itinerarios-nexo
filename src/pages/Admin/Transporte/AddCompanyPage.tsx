@@ -48,7 +48,7 @@ function BusAddPage() {
             sessionStorage.setItem('formSuccess', 'true');
 
             // Redirigir
-            navigate('/transports_info');
+            navigate('/dashboard/transports_info');
         } catch (error) {
             // Puedes también agregar una notificación de error aquí
             console.error(error);

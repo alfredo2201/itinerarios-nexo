@@ -4,8 +4,8 @@ import { useLocation, useNavigate } from "react-router";
 import toast from "react-hot-toast";
 import { loginAPI, registerAPI } from "../services/AuthService";
 import axios from "axios";
-import NotFoundPage from "../pages/NotFoundPage";
 import { UserContext } from "./userContext";
+import NotFoundPage from "../pages/NotFoundPage";
 
 type Props = { children: React.ReactNode };
 
@@ -61,7 +61,7 @@ export function UserProvider({ children }: Props) {
                    setUser(userObj);
                    setToken('data?.data.token');
                    toast.success("Usuario registrado correctamente");
-                   navigate("/itinerary");
+                   navigate("/dashboard/itinerary");
                }
            }).catch((error: unknown) => {
                console.error("Error en el registro:", error);
@@ -84,7 +84,7 @@ export function UserProvider({ children }: Props) {
 
     return (
         <UserContext.Provider value={{ user, token, registerUser, loginUser, logout, isLoggedIn }}>
-            {(isReady || location.pathname == "/login") ? children : <NotFoundPage />}
+            {(isReady || location.pathname == "/") ? children : <NotFoundPage />}
         </UserContext.Provider>
     )
 

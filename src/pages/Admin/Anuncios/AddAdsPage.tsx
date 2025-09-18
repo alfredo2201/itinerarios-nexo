@@ -91,7 +91,7 @@ function AddAdsPage() {
                 }
                 createAdvertisement(ads).then((result)=>{                    
                     if(result) sessionStorage.setItem('formSuccess','true')
-                    navigate('/advertisement');
+                    navigate('/dashboard/advertisement');
                 })
             }            
         } catch (error) {
@@ -116,7 +116,7 @@ function AddAdsPage() {
             }).then((result) => {
                 if (result.isConfirmed) {
                     deleteVideo(video?.public_id).then(() => {
-                        navigate('/advertisement');
+                        navigate('/dashboard/advertisement');
                     })
                 }
             });

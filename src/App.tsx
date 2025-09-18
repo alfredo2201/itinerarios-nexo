@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from 'react-router'
+import { createBrowserRouter, Navigate, RouterProvider } from 'react-router'
 import { Toaster } from 'react-hot-toast'
 import React from 'react';
 import '@fontsource/roboto/300.css';
@@ -28,74 +28,76 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 
 const router = createBrowserRouter([
     {
-        path: "/login",
-        element: <UserProvider><LoginPage /></UserProvider>,
+        path: "/",
+        element: <UserProvider><LoginPage/></UserProvider>,
         handle: { title: 'Iniciar Sesión' as RouterHandle },
         errorElement: <NotFoundPage />,
-        index: true
+        index: true // Ruta principal
     },
     {
-        path: "/",
-        element:<UserProvider><MainLayout /></UserProvider>,
+        path: "/login",
+        element: <Navigate to="/" replace /> // Redirección a la ruta principal
+    },    
+    {
+        path: "/dashboard", // Cambiado de "/" a "/dashboard"
+        element:<UserProvider><MainLayout /></UserProvider>,        
         handle: { title: 'Bienvenido/a' as RouterHandle },
         children: [
             {
-                path: "/itinerary",
+                path: "/dashboard/itinerary", // Actualizado el path
                 element: <MainPage />,
                 handle: { title: 'Itinerario' as RouterHandle }
             },
             {
-                path: "/transports_info",
+                path: "/dashboard/transports_info", // Actualizado el path
                 element: <ChildrenLayout />,
                 handle: { title: 'Autobuses' as RouterHandle },
                 children: [
                     {
-                        path: "/transports_info",
+                        path: "/dashboard/transports_info",
                         element: <AdminBusesPage />,
                         handle: { title: 'Autobuses' as RouterHandle }
                     },
                     {
-                        path: "/transports_info/all",
+                        path: "/dashboard/transports_info/all",
                         element: <BusInfoPage />,
                         handle: { title: 'Autobuses' as RouterHandle }
                     }, {
-                        path: "/transports_info/add",
+                        path: "/dashboard/transports_info/add",
                         element: <BusAddPage />,
                         handle: { title: 'Autobuses' as RouterHandle }
                     }
                 ]
             },
             {
-                path: "/tracking",
+                path: "/dashboard/tracking", // Actualizado el path
                 element: <ChildrenLayout />,
                 handle: { title: 'Rastreo' as RouterHandle },
                 children: [
                     {
-                        path: "/tracking",
+                        path: "/dashboard/tracking",
                         element: <TrackingPage />,
                         handle: { title: 'Rastreo' as RouterHandle }
                     },
-
                 ]
             }, {
-                path: "/advertisement",
+                path: "/dashboard/advertisement", // Actualizado el path
                 element: <ChildrenLayout />,
                 handle: { title: 'Anuncios' as RouterHandle },
                 children: [
                     {
-                        path: "/advertisement",
+                        path: "/dashboard/advertisement",
                         element: <AdvertismentPage />,
                         handle: { title: 'Anuncios' as RouterHandle }
                     },
                     {
-                        path: "/advertisement/add",
+                        path: "/dashboard/advertisement/add",
                         element: <AddAdsPage />,
                         handle: { title: 'Anuncios' as RouterHandle }
                     }
                 ]
             },
         ]
-
     },
     {
         path: "/displays",
