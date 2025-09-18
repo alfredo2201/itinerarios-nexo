@@ -104,7 +104,7 @@ function BusAddPage() {
                     </div>
                     <div className="flex flex-row w-full pt-10 px-7 justify-between">
                         <button className="bg-[#CCCCCC] hover:bg-[#A6A5A5] cursor-pointer  w-1/6 h-10 min-w-20 rounded-full justify-items-start transition duration-150 ease-in-out"
-                            onClick={() => navigate('/bus_info')}>Cancelar</button>
+                            onClick={() => navigate('/dashboard/bus_info')}>Cancelar</button>
                         <button className="bg-[#023672] hover:bg-[#0251B3] cursor-pointer text-white w-1/6 h-10 min-w-20 rounded-full justify-end transition duration-150 ease-in-out"
                             type="submit"
                             value="Agregar">Guardar</button>
