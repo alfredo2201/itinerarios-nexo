@@ -69,6 +69,18 @@ export interface VideoData {
 }
 
 export interface SelectOption {
-  value: string;
-  label: string;
+    value: string;
+    label: string;
+}
+
+export type CompanyResponse = {
+    message: string;
+    company: {
+        companyName: string,
+        image: string,
+        isActive: boolean,
+        _id: string,
+        createdAt: string,
+        updatedAt: string
+    };
 }

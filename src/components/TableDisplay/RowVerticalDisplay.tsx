@@ -4,10 +4,10 @@ import type { Itinerary } from '../../models/Trasportation'
 import { formatTimeInSonoraCustom } from "../../utils/validations";
 
 interface Props {
-    itinerary:Itinerary
+    itinerary: Itinerary
 }
 
-function RowVerticalDisplay({itinerary}: Props) {
+function RowVerticalDisplay({ itinerary }: Props) {
     const [isVisible, setIsVisible] = useState(false);
     const [animate, setAnimate] = useState("animate-drop-in");
 
@@ -35,26 +35,29 @@ function RowVerticalDisplay({itinerary}: Props) {
                 <td className="text-[13px] sm:text-[24px] font-bold py-2 text-center" >{itinerary.transport.code}</td>
             </tr>
             <tr></tr>
-            <td colSpan={4}>
-                {isVisible ?
-                    <CardInfoItinerary
-                        key={itinerary._id}
-                        itinerary={itinerary}
-                        animate={animate}
-                        uuid={itinerary._id}
-                        code={itinerary.transport.code}
-                        state={itinerary.transport.gpsStatus}
-                        bg='252525'
-                        text="white"
-                        showTransport={
-                            () => console.log('Hola')//showTransport(transport.UUID,companyName,code)
-                        }
-                        companyName={itinerary.company?.companyName}>
-                    </CardInfoItinerary>
-                    :
-                    <></>
-                }
-            </td>
+            <tr>
+                <td colSpan={4}>
+                    {isVisible ?
+                        <CardInfoItinerary
+                            key={itinerary._id}
+                            itinerary={itinerary}
+                            animate={animate}
+                            uuid={itinerary._id}
+                            code={itinerary.transport.code}
+                            state={itinerary.transport.gpsStatus}
+                            bg='252525'
+                            text="white"
+                            showTransport={
+                                () => console.log('Hola')//showTransport(transport.UUID,companyName,code)
+                            }
+                            companyName={itinerary.company?.companyName}>
+                        </CardInfoItinerary>
+                        :
+                        <></>
+                    }
+                </td>
+            </tr>
+
         </>
 
 

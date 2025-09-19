@@ -75,7 +75,7 @@ function AdminBusesPage() {
             <div className="flex justify-end pr-10">
                 <button
                     className="bg-[#023672] text-white w-1/8 h-10 rounded-lg justify-end min-w-30 hover:bg-[#0251B3] cursor-pointer transition duration-150 ease-in-out">
-                    <Link to={"/transports_info/add"}>Agregar</Link>
+                    <Link to={"/dashboard/transports_info/add"}>Agregar</Link>
                 </button>
             </div>
         </div>

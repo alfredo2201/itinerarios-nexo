@@ -33,8 +33,7 @@ function BusInfoPage() {
             setLoading(true)
             setIsVisibleItinerarios(true);
             getItinerariesByTransport(id).then()
-                .then((res) => {
-                    console.log('Itinerarios ->', res)
+                .then((res) => {                
                     setItinerario(res)
                     setLoading(false)
                 })

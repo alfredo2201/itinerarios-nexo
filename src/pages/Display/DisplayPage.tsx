@@ -114,7 +114,6 @@ const DisplayPage: React.FC = () => {
             {/*Valida si esta en la pantalla principal*/}
             {location.pathname == '/displays' ? <>
                 <DisplayTopBarComponent />
-
                 {mostrarVideo ? (                
                     <div className=" h-245 justify-center bg-black">
                         {/*Si deseo poner en pantalla completa solo pongo -> fixed */}
@@ -143,8 +142,6 @@ const DisplayPage: React.FC = () => {
                     <DisplayTopBarComponent />
                     <DisplayTopBarComponent />
                 </div>
-
-
                 {mostrarVideo ? (
                     <div className=" flex h-245 justify-center bg-black overflow-hidden">
                         <ReactPlayer

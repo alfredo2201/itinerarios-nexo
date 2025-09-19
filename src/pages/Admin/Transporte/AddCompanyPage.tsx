@@ -1,12 +1,14 @@
 import { useRef, useState } from "react";
 import { Form, useNavigate } from "react-router";
+import { insertNewCompanyAndInfo } from "../../../services/CompanyService";
 
 function BusAddPage() {
     const fileInputLogo = useRef<HTMLInputElement | null>(null)
     const fileInputItinerarios = useRef<HTMLInputElement | null>(null)
+    const inputName = useRef<HTMLInputElement | null>(null)
     const [fileLogoName, setFileLogoName] = useState<string>("Sin Archivos seleccionados");
     const [fileItinerarioName, setFileItinerarioName] = useState<string>("Sin Archivos seleccionados");
-    const [fileItinerario,setFileItinerario]= useState<File | null>(null);
+    const [fileItinerario, setFileItinerario] = useState<File | null>(null);
     const [imagePreviewUrl, setImagePreviewUrl] = useState<string | undefined>(undefined);
     const navigate = useNavigate();
 
@@ -23,8 +25,8 @@ function BusAddPage() {
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>
     ) => {
-        const file = event.target.files?.[0];        
-        if (file && (file.type.startsWith("text/") || file.type === "application/vnd.ms-excel" || file.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")) {            
+        const file = event.target.files?.[0];
+        if (file && (file.type.startsWith("text/") || file.type === "application/vnd.ms-excel" || file.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")) {
             setFileItinerarioName(file.name);
             setFileItinerario(file);
         } else if (file) {
@@ -38,17 +40,22 @@ function BusAddPage() {
         event.preventDefault();
         try {
             const formData = new FormData(event.currentTarget);
-            formData.append('logo', fileInputLogo.current?.files?.[0] || '');
-            formData.append('itinerarios', fileItinerario || ''); 
-            console.log(fileItinerario);                      
+            formData.append('company_name', inputName.current?.value || '')
+            formData.append('company_logo', fileInputLogo.current?.files?.[0] || '');
+            formData.append('itineraries', fileItinerario || '');
             // Simulación de envío (puedes reemplazar con una petición real)            
-            await new Promise((resolve) => setTimeout(resolve, 1000));
+            insertNewCompanyAndInfo(formData).then((response) => {
+                if (response.message === 'Compañía creada exitosamente') {
+                    // Marcar éxito en sessionStorage
+                    sessionStorage.setItem('formSuccess', 'true');
+                    // Redirigir
+                    navigate('/dashboard/transports_info');
+                }else{
+                    sessionStorage.setItem('formSuccess', 'false');
+                    navigate('/dashboard/transports_info');
+                }
+            })
 
-            // Marcar éxito en sessionStorage
-            sessionStorage.setItem('formSuccess', 'true');
-
-            // Redirigir
-            navigate('/dashboard/transports_info');
         } catch (error) {
             // Puedes también agregar una notificación de error aquí
             console.error(error);
@@ -62,6 +69,7 @@ function BusAddPage() {
                 <Form onSubmit={handleSubmit} className="flex flex-col gap-2 px-8 w-8/9 h-full">
                     <label htmlFor="nombre_autobus">Nombre de Linea de Transporte</label>
                     <input
+                        ref={inputName}
                         placeholder="Ej. Autobuses del Pacifico"
                         className="w-full py-3 px-4 border-1 border-[#D9D9D9] rounded flex items-center gap-4 shadow-sm"
                         type="text"

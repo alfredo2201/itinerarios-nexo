@@ -17,8 +17,10 @@ export const useItineraries = () => {
     const limitItineraries = (data: Itinerary[]) => {
         const listItienraires: Itinerary[] = []
         data.map((item) => {
-
-            if (new Date(item.departureTime) > new Date()) {
+            const hour = new Date(item.departureTime).getUTCHours();
+            const minutes =  new Date(item.departureTime).getUTCMinutes();
+            item.departureTime = new Date(new Date(item.departureTime).setHours(hour,minutes))            
+            if (item.departureTime > new Date()) {
                 listItienraires.push(item)
             }
         })
@@ -36,9 +38,14 @@ export const useItineraries = () => {
                     const data = await getAllItineraries(controller.signal)
                     // Verificar si la petición no fue cancelada antes de actualizar el estado
                     if (!controller.signal.aborted && data && data.length > 0) {
-                        setItineraries(limitItineraries(data).slice(0, 14))
-                        if (location.pathname === '/displayExtended') {
-                            setDobleDisplay(limitItineraries(data).slice(15, 29))
+                        if (location.pathname === '/vertical-display') {
+                            setItineraries(limitItineraries(data))
+                            return
+                        } else {
+                            setItineraries(limitItineraries(data).slice(0, 14))
+                            if (location.pathname === '/displayExtended') {
+                                setDobleDisplay(limitItineraries(data).slice(15, 29))
+                            }
                         }
                     }
                 }
@@ -53,7 +60,7 @@ export const useItineraries = () => {
             }
         };
 
-        fetchData();
+        fetchData();       
 
         return () => {
             controller.abort();
@@ -63,11 +70,16 @@ export const useItineraries = () => {
 
     useEffect(() => {
         const intervalo = setInterval(() => {
-            setItineraries(limitItineraries(itineraries))
-            if (location.pathname === '/displayExtended') {
-                            setDobleDisplay(limitItineraries(itineraries).slice(15, 28))
-                        }
-        // Actualiza cada 10 minutos 
+            if (location.pathname === '/vertical-display') {
+                setItineraries(limitItineraries(itineraries))
+                return
+            } else {
+                setItineraries(limitItineraries(itineraries).slice(0, 14))
+                if (location.pathname === '/displayExtended') {
+                    setDobleDisplay(limitItineraries(itineraries).slice(15, 29))
+                }
+            }
+            // Actualiza cada 10 minutos 
         }, 10 * 60 * 1000)
         return () => clearInterval(intervalo)
     }, [])
