@@ -49,7 +49,7 @@ function BusInfoPage() {
                     setLoading(false)
                 })
         }
-
+        console.log(transport)
     }
 
     // useEffect para traer todo los datos de el autobus seleccionado
