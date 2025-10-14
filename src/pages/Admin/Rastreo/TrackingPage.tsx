@@ -35,7 +35,7 @@ function TrackingPage() {
     const showTransportMap = (name: string, code?: string) => {   
         setError('')     
         setMarkerName(name + " Num:" + code)
-        setUbicacion(new LatLng(27.283239, -109.672311))
+        setUbicacion(new LatLng(27.4824, -109.9467))
     }
 
     const changeStatus = (status: string) => {

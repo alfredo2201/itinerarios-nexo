@@ -145,7 +145,7 @@ function BusInfoPage() {
 
                     {
                         isVisibleItinerarios ?
-                            <div className="w-full bg-black h-55 2xl:h-130 rounded-lg overflow-auto scrollbar-hide  ">
+                            <div className="w-full bg-white h-35 2xl:h-80 rounded-lg overflow-auto scrollbar-hide  ">
                                 <table className="table-auto md:table-fixed">
                                     <thead>
                                         <tr className="bg-[#A3C0E2] text-black w-full">
@@ -185,9 +185,8 @@ function BusInfoPage() {
                             :
                             <></>
                     }
-                    <div className="bg-green-300 h-35 mt-5 rounded-lg px-4 py-2">
-                        <p className="text-[13px] font-bold">Informacion adicional</p>
-                                                
+                    <div className="h-35 2xl:h-50 mt-5 rounded-lg px-4 py-2 shadow-inner bg-[#F3F6F9]">
+                        <p className="text-[13px] font-bold">Informacion adicional</p>                                              
                     </div>
                 </div>
 
