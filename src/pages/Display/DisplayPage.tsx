@@ -7,6 +7,7 @@ import { useAdvertisement } from "../../hooks/useAdvertisment";
 import type { Advertisement } from "../../models/Advertisement";
 import VideoFlowManager from "../../classes/VideoFlowManager";
 import { useLocation } from "react-router";
+import { useItineraries } from "../../hooks/useItineraries";
 
 // Instancia global del manager
 const flowManager: VideoFlowManager = new VideoFlowManager();
@@ -16,7 +17,7 @@ const DisplayPage: React.FC = () => {
     const playerRef = useRef(null);
 
     const { loading, firstGroup, secondGroup, thirdGroup, fourthGroup, getVideosForStep } = useAdvertisement();
-
+    const { itineraries,displayDoble } = useItineraries();
     const [mostrarVideo, setMostrarVideo] = useState<boolean>(false);
     const [currentAds, setCurrentAds] = useState<Advertisement[]>([]);
     const [totalReproducido, setTotalReproducido] = useState<number>(0);
@@ -102,8 +103,7 @@ const DisplayPage: React.FC = () => {
         return (
             <div className="fixed flex flex-col">
                 <DisplayTopBarComponent />
-
-                <h1 className="text-[30px] font-sans text-center font-semibold bg-gray-300 w-full h-screen">CARGANDO PAGINA...</h1>
+                <h1 className="text-[40px] text-white bg-black font-sans text-center font-semibold w-screen h-screen">CARGANDO PAGINA...</h1>
             </div>
         );
     }
@@ -134,7 +134,7 @@ const DisplayPage: React.FC = () => {
 
                     </div>
                 ) : (
-                    <TableDisplay typeDisplay={1}/>
+                    <TableDisplay typeDisplay={1} itineraries={itineraries} displayDoble={displayDoble}/>
                 )}
             </> : <>
                 {/*En caso de esta el el videowall */}
@@ -162,8 +162,8 @@ const DisplayPage: React.FC = () => {
                     </div>
                 ) : (
                     <div className="flex flex-row w-full gap-2 justify-center bg-black">
-                        <TableDisplay typeDisplay={1}/>
-                        <TableDisplay typeDisplay={2}/>
+                        <TableDisplay typeDisplay={1} itineraries={itineraries} displayDoble={displayDoble}/>
+                        <TableDisplay typeDisplay={2} itineraries={itineraries} displayDoble={displayDoble}/>
                     </div>
                 )}
             </>}

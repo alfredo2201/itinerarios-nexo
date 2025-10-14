@@ -14,6 +14,7 @@ export const useItineraries = () => {
     const [loading, setLoading] = useState<boolean>();
 
 
+
     const limitItineraries = (data: Itinerary[]) => {
         const listItienraires: Itinerary[] = []
         data.map((item) => {
@@ -30,7 +31,7 @@ export const useItineraries = () => {
 
     useEffect(() => {
         const controller = new AbortController();
-
+        console.log('Entra a hacer fetch')
         const fetchData = async () => {
             try {
                 setLoading(true);
@@ -39,8 +40,7 @@ export const useItineraries = () => {
                     // Verificar si la petición no fue cancelada antes de actualizar el estado
                     if (!controller.signal.aborted && data && data.length > 0) {
                         if (location.pathname === '/vertical-display') {
-                            setItineraries(limitItineraries(data))
-                            return
+                            setItineraries(limitItineraries(data))                        
                         } else {
                             setItineraries(limitItineraries(data).slice(0, 14))
                             if (location.pathname === '/displayExtended') {
@@ -72,7 +72,7 @@ export const useItineraries = () => {
         const intervalo = setInterval(() => {
             if (location.pathname === '/vertical-display') {
                 setItineraries(limitItineraries(itineraries))
-                return
+                
             } else {
                 setItineraries(limitItineraries(itineraries).slice(0, 14))
                 if (location.pathname === '/displayExtended') {

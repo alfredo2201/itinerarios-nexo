@@ -23,6 +23,7 @@ import AddAdsPage from './pages/Admin/Anuncios/AddAdsPage.tsx'
 import { UserProvider } from './context/useAuth.tsx';
 import DisplayVerticalPage from './pages/Display/DisplayVerticalPage.tsx';
 import axios from 'axios';
+import UserPage from './pages/Admin/Usuarios/UsersPage.tsx';
 
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
@@ -37,16 +38,21 @@ const router = createBrowserRouter([
     {
         path: "/login",
         element: <Navigate to="/" replace /> // Redirección a la ruta principal
-    },    
+    },
     {
-        path: "/dashboard", // Cambiado de "/" a "/dashboard"
-        element:<UserProvider><MainLayout /></UserProvider>,        
+        path: "/dashboard", 
+        element: <UserProvider><MainLayout /></UserProvider>,
         handle: { title: 'Bienvenido/a' as RouterHandle },
         children: [
             {
                 path: "/dashboard/itinerary", // Actualizado el path
                 element: <MainPage />,
                 handle: { title: 'Itinerario' as RouterHandle }
+            },
+            {
+                path: "/dashboard/users", // Actualizado el path
+                element: <UserPage/>,
+                handle: { title: 'Usuarios' as RouterHandle }
             },
             {
                 path: "/dashboard/transports_info", // Actualizado el path
@@ -105,7 +111,7 @@ const router = createBrowserRouter([
     },
     {
         path: "/displayExtended",
-        element: <DisplayPage/>
+        element: <DisplayPage />
     },
     {
         path: "/vertical-display",
@@ -119,7 +125,7 @@ const router = createBrowserRouter([
 
 function App() {
     return (
-        <React.StrictMode>
+        <React.StrictMode>            
             <RouterProvider router={router} />
             <Toaster position="top-right" />
         </React.StrictMode>

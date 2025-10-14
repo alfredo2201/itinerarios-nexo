@@ -8,18 +8,18 @@ interface ItinerarioDisplayProps {
     estado?: string
 }
 
-function CellTableDisplay({ departureTime, destino, autobusImg, numero, estado }: ItinerarioDisplayProps) {
+function RowTableDisplay({ departureTime, destino, autobusImg, numero, estado }: ItinerarioDisplayProps) {
 
     return (
-        <tr className="bg-[#171717] text-white h-13 w-screen even:bg-[#023672] ">
-            <td className="text-[#C3D000] sm:text-[36px] font-bold  text-center">
+        <tr className="bg-[#171717] text-white h-13  even:bg-[#023672] ">
+            <td className="text-[#C3D000]  sm:text-[36px] font-bold  text-center">
                 {formatTimeInSonoraCustom(departureTime)}
             </td>
             <td className="sm:text-[36px] font-semibold  text-center">{destino}</td>
-            <td className="flex flex-col font-semibold items-center justify-center h-full ">
-                <img src={autobusImg} alt="Logotipo" className="sm:h-10" />
+            <td className="text-center">
+                <img src={autobusImg} alt="Logotipo" className="mx-auto h-12 w-auto object-contain" />
             </td>
-            <td className="sm:text-[36px] font-bold text-center" >{numero}</td>
+            <td className="sm:text-[36px]  font-bold text-center" >{numero}</td>
             {estado != null || estado != undefined ?
                 <td className="sm:text-[36px] font-semibold text-center">
                     <div className="flex items-center justify-center">
@@ -37,4 +37,4 @@ function CellTableDisplay({ departureTime, destino, autobusImg, numero, estado }
         </tr>
     )
 }
-export default CellTableDisplay;
+export default RowTableDisplay;

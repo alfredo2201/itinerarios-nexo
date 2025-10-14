@@ -43,7 +43,8 @@ function CardInfoItinerary(
 
                     </div>
                     <div className="flex py-2">
-                        <h1 className="px-6 text-[10px] text-[#B8B5B5]">{itinerary.estimatedDuration}</h1>
+                        <h1 className="px-6 text-[10px] text-[#B8B5B5]">{`${Math.floor(itinerary.estimatedDuration / 3600000).toString().padStart(2, '0')}` +
+                                                                    `h${Math.floor((itinerary.estimatedDuration % 3600000) / 60000).toString().padStart(2, '0')}m`}</h1>
                         <h1 className="text-[11px] leading-tight>Escala">Escala:</h1>
                     </div>
                     <div className="flex flex-row">
