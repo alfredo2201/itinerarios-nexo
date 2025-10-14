@@ -105,7 +105,7 @@ function DisplayVerticalPage() {
     }
     return (
 
-        <div className="flex flex-col bg-black">
+        <div className="flex flex-col bg-black h-screen">
             <DisplayTopBarComponent></DisplayTopBarComponent>
             {mostrarVideo ?
                 <div className="w-screen justify-center">

@@ -21,14 +21,6 @@ export interface AnuncioInterface {
     estado: string
 }
 
-export interface User {
-    id?: number;
-    userName: string;
-    password?: string;
-}
-
-
-
 export interface ItineraryTable {
     UUID: string
     itinerary: ItineraryInterface;

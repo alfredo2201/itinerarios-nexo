@@ -45,7 +45,7 @@ function RowVerticalDisplay({ itinerary }: Props) {
                             uuid={itinerary._id}
                             code={itinerary.transport.code}
                             state={itinerary.transport.gpsStatus}
-                            bg='252525'
+                            bg='112236'
                             text="white"
                             showTransport={
                                 () => console.log('Hola')//showTransport(transport.UUID,companyName,code)

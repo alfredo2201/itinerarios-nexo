@@ -1,14 +1,13 @@
 import { Outlet, useMatches } from "react-router";
 import BoxAsidebar from "../../components/BoxSidebar/BoxAsidebar";
 import type { RouterHandle } from "../../interfaces/types";
-import { ExitIcon } from "@radix-ui/react-icons";
 import { useAuth } from "../../context/userContext";
+import { useEffect, useState } from "react";
 interface BoxInfoProps {
     title: string,
     url: string
     icon: string
 }
-
 const infoDisplay: BoxInfoProps[] = [
     {
         title: "Itinerario",
@@ -21,7 +20,13 @@ const infoDisplay: BoxInfoProps[] = [
         icon: "M1 3.25C1 3.11193 1.11193 3 1.25 3H13.75C13.8881 3 14 3.11193 14 3.25V10.75C14 10.8881 13.8881 11 13.75 11H1.25C1.11193 11 1 10.8881 1 10.75V3.25ZM1.25 2C0.559643 2 0 2.55964 0 3.25V10.75C0 11.4404 0.559644 12 1.25 12H5.07341L4.82991 13.2986C4.76645 13.6371 5.02612 13.95 5.37049 13.95H9.62951C9.97389 13.95 10.2336 13.6371 10.1701 13.2986L9.92659 12H13.75C14.4404 12 15 11.4404 15 10.75V3.25C15 2.55964 14.4404 2 13.75 2H1.25ZM9.01091 12H5.98909L5.79222 13.05H9.20778L9.01091 12Z"
     },
 ]
-
+const infoUsers: BoxInfoProps[] = [
+    {
+        title: "Administrar Usuario",
+        url: "users",
+        icon: "M7.5 0.875C5.49797 0.875 3.875 2.49797 3.875 4.5C3.875 6.15288 4.98124 7.54738 6.49373 7.98351C5.2997 8.12901 4.27557 8.55134 3.50407 9.31167C2.52216 10.2794 2.02502 11.72 2.02502 13.5999C2.02502 13.8623 2.23769 14.0749 2.50002 14.0749C2.76236 14.0749 2.97502 13.8623 2.97502 13.5999C2.97502 11.8799 3.42786 10.7206 4.17091 9.9883C4.91536 9.25463 6.02674 8.87499 7.49995 8.87499C8.97317 8.87499 10.0846 9.25463 10.8291 9.98831C11.5721 10.7206 12.025 11.8799 12.025 13.5999C12.025 13.8623 12.2376 14.0749 12.5 14.0749C12.7623 14.075 12.975 13.8623 12.975 13.6C12.975 11.72 12.4778 10.2794 11.4959 9.31166C10.7244 8.55135 9.70025 8.12903 8.50625 7.98352C10.0187 7.5474 11.125 6.15289 11.125 4.5C11.125 2.49797 9.50203 0.875 7.5 0.875ZM4.825 4.5C4.825 3.02264 6.02264 1.825 7.5 1.825C8.97736 1.825 10.175 3.02264 10.175 4.5C10.175 5.97736 8.97736 7.175 7.5 7.175C6.02264 7.175 4.825 5.97736 4.825 4.5Z"
+    }
+]
 const infoAdmin: BoxInfoProps[] = [
     {
         title: "Compañias",
@@ -39,19 +44,50 @@ const infoAdmin: BoxInfoProps[] = [
         icon: "M14 2.58711L1.85163 13H13.5C13.7761 13 14 12.7761 14 12.5V2.58711ZM0.762879 13.8067L0.825396 13.8796L0.854717 13.8545C1.05017 13.9478 1.26899 14 1.5 14H13.5C14.3284 14 15 13.3284 15 12.5V2.5C15 1.93949 14.6926 1.45078 14.2371 1.19331L14.1746 1.12037L14.1453 1.1455C13.9498 1.05222 13.731 1 13.5 1H1.5C0.671573 1 0 1.67157 0 2.5V12.5C0 13.0605 0.307435 13.5492 0.762879 13.8067ZM1 12.4129L13.1484 2H1.5C1.22386 2 1 2.22386 1 2.5V12.4129Z"
     },
 ]
-
+const navUsers = infoUsers.map(item =>
+    <BoxAsidebar key={item.url} title={item.title} url={item.url} pathIcon={item.icon} />
+)
 const navAdmin = infoDisplay.map(item =>
     <BoxAsidebar key={item.url} title={item.title} url={item.url} pathIcon={item.icon} />
 )
-
 const navItinerario = infoAdmin.map(item =>
     <BoxAsidebar key={item.url} title={item.title} url={item.url} pathIcon={item.icon} />
 )
+
+// Hook para animaciones de entrada del dashboard
+const useDashboardAnimation = () => {
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [sidebarVisible, setSidebarVisible] = useState(false);
+    const [headerVisible, setHeaderVisible] = useState(false);
+    const [contentVisible, setContentVisible] = useState(false);
+
+    useEffect(() => {
+        // Secuencia de animaciones
+        const timers = [
+            setTimeout(() => setIsLoaded(true), 100),
+            setTimeout(() => setSidebarVisible(true), 200),
+            setTimeout(() => setHeaderVisible(true), 400),
+            setTimeout(() => setContentVisible(true), 600)
+        ];
+
+        return () => timers.forEach(timer => clearTimeout(timer));
+    }, []);
+
+    return {
+        isLoaded,
+        sidebarVisible,
+        headerVisible,
+        contentVisible
+    };
+};
 
 function MainLayout() {
     const { logout } = useAuth();
     const busCentralName = localStorage.getItem("busCentralName") || "Central Faustino Félix Serna";
     const matches = useMatches();
+    
+    // Hook para animaciones
+    const { isLoaded, sidebarVisible, headerVisible, contentVisible } = useDashboardAnimation();
 
     const handleLogout = () => {
         logout();
@@ -61,60 +97,129 @@ function MainLayout() {
         .filter((match) => (match.handle as RouterHandle)?.title)
         .map((match) => (match.handle as RouterHandle).title!)
         .pop();
-    return (
 
-        <div className="flex h-dvh flex-row ">
-            <div className="w-70 transition-transform -translate-x-full md:translate-x-0 hidden lg:block">
-                <aside id="logo-sidebar" className="top-0 left-0 z-40 w-60 h-dvh pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-[#023672] dark:border-gray-700" aria-label="Sidebar">
+    return (
+        <div className={`flex min-h-screen flex-row transition-all duration-700 ${
+            isLoaded ? 'opacity-100' : 'opacity-0'
+        }`}>
+            
+            {/* Sidebar con animación de entrada desde la izquierda */}
+            <div className={`sticky w-auto transition-all duration-500 ${
+                sidebarVisible 
+                    ? 'translate-x-0 opacity-100' 
+                    : '-translate-x-full opacity-0'
+            } hidden lg:block`}>
+                <aside 
+                    id="logo-sidebar" 
+                    className="top-0 left-0 z-40 w-60 h-screen pt-20 bg-white border-r border-gray-200 dark:bg-[#023672] dark:border-gray-700" 
+                    aria-label="Sidebar"
+                >
                     <div className="w-auto px-3 pb-4 overflow-y-auto bg-white dark:bg-[#023672]">
-                        <ul className="space-y-2 font-medium">
-                            {navAdmin}
-                        </ul>
-                        <hr className="h-px my-4 bg-white border-0 dark:bg-white" />
-                        <p className="text-white font-medium p-2">Administrar</p>
-                        <ul className="space-y-2 font-medium">
-                            {navItinerario}
-                        </ul>
-                        <hr className="h-px my-4 bg-white border-0 dark:bg-white" />
+                        
+                        {/* Sección Admin con animación escalonada */}
+                        <div className={`transform transition-all duration-500 ${
+                            sidebarVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+                        }`} style={{ transitionDelay: '0.1s' }}>
+                            <ul className="space-y-2 font-medium">
+                                {navAdmin}
+                            </ul>
+                        </div>
+                        
+                        <hr className={`h-px my-4 bg-white border-0 dark:bg-white transition-all duration-300 ${
+                            sidebarVisible ? 'opacity-100 scale-x-100' : 'opacity-0 scale-x-0'
+                        }`} style={{ transitionDelay: '0.2s' }} />
+                        
+                        {/* Sección Administrar */}
+                        <div className={`transform transition-all duration-500 ${
+                            sidebarVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+                        }`} style={{ transitionDelay: '0.3s' }}>
+                            <p className="text-white font-medium p-2">Administrar</p>
+                            <ul className="space-y-2 font-medium">
+                                {navItinerario}
+                            </ul>
+                        </div>
+                        
+                        <hr className={`h-px my-4 bg-white border-0 dark:bg-white transition-all duration-300 ${
+                            sidebarVisible ? 'opacity-100 scale-x-100' : 'opacity-0 scale-x-0'
+                        }`} style={{ transitionDelay: '0.4s' }} />
+                        
+                        {/* Sección Usuarios */}
+                        <div className={`transform transition-all duration-500 ${
+                            sidebarVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+                        }`} style={{ transitionDelay: '0.5s' }}>
+                            <p className="text-white font-medium p-2">Usuarios</p>
+                            <ul>
+                                {navUsers}
+                            </ul>
+                        </div>
                     </div>
-                    <div className="flex h-1/2 items-end">
-                        <div onClick={handleLogout} className="flex flex-row justify-start items-center gap-2 p-2 w-1/3 ml-3 text-white rounded-full cursor-pointer hover:bg-[#4185D4] dark:hover:bg-[#4185D4] group transition duration-150 ease-in-out">
-                            <ExitIcon></ExitIcon>
-                            <p>Logout</p>
+                    
+                    {/* Botón de logout con animación */}
+                    <div className={`flex items-end transform transition-all duration-500 ${
+                        sidebarVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+                    }`} style={{ transitionDelay: '0.6s' }}>
+                        <div 
+                            onClick={handleLogout} 
+                            className="flex flex-row justify-start items-center gap-2 py-2 px-4 w-40 ml-3 text-white rounded-full cursor-pointer hover:bg-[#4185D4] dark:hover:bg-[#4185D4] group transition-all duration-200 ease-in-out hover:scale-105 active:scale-95"
+                        >
+                            <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3 1C2.44771 1 2 1.44772 2 2V13C2 13.5523 2.44772 14 3 14H10.5C10.7761 14 11 13.7761 11 13.5C11 13.2239 10.7761 13 10.5 13H3V2L10.5 2C10.7761 2 11 1.77614 11 1.5C11 1.22386 10.7761 1 10.5 1H3ZM12.6036 4.89645C12.4083 4.70118 12.0917 4.70118 11.8964 4.89645C11.7012 5.09171 11.7012 5.40829 11.8964 5.60355L13.2929 7H6.5C6.22386 7 6 7.22386 6 7.5C6 7.77614 6.22386 8 6.5 8H13.2929L11.8964 9.39645C11.7012 9.59171 11.7012 9.90829 11.8964 10.1036C12.0917 10.2988 12.4083 10.2988 12.6036 10.1036L14.8536 7.85355C15.0488 7.65829 15.0488 7.34171 14.8536 7.14645L12.6036 4.89645Z" fill="currentColor" fillRule="evenodd" clipRule="evenodd"></path>
+                            </svg>
+                            <p>Cerrar Sesion</p>
                         </div>
                     </div>
                 </aside>
             </div>
-            {/* Contenedor de toda las segunda columna */}
-            <div className="w-full h-full flex flex-col grow ">
-                {/*Contenedor del titulo */}
-                <div className="w-full h-25 lg:h-15 p-5 sm:p-3 lg:px-8 lg:pl-8 bg-white">
+
+            {/* Contenedor de la segunda columna */}
+            <div className="flex-1 overflow-y-auto scrollbar-hide">
+                
+                {/* Header con animación de entrada desde arriba */}
+                <div className={`w-full h-25 lg:h-15 p-5 sm:p-3 lg:px-8 lg:pl-8 bg-white transform transition-all duration-500 ${
+                    headerVisible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
+                }`}>
                     <div className="flex items-center justify-between">
-                        <div className="flex items-center justify-start rtl:justify-end ">
-                            <span className="self-center text-xl font-semibold sm:text-2xl text-[#023672]">{currentTitle} - {busCentralName}</span>
+                        <div className="flex items-center justify-start rtl:justify-end">
+                            <span className={`self-center text-xl font-semibold sm:text-2xl text-[#023672] transform transition-all duration-500 ${
+                                headerVisible ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
+                            }`} style={{ transitionDelay: '0.1s' }}>
+                                {currentTitle} - {busCentralName}
+                            </span>
                         </div>
 
-                        <div className="flex items-center ms-3">
+                        <div className={`flex items-center ms-3 transform transition-all duration-500 ${
+                            headerVisible ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
+                        }`} style={{ transitionDelay: '0.2s' }}>
                             <div>
-                                <button type="button" className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
+                                <button 
+                                    type="button" 
+                                    className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600 transition-all duration-200 hover:scale-110 active:scale-95" 
+                                    aria-expanded="false" 
+                                    data-dropdown-toggle="dropdown-user"
+                                >
                                     <span className="sr-only">Open user menu</span>
-                                    <img className="w-7 h-7 sm:w-8 sm:h-8 rounded-full" alt="user photo" src="https://www.reshot.com/preview-assets/icons/F3N5JXHBEG/user-F3N5JXHBEG.svg" />
+                                    <img 
+                                        className="w-7 h-7 sm:w-8 sm:h-8 rounded-full" 
+                                        alt="user photo" 
+                                        src="https://www.reshot.com/preview-assets/icons/F3N5JXHBEG/user-F3N5JXHBEG.svg" 
+                                    />
                                 </button>
                             </div>
                         </div>
-
                     </div>
                 </div>
-                {/*Contenedor del Oulet donde se renderizara todo el sistema */}
-                <div className="w-full h-full" >
+
+                {/* Contenedor del Outlet con animación de fade in */}
+                <div className={`w-full h-full transform transition-all duration-700 ${
+                    contentVisible 
+                        ? 'translate-y-0 opacity-100 scale-100' 
+                        : 'translate-y-4 opacity-0 scale-98'
+                } `}>
                     <Outlet />
                 </div>
             </div>
-
         </div>
-
-
-    )
+    );
 }
 
 export default MainLayout;
