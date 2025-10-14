@@ -32,17 +32,18 @@ function TrackingPage() {
         iconAnchor: [12, 41],
     });
 
-    // const showTransportMap = (id: string, name: string, code?: string) => {   
-    //     setError('')     
-    //     setMarkerName(name + " Num:" + code)
-    //     setUbicacion(new LatLng(27.283239, -109.672311))
-    // }
+    const showTransportMap = (name: string, code?: string) => {   
+        setError('')     
+        setMarkerName(name + " Num:" + code)
+        setUbicacion(new LatLng(27.283239, -109.672311))
+    }
 
     const changeStatus = (status: string) => {
         setGpsStatus(status)
     }
 
     useEffect(() => {   
+        showTransportMap('', 'Central Camionera Ciudad Obregon')
         // setTransport(data)
         // if (gpsStatus != '') {
         //     if (transport == undefined) return
