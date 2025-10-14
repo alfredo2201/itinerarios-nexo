@@ -2,11 +2,11 @@ import axios from "axios";
 //import { user } from "../data/UserData";
 import type { UserProfileToken } from "../models/User";
 import { handleError } from "../helpers/ErrorHandler";
-const api = "localhost:4000/api";
+const URL = import.meta.env.VITE_URL_BASE!
 
 export const loginAPI = async (user: { email: string; password: string }) => {
     try {        
-        const data = await axios.post<UserProfileToken>(`http://localhost:4000/api/users/login`,user, {
+        const data = await axios.post<UserProfileToken>(`${URL}/users/login`,user, {
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
@@ -23,7 +23,7 @@ export const loginAPI = async (user: { email: string; password: string }) => {
 
 export const registerAPI = async (user: { username: string; password: string, email: string }) => {
     try {
-        const data = await axios.post<UserProfileToken>(api + 'account/register', user);
+        const data = await axios.post<UserProfileToken>(`${URL}/account/register`, user);
         return data
     } catch (error) {
         console.error("Error en loginAPI:", error);
