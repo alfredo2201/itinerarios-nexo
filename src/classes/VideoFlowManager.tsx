@@ -2,9 +2,9 @@ import type { FlowStep, GroupAvailability } from '../interfaces/types'
 import type { Advertisement } from '../models/Advertisement';
 
 // ===== SISTEMA DE PROGRAMACIÓN DE VIDEOS =====
-const BASE_SCREEN_TIME: number = 30 * 1000;     // 30 segundos
-const DOUBLE_SCREEN_TIME: number = 60 * 1000;  // 1 minuto  
-const TRIPLE_SCREEN_TIME: number = 90 * 1000;  // 1 minuto 1/2
+const BASE_SCREEN_TIME: number = 7 * 60 * 1000;     // 7 minutos
+const DOUBLE_SCREEN_TIME: number = 14 * 60 * 1000;  // 14 minutos  
+const TRIPLE_SCREEN_TIME: number = 28 * 60 * 1000;  // 28 minutos
 
 export default class VideoFlowManager {
     public initialized: boolean;
@@ -92,7 +92,7 @@ export default class VideoFlowManager {
         return nextStep;
     }
 
-    // NUEVA FUNCIÓN: Obtiene el tiempo actual de la tabla según el paso actual
+    // Obtiene el tiempo actual de la tabla según el paso actual
     getCurrentTableTime(): number {
         if (this.flowPattern.length === 0) return BASE_SCREEN_TIME;
 
@@ -100,11 +100,10 @@ export default class VideoFlowManager {
         return currentStep.duration;
     }
 
-    // FUNCIÓN ANTERIOR MANTENIDA PARA COMPATIBILIDAD (ahora delegada)
     getTableTime(): number {
         return this.getCurrentTableTime();
     }
-
+    //Funcion para settear las variables a su estado inicial
     reset(): void {
         this.initialized = false;
         this.flowPattern = [];
@@ -116,7 +115,7 @@ export default class VideoFlowManager {
             hasAll: false
         };
     }
-
+    //Regresa el estado actual 
     getCurrentState() {
         return {
             available: this.available,
@@ -128,7 +127,7 @@ export default class VideoFlowManager {
         };
     }
 
-    // NUEVA FUNCIÓN: Para debug más detallado
+    // Para debug más detallado
     getDetailedState() {
         const currentStep = this.flowPattern[this.patternIndex] || null;
         return {

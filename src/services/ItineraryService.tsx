@@ -1,7 +1,5 @@
 import axios from "axios";
 import { handleError } from "../helpers/ErrorHandler";
-//import type { ItineraryTable } from "../interfaces/types";
-//import { convertirHora24, validateShowItinerary } from "../utils/validations";
 import type { Itinerary, PaginatedResponse } from "../models/Trasportation";
 
 const URL = import.meta.env.VITE_URL_BASE!

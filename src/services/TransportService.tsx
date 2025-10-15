@@ -2,7 +2,7 @@ import axios from "axios";
 import { handleError } from "../helpers/ErrorHandler";
 //import type { ItineraryTable } from "../interfaces/types";
 //import { convertirHora24, validateShowItinerary } from "../utils/validations";
-import type { Company, Trasport } from "../models/Trasportation";
+import type { Company, PaginatedResponseTransport, Trasport } from "../models/Trasportation";
 
 const URL = import.meta.env.VITE_URL_BASE!
 //Servicio para obtener todos los nombres de las empresas con su logo
@@ -24,20 +24,6 @@ export const getAllCompanies = async (): Promise<Company[]> => {
     }
 }
 
-// export const getCompanyById = async (id: string) => {
-//     try {
-//         // const company = dataTrasporte.find(item => item._id === id);
-//         // if (!company) {
-//         //     throw new Error("Company not found");
-//         // }
-//         // return {
-//         //     data: company
-//         // };
-//     } catch (error) {
-//         console.error("Error in getCompanyById:", error);
-//         handleError(error);
-//     }
-// }
 //Servicio para obtener la compañia por su id
 export const getTransportsByCompanyId = async (id: string): Promise<Trasport[] | undefined> => {
     try {
@@ -78,13 +64,6 @@ export const getAllItineraries = async (signal: AbortSignal) => {
         }
         return [];
     }
-    //     return {
-    //         data: data.slice(from, to)
-    //     };
-    // } catch (error) {
-    //     console.error("Error in getAllItineraries:", error);
-    //     handleError(error);
-    // }
 }
 
 
@@ -108,6 +87,29 @@ export const createCompany = async (formData: FormData) => {
         console.error("Error en Advertisments:", error);
         handleError(error);
         // Return a default value or throw to satisfy the return type
+        throw error;
+    }
+}
+
+export const getTransportsForPagination = async (page: number, companyId:string): Promise<PaginatedResponseTransport> => {
+   try {                
+        const response = await axios.get(`${URL}/transports/pages`, {            
+            params:{
+                page:page,
+                limit:10,
+                companyId:companyId
+            },
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'origin': 'x-requested-with',
+                'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
+            },            
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error en ItineraryService:", error);
+        handleError(error);
         throw error;
     }
 }

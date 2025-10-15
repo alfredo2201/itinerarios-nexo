@@ -17,6 +17,8 @@ export const usePagination = () => {
                 : ITEMS_FOR_PAGE * numberPage;
         return { fromPage, toPage };
     };
+
+    
     
     const setterPage = (numberPage:number)=>{
         setPage(numberPage)

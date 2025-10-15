@@ -73,5 +73,24 @@ export interface ItineraryInterface {
     origin: string;
     destination: string;
     stops: string[];
-    // Add other properties as needed for your itinerary
 }
+
+export interface PaginationInfo {
+  currentPage: number;
+  limit: number;
+  totalDocuments: number;
+  totalPages: number;
+  hasNextPage: boolean;
+  hasPrevPage: boolean;
+  nextPage: number | null;
+  prevPage: number | null;
+}
+
+export interface PaginatedResponseTransport {
+  success: boolean;
+  data: {
+    transports: Trasport[];
+    pagination: PaginationInfo;
+  };
+}
+

@@ -64,3 +64,38 @@ html{
 .fade-up {
   animation: fade-up 0.5s ease-out forwards;
 }
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-slide-down {
+  animation: slideDown 0.4s ease-out;
+}
+
+.animate-slide-down-delayed {
+  animation: slideDown 0.4s ease-out 0.15s backwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+.animate-fade-in-delayed {
+  animation: fadeIn 0.3s ease-out 0.15s backwards;
+}

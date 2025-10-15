@@ -172,15 +172,15 @@ function MainLayout() {
             </div>
 
             {/* Contenedor de la segunda columna */}
-            <div className="flex-1 overflow-y-auto scrollbar-hide">
+            <div className="h-screen flex-1 overflow-y-auto scrollbar-hide">
                 
                 {/* Header con animación de entrada desde arriba */}
-                <div className={`w-full h-25 lg:h-15 p-5 sm:p-3 lg:px-8 lg:pl-8 bg-white transform transition-all duration-500 ${
+                <div className={`w-full h-1/15 lg:h-1/15 p-5 sm:p-3 lg:px-8 lg:pl-8 bg-white transform transition-all duration-500 ${
                     headerVisible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
                 }`}>
                     <div className="flex items-center justify-between">
                         <div className="flex items-center justify-start rtl:justify-end">
-                            <span className={`self-center text-xl font-semibold sm:text-2xl text-[#023672] transform transition-all duration-500 ${
+                            <span className={`self-center text-md font-semibold sm:text-2xl text-[#023672] transform transition-all duration-500 ${
                                 headerVisible ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
                             }`} style={{ transitionDelay: '0.1s' }}>
                                 {currentTitle} - {busCentralName}
@@ -210,7 +210,7 @@ function MainLayout() {
                 </div>
 
                 {/* Contenedor del Outlet con animación de fade in */}
-                <div className={`w-full h-full transform transition-all duration-700 ${
+                <div className={`w-full h-14/15 transform transition-all duration-700 ${
                     contentVisible 
                         ? 'translate-y-0 opacity-100 scale-100' 
                         : 'translate-y-4 opacity-0 scale-98'
