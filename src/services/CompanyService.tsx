@@ -43,7 +43,7 @@ export const getAllCompanies = async (): Promise<Company[]> => {
 
 export const getCompanyById = async (id: string): Promise<Company> => {
     try {
-        const response = await axios.get(`${URL}/companies/`, {
+        const response = await axios.get(`${URL}/company/`, {
             params: { id },
             headers: {
                 'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ export const getCompanyById = async (id: string): Promise<Company> => {
                 'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
             }
         });
-        return response.data[0];
+        return response.data;
     } catch (error) {
         console.error("Error en CompaniesService:", error);
         handleError(error);

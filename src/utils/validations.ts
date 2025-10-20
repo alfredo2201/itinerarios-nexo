@@ -1,4 +1,4 @@
-import type { Hour } from "../interfaces/types";
+import { TransportStatus, type Hour } from "../interfaces/types";
 
 export function validateEmail(email: string): boolean {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -38,3 +38,16 @@ export const formatTimeInSonoraCustom = (date: Date): string => {
   return formatter.format(new Date(date));
 };
 
+export const formatDuration = (milliseconds: number): string => {
+  const hours = Math.floor(milliseconds / 3600000);
+  const minutes = Math.floor((milliseconds % 3600000) / 60000);
+  return `${hours.toString().padStart(2, '0')}h${minutes.toString().padStart(2, '0')}m`;
+};
+
+export const formatLastSeen = (date: Date | null): string => {
+  return date ? new Date(date).toLocaleString() : 'Sin información';
+};
+
+export const getStatusLabel = (status: string): string => {
+  return status === TransportStatus.ACTIVE ? 'Activo' : 'Inactivo';
+};

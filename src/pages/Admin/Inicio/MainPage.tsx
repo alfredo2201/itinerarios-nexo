@@ -1,84 +1,78 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Pagination } from "../../../components/Pagination/Pagination";
 import { usePagination } from "../../../hooks/usePagination";
-import ItineraryTableDisplay from "../../../components/Inicio/ItineraryTable";
-import { getItinerariesForPagination } from "../../../services/ItineraryService";
-import type { Itinerary, PaginatedResponse } from "../../../models/Trasportation";
+import ItineraryTableDisplay from "../../../components/Inicio/ItineraryTable"
+import useItinerariesData from "../../../hooks/useItinerariesData";
+import PaginationInfo from "../../../components/Pagination/PaginationInfo";
 
 
 function MainPage() {
-    const { ITEMS_FOR_PAGE,
-        numberArray,
-        numberPagination,
-        calculatePagination,
-        setNumberArrayState,
-        page, setterPage } = usePagination();
-    const [itineraries, setItineraries] = useState<Itinerary[]>([]);
+  // Hook de paginación
+  const pagination = usePagination({ itemsPerPage: 10 });
 
+  // Hook de datos que refetch automáticamente al cambiar página
+  const {
+    itineraries,
+    loading,
+    error,
+    totalItems,
+    totalPages,
+    refetch
+  } = useItinerariesData(pagination.currentPage);
 
-    //Obtiene toda la informacion de los itinerarios dependiendo del rango a mostrar
-    const getInformation = async (numberPage: number) => {
-        try {
-            const response = await getItinerariesForPagination(numberPage);
-            if (response.data?.pagination.totalDocuments !== undefined && response.data.pagination.totalPages) {
-                setNumberArrayState(response.data.pagination.totalDocuments);
-                calculatePagination(response.data.pagination.totalPages);
-            }
-            const data: PaginatedResponse = response;
-            return data;
-        } catch (error) {
-            console.error("Error fetching itineraries:", error);
-            return undefined;
-        }
-    };
+  // Actualizar totales de paginación cuando llegan los datos
+  useEffect(() => {
+    if (totalItems > 0) {
+      pagination.setTotalItems(totalItems);
+      pagination.setTotalPages(totalPages);
+    }
+  }, [totalItems, totalPages]);
 
-    useEffect(() => {
-        getInformation(page).then((response) => {
-            if (response != undefined) {
-                if (response.data?.itineraries !== undefined) {
-                    setItineraries(response.data.itineraries)
-                };
-            }
+  const { fromIndex, toIndex } = pagination.getPageRange();
 
-        });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [numberPagination, page]);
+  return (
+    <div className="w-full h-full sm:px-10 py-6 px-5 overflow-hidden">
+      <div className="bg-white flex flex-col p-5 sm:p-8 rounded-lg h-165 2xl:h-160">
+        <h1 className="font-sans font-semibold text-xl pb-4 pl-3">
+          Vista Previa del Itinerario
+        </h1>
 
-    return (
-        <div className="w-full h-full sm:px-10 py-6 px-5 overflow-hidden">
-            <div className="bg-white flex flex-col p-5 sm:p-8 rounded-lg h-165 2xl:h-160">
-                <h1 className="font-sans font-semibold text-xl pb-4 pl-3">
-                    Vista Previa del Itinerario
-                </h1>
-                <ItineraryTableDisplay itineraries={itineraries} />
-                <div className="flex flex-col sm:flex-row justify-between items-center px-4 py-6">
-                    {itineraries.length > 0 ?
-                        <>
-                            <div className="text-sm text-slate-500">
-                                <span>Mostrando </span>
-                                <b>
-                                    {1 + ITEMS_FOR_PAGE * (page - 1)}-
-                                    {ITEMS_FOR_PAGE * page > numberArray
-                                        ? numberArray
-                                        : ITEMS_FOR_PAGE * page}
-                                </b>{" "}
-                                de {numberArray}
-                            </div>
-                            <Pagination
-                                page={page}
-                                setPage={setterPage}
-                                numberPagination={numberPagination}
-                            />
-                        </>
-                        :
-                        <>                        
-                        </>
-                    }
-                </div>
-            </div>
+        {/* Manejo de errores */}
+        {error && (
+          <div className="text-red-500 p-4 mb-4 bg-red-50 rounded">
+            {error}
+            <button onClick={refetch} className="ml-4 underline">
+              Reintentar
+            </button>
+          </div>
+        )}
+
+        {/* Tabla de itinerarios */}
+        <ItineraryTableDisplay 
+          itineraries={itineraries} 
+          loading={loading}
+        />
+
+        {/* Paginación */}
+        <div className="flex flex-col sm:flex-row justify-between items-center px-4 py-6">
+          {itineraries.length > 0 && (
+            <>
+              <PaginationInfo
+                fromIndex={fromIndex}
+                toIndex={toIndex}
+                total={totalItems}
+              />
+              <Pagination
+                page={pagination.currentPage}
+                setPage={pagination.setPage}
+                numberPagination={totalPages}
+              />
+            </>
+          )}
         </div>
-    );
+      </div>
+    </div>
+  );
 }
-
 
 export default MainPage;

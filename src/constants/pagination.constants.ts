@@ -1,0 +1,6 @@
+export const PAGINATION_CONSTANTS = {
+  DEFAULT_ITEMS_PER_PAGE: 10,
+  DEFAULT_PAGE: 1,
+  MIN_PAGE: 1,
+  MIN_ITEMS: 0
+} as const;

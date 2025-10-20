@@ -76,3 +76,17 @@ export type CompanyResponse = {
         updatedAt: string
     };
 }
+
+const FILE_TYPES = {
+  CSV: "text/csv",
+  EXCEL: "application/vnd.ms-excel",
+  XLSX: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+} as const;
+
+export const ALLOWED_FILE_TYPES = Object.values(FILE_TYPES);
+export const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+
+export enum TransportStatus {
+  ACTIVE = 'active',
+  INACTIVE = 'inactive'
+}

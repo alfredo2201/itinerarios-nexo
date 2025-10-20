@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react"
-import type { Itinerary } from "../models/Trasportation"
+import type { Itinerary, Trasport } from "../models/Trasportation"
 import { handleError } from "../helpers/ErrorHandler"
 import { useLocation } from "react-router"
 import axios from "axios"
 import { getAllItineraries } from "../services/TransportService"
+import { getItinerariesByTransport } from "../services/ItineraryService"
 
 export const useItineraries = () => {
     const location = useLocation();
-
     const [itineraries, setItineraries] = useState<Itinerary[]>([])
     const [displayDoble, setDobleDisplay] = useState<Itinerary[]>([])
-
-    const [loading, setLoading] = useState<boolean>();
+    const [loading, setLoading] = useState<boolean>(false);
+    const [selectedTransport, setSelectedTransport] = useState<Trasport | null>(null);
+    const [isVisible, setIsVisible] = useState(false);
 
 
 
@@ -19,14 +20,41 @@ export const useItineraries = () => {
         const listItienraires: Itinerary[] = []
         data.map((item) => {
             const hour = new Date(item.departureTime).getUTCHours();
-            const minutes =  new Date(item.departureTime).getUTCMinutes();
-            item.departureTime = new Date(new Date(item.departureTime).setHours(hour,minutes))            
+            const minutes = new Date(item.departureTime).getUTCMinutes();
+            item.departureTime = new Date(new Date(item.departureTime).setHours(hour, minutes))
             if (item.departureTime > new Date()) {
                 listItienraires.push(item)
             }
         })
         return listItienraires;
     }
+
+    const loadItineraries = async (transportId: string, transport: Trasport) => {
+        if (selectedTransport?._id === transportId) {
+            setIsVisible(!isVisible);
+            return;
+        }
+
+        setSelectedTransport(transport);
+        setIsVisible(true);
+        setLoading(true);
+
+        try {
+            const data = await getItinerariesByTransport(transportId);
+            setItineraries(data);
+        } catch (err) {
+            console.error('Error loading itineraries:', err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const reset = () => {
+        setIsVisible(false);
+        setSelectedTransport(null);
+        setItineraries([]);
+    };
+
 
 
     useEffect(() => {
@@ -40,7 +68,7 @@ export const useItineraries = () => {
                     // Verificar si la petición no fue cancelada antes de actualizar el estado
                     if (!controller.signal.aborted && data && data.length > 0) {
                         if (location.pathname === '/vertical-display') {
-                            setItineraries(limitItineraries(data))                        
+                            setItineraries(limitItineraries(data))
                         } else {
                             setItineraries(limitItineraries(data).slice(0, 14))
                             if (location.pathname === '/displayExtended') {
@@ -60,7 +88,7 @@ export const useItineraries = () => {
             }
         };
 
-        fetchData();       
+        fetchData();
 
         return () => {
             controller.abort();
@@ -72,7 +100,7 @@ export const useItineraries = () => {
         const intervalo = setInterval(() => {
             if (location.pathname === '/vertical-display') {
                 setItineraries(limitItineraries(itineraries))
-                
+
             } else {
                 setItineraries(limitItineraries(itineraries).slice(0, 14))
                 if (location.pathname === '/displayExtended') {
@@ -87,7 +115,11 @@ export const useItineraries = () => {
     return {
         itineraries,
         displayDoble,
-        loading
+        loading,
+        selectedTransport,
+        isVisible,
+        loadItineraries,
+        reset
     }
 
 }

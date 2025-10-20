@@ -1,16 +1,26 @@
 
 
 import type { Itinerary } from "../../models/Trasportation";
+import SpinnerSvg from "../SpinnerSvg";
 import CellItineraryComponent from "../TableItinerario/CellItineraryComponent";
 
 type Props = {
   itineraries: Itinerary[];
+  loading: boolean;
 };
 
-export const ItineraryTableDisplay = ({ itineraries }: Props) => {
-
-
-
+export const ItineraryTableDisplay = ({ itineraries,loading }: Props) => {
+if (loading) {
+    return (
+      <tr className="h-30 2xl:h-65">
+        <td colSpan={3}>
+          <div className="flex justify-center">
+            <SpinnerSvg size={95} className="text-blue-100" />
+          </div>
+        </td>
+      </tr>
+    );
+  }
   return (
     <div className="bg-[#32649D] rounded-t-lg">
       <table className="table-auto md:table-fixed">
