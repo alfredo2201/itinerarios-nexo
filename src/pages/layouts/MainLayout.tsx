@@ -82,7 +82,7 @@ const useDashboardAnimation = () => {
 };
 
 function MainLayout() {
-    const { logout } = useAuth();
+    const { logout,user } = useAuth();
     const busCentralName = localStorage.getItem("busCentralName") || "Central Faustino Félix Serna";
     const matches = useMatches();
     
@@ -175,12 +175,12 @@ function MainLayout() {
             <div className="h-screen flex-1 overflow-y-auto scrollbar-hide">
                 
                 {/* Header con animación de entrada desde arriba */}
-                <div className={`w-full h-1/15 lg:h-1/15 p-5 sm:p-3 lg:px-8 lg:pl-8 bg-white transform transition-all duration-500 ${
+                <div className={`w-full h-1/15 lg:h-1/15 p-1 2xl:p-3 lg:px-8 lg:pl-8 bg-white transform transition-all duration-500 ${
                     headerVisible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
                 }`}>
                     <div className="flex items-center justify-between">
                         <div className="flex items-center justify-start rtl:justify-end">
-                            <span className={`self-center text-md font-semibold sm:text-2xl text-[#023672] transform transition-all duration-500 ${
+                            <span className={`self-center text-lg font-semibold 2xl:text-2xl text-[#023672] transform transition-all duration-500 ${
                                 headerVisible ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
                             }`} style={{ transitionDelay: '0.1s' }}>
                                 {currentTitle} - {busCentralName}
@@ -190,7 +190,8 @@ function MainLayout() {
                         <div className={`flex items-center ms-3 transform transition-all duration-500 ${
                             headerVisible ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
                         }`} style={{ transitionDelay: '0.2s' }}>
-                            <div>
+                            <div className="flex flex-row gap-2 justify-center items-center">
+                                <p className="text-center">{user?.userName}</p>
                                 <button 
                                     type="button" 
                                     className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600 transition-all duration-200 hover:scale-110 active:scale-95" 

@@ -42,7 +42,7 @@ export default function TransportTable({ data, loading, onSelectTransport }: Tra
             key={item._id}
             id={item._id || ''}
             numero={item.code}
-            estadoGps={item.gpsStatus}
+            estado={item.isActive}
             ultimaVista={item.lastSeen}
             toggleItinerarios={() => onSelectTransport(item._id || '', item)}
           />

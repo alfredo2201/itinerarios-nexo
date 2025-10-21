@@ -9,21 +9,23 @@ type Props = {
   loading: boolean;
 };
 
-export const ItineraryTableDisplay = ({ itineraries,loading }: Props) => {
-if (loading) {
+export const ItineraryTableDisplay = ({ itineraries, loading }: Props) => {
+  if (loading) {
     return (
-      <tr className="h-30 2xl:h-65">
-        <td colSpan={3}>
-          <div className="flex justify-center">
-            <SpinnerSvg size={95} className="text-blue-100" />
-          </div>
-        </td>
-      </tr>
+      <div className="flex justify-center items-center w-full h-full">
+        <SpinnerSvg size={95} className="text-blue-100" />
+      </div>
     );
   }
   return (
     <div className="bg-[#32649D] rounded-t-lg">
-      <table className="table-auto md:table-fixed">
+      {itineraries.length === 0 ? (
+        <div className="flex justify-center items-center h-40">
+          <p className="text-[16px] font-bold text-center text-white">
+            No hay itinerarios disponibles
+          </p>
+        </div>
+      ) : (<table className="table-auto md:table-fixed">
         <thead>
           <tr className="text-[#C3D000] w-full">
             <th className="w-2xs text-[12px] md:text-[16px] p-3">Salida</th>
@@ -45,7 +47,9 @@ if (loading) {
             />
           ))}
         </tbody>
-      </table>
+      </table>)
+      }
+
     </div>
 
   );
