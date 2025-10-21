@@ -71,9 +71,9 @@ export const usePagination = (
   const [totalItems, setTotalItemsState] = useState<number>(0);
 
   // Validación de página
-  const isValidPage = useCallback((page: number): boolean => {
-    return page >= PAGINATION_CONSTANTS.MIN_PAGE && page <= totalPages;
-  }, [totalPages]);
+  // const isValidPage = useCallback((page: number): boolean => {
+  //   return page >= PAGINATION_CONSTANTS.MIN_PAGE && page <= totalPages;
+  // }, [totalPages]);
 
   // Setter de página con validación
   const setPage = useCallback((page: number) => {
