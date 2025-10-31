@@ -1,4 +1,4 @@
-import { TransportStatus, type Hour } from "../interfaces/types";
+import { TransportStatus, type Hour } from "../types/types";
 
 export function validateEmail(email: string): boolean {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -51,3 +51,10 @@ export const formatLastSeen = (date: Date | null): string => {
 export const getStatusLabel = (status: string): string => {
   return status === TransportStatus.ACTIVE ? 'Activo' : 'Inactivo';
 };
+
+// Función para validar la contraseña y mostrar mensaje de error si no coinciden
+export const validateConfirmPassword = (password: string, confirmPassword: string): string => {
+    if (!confirmPassword) return '';
+    if (password !== confirmPassword) return 'Las contraseñas no coinciden.';
+    return '';
+}

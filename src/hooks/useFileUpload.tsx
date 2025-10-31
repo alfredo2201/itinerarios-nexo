@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { saveItineraryForCompany } from "../services/ItineraryService";
-import { ALLOWED_FILE_TYPES, MAX_FILE_SIZE } from "../interfaces/types";
+import { ALLOWED_FILE_TYPES, MAX_FILE_SIZE } from "../types/types";
 
 export default function useFileUpload(companyId: string, onSuccess: () => void) {
   const [file, setFile] = useState<File | null>(null);  

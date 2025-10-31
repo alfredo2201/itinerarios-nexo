@@ -12,7 +12,6 @@ export default function FileUploadConfirmation({ file, onSubmit, uploading }: Fi
   const [selectedDate, setSelectedDate] = useState<string>('');
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // event.target.value devuelve la fecha como un string "YYYY-MM-DD"    
     setSelectedDate(e.target.value);
   };
 

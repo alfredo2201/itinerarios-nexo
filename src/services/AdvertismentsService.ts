@@ -1,16 +1,19 @@
 import axios from "axios";
 import { handleError } from "../helpers/ErrorHandler";
 import type { Advertisement } from "../models/Advertisement";
-import type { VideoData } from "../interfaces/types";
+import type { VideoData } from "../types/types";
 
 const URL = import.meta.env.VITE_URL_BASE!
 const apiKey = import.meta.env.VITE_API_KEY!
 const uploadPreset = import.meta.env.VITE_UPLOAD_PRESET!
-
+const api = axios.create({
+    baseURL: URL,
+    withCredentials: true 
+})
 
 export const getVideos = async () => {
     try {
-        const response = await axios.get(`${URL}/videos/ads`, {
+        const response = await api.get(`/videos/ads`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
@@ -22,14 +25,13 @@ export const getVideos = async () => {
     } catch (error) {
         console.error("Error en Advertisments:", error);
         handleError(error);
-        // Return a default value or throw to satisfy the return type
         throw error;
     }
 }
 
 export const getVideosByRepetitions = async (resolution: number) => {
     try {
-        const response = await axios.get(`${URL}/videos/ads/format/${resolution}`, {
+        const response = await api.get(`/videos/ads/format/${resolution}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
@@ -46,19 +48,40 @@ export const getVideosByRepetitions = async (resolution: number) => {
     }
 }
 
+export const getVideosByCompanyName = async (companyName: string) => {
+    try {
+        const response = await api.get(`/videos/ads/company/`, {
+            params: {
+                companyName: companyName
+            },
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'origin': 'x-requested-with',
+                'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
+            }
+        });
+        return response.data;   
+    } catch (error) {
+        console.error("Error en Advertisments:", error);
+        handleError(error);
+        throw error;
+    }   
+}
+
 /**
- * Retrieves a list of advertisments filtered by the specified video resolution.
+ * Recupera una lista de anuncios filtrados por la resolución de video especificada.
  *
- * @param resolution - The desired video resolution (format) to filter advertisments by.
- * @returns A promise that resolves to an array of `Advertisment` objects matching the given resolution,
- *          or `null` if the resolution is an empty string.
- * @throws Logs and handles any errors that occur during the process.
+ * @param resolution - La resolución de video (formato) deseada para filtrar los anuncios.
+ * @returns Una promesa que resuelve a un arreglo de objetos `Advertisment` que coinciden con la resolución dada,
+ *          o `null` si la resolución es una cadena vacía.
+ * @throws Registra y maneja cualquier error que ocurra durante el proceso.
  */
 export const getVideosByResolution = async (resolution: string, signal: AbortSignal): Promise<Advertisement[]> => {
 
     try {
         if (resolution !== '') {
-            const response = await axios.get(`${URL}/videos/ads/format/${resolution}`, {
+            const response = await api.get(`/videos/ads/format/${resolution}`, {
                 signal: signal,
                 headers: {
                     'Content-Type': 'application/json',
@@ -79,14 +102,26 @@ export const getVideosByResolution = async (resolution: string, signal: AbortSig
         return [];
     }
 }
-//Funcoin para subir videos a Cloudinary
+
+/**
+ * Sube un nuevo archivo de video al almacenamiento en la nube a través de la API.
+ *
+ * @param video - El archivo de video que se va a subir.
+ * @returns Una promesa que resuelve con los datos del video subido.
+ * @throws Lanzará un error si la subida falla.
+ *
+ * @remarks
+ * Esta función envía una solicitud POST al endpoint `/cloud/upload/video`,
+ * incluyendo el archivo de video y las credenciales requeridas en un payload multipart/form-data.
+ *
+ */
 export async function addNewVideo(video: File): Promise<VideoData> {
     try {
         const formData = new FormData();
         formData.append('file', video);
         formData.append('upload_preset', uploadPreset);
         formData.append('api_key', apiKey);
-        const response = await axios.post(`${URL}/cloud/upload/video`, formData, {
+        const response = await api.post(`/cloud/upload/video`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 'Access-Control-Allow-Origin': '*',
@@ -109,7 +144,7 @@ export async function deleteVideo(publicId: string | undefined): Promise<string>
             return "error";
         }
 
-        await axios.delete(`${URL}/cloud/delete/video`, {
+        await api.delete(`/cloud/delete/video`, {
             params: {
                 publicId: publicId
             },
@@ -133,7 +168,7 @@ export async function deleteVideo(publicId: string | undefined): Promise<string>
 //Funcoin para subir videos a Cloudinary
 export async function createAdvertisement(data: Advertisement): Promise<VideoData> {
     try {
-        const response = await axios.post(`${URL}/videos/ads`, data, {
+        const response = await api.post(`/videos/ads`, data, {
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
@@ -153,7 +188,7 @@ export async function createAdvertisement(data: Advertisement): Promise<VideoDat
 //Funcoin para hacer la peticion para eliminar anuncios de la base de datos
 export async function deletAds(id: string): Promise<VideoData> {
     try {
-        const response = await axios.delete(`${URL}/videos/ads/${id}`, {
+        const response = await api.delete(`/videos/ads/${id}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',

@@ -13,16 +13,18 @@ interface UseTransportDataReturn {
 
 export function useTransportData(
   companyId: string,
-  currentPage: number
+  currentPage: number,
+  itemsForPage: number = 8
 ): UseTransportDataReturn {
   const [transportData, setTransportData] = useState<Trasport[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [totalItems, setTotalItems] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
+  const itemsPerPage = itemsForPage;
 
   // Función para hacer fetch (se puede llamar manualmente)
-  const fetchData = async () => {
+  async function fetchData() {
     if (!companyId) {
       setLoading(false);
       return;
@@ -32,13 +34,13 @@ export function useTransportData(
     setError(null);
 
     try {
-      const response = await getTransportsForPagination(currentPage, companyId);
+      const response = await getTransportsForPagination(currentPage, companyId, itemsPerPage);
 
       if (response?.success && response.data) {
         const { transports = [], pagination } = response.data;
-        
+
         setTransportData(transports);
-        
+
         if (pagination) {
           setTotalItems(pagination.totalDocuments);
           setTotalPages(pagination.totalPages);
@@ -53,7 +55,7 @@ export function useTransportData(
     } finally {
       setLoading(false);
     }
-  };
+  }
 
   // Effect que se ejecuta cuando cambian companyId o currentPage
   useEffect(() => {

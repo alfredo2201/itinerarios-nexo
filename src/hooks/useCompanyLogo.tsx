@@ -8,8 +8,7 @@ export default function useCompanyLogo(companyId: string):{logo:string} {
   useEffect(() => {
     if (!companyId) return;  
     getCompanyById(companyId)
-      .then((company: Company) => {
-        console.log('Company logo loaded:', company);
+      .then((company: Company) => {        
         if (company?.image) {
           setLogo(company.image);          
         }

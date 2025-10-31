@@ -17,11 +17,10 @@ const DisplayPage: React.FC = () => {
     const playerRef = useRef(null);
 
     const { loading, firstGroup, secondGroup, thirdGroup, fourthGroup, getVideosForStep } = useAdvertisement();
-    const { itineraries,displayDoble } = useItineraries();
+    const { itineraries,displayDoble,fetchInitialData } = useItineraries();
     const [mostrarVideo, setMostrarVideo] = useState<boolean>(false);
     const [currentAds, setCurrentAds] = useState<Advertisement[]>([]);
-    const [totalReproducido, setTotalReproducido] = useState<number>(0);
-    //const [currentStep, setCurrentStep] = useState<number>(0);
+    const [totalReproducido, setTotalReproducido] = useState<number>(0);    
 
     // Cuando termina un video
     const handleVideoEnded = (): void => {
@@ -36,6 +35,9 @@ const DisplayPage: React.FC = () => {
 
     // useEffect principal - controla el flujo pantalla/video
     useEffect(() => {
+        const abortController = new AbortController();
+        fetchInitialData(abortController.signal);
+        
         if (loading) return;
 
         let timeout: ReturnType<typeof setTimeout>;
@@ -73,8 +75,8 @@ const DisplayPage: React.FC = () => {
                 }
             }, tiempo);
         }
-
         return () => {
+            abortController.abort();
             if (timeout) {
                 clearTimeout(timeout);
             }

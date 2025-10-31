@@ -3,11 +3,12 @@ import ReactPlayer from "react-player";
 import { useDropzone } from "react-dropzone";
 import { Form, useNavigate } from "react-router";
 import { addNewVideo, createAdvertisement, deleteVideo } from "../../../services/AdvertismentsService";
-import type { VideoData, Video, SelectOption } from "../../../interfaces/types";
+import type { VideoData, Video, SelectOption } from "../../../types/types";
 import Swal from 'sweetalert2'
 import type { Advertisement } from "../../../models/Advertisement";
 
 function AddAdsPage() {
+    
     const [formVisible, setFormVisible] = useState(true)
     const playerRef = useRef(null)
     const [isAvailable, setIsAvailable] = useState('pointer-events-none')

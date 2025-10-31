@@ -1,17 +1,15 @@
-import { createContext, useContext } from "react";
-import type { UserProfile } from "../models/User";
+import { createContext, useContext, type Dispatch, type SetStateAction } from "react";
+import type { UserResponseDto } from "../models/User";
 
-type UserContextType = {
-    user: UserProfile | null;
-    token: string | null;
-    registerUser: (email: string, username: string, password: string) => void;
-    loginUser: (username: string, password: string) => void;
-    logout: () => void;
-    isLoggedIn: () => boolean;
+export interface UserContextType {
+  user: UserResponseDto | undefined;
+  setUserContext: Dispatch<SetStateAction<UserResponseDto | undefined>>;
+  isInitialized: boolean;
+  setIsInitialized: Dispatch<SetStateAction<boolean>>;
+  isLoading: boolean;
+  setIsLoading: Dispatch<SetStateAction<boolean>>;
 }
 
-
-
-export const UserContext = createContext<UserContextType>({} as UserContextType);
+export const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const useAuth = () => useContext(UserContext);

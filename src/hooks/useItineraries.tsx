@@ -17,16 +17,17 @@ export const useItineraries = () => {
 
 
     const limitItineraries = (data: Itinerary[]) => {
-        const listItienraires: Itinerary[] = []
-        data.map((item) => {
-            const hour = new Date(item.departureTime).getUTCHours();
-            const minutes = new Date(item.departureTime).getUTCMinutes();
-            item.departureTime = new Date(new Date(item.departureTime).setHours(hour, minutes))
-            if (item.departureTime > new Date()) {
-                listItienraires.push(item)
-            }
-        })
-        return listItienraires;
+        const currentDateTime = new Date();
+        return data.filter(item => {
+            const departureTime = new Date(item.departureTime);
+            departureTime.setHours(
+                departureTime.getHours(),
+                departureTime.getMinutes(),
+                0,
+                0
+            );
+            return departureTime > currentDateTime;
+        });
     }
 
     const loadItineraries = async (transportId: string, transport: Trasport) => {
@@ -57,44 +58,34 @@ export const useItineraries = () => {
 
 
 
-    useEffect(() => {
-        const controller = new AbortController();
+    const fetchInitialData = async (signal:AbortSignal) => {        
         console.log('Entra a hacer fetch')
-        const fetchData = async () => {
-            try {
-                setLoading(true);
-                if (itineraries.length === 0) {
-                    const data = await getAllItineraries(controller.signal)
-                    // Verificar si la petición no fue cancelada antes de actualizar el estado
-                    if (!controller.signal.aborted && data && data.length > 0) {
-                        if (location.pathname === '/vertical-display') {
-                            setItineraries(limitItineraries(data))
-                        } else {
-                            setItineraries(limitItineraries(data).slice(0, 14))
-                            if (location.pathname === '/displayExtended') {
-                                setDobleDisplay(limitItineraries(data).slice(15, 29))
-                            }
+        try {
+            setLoading(true);
+            if (itineraries.length === 0) {
+                const data = await getAllItineraries(signal)
+                // Verificar si la petición no fue cancelada antes de actualizar el estado
+                if (!signal.aborted && data && data.length > 0) {
+                    if (location.pathname === '/vertical-display') {
+                        setItineraries(limitItineraries(data))
+                    } else {
+                        setItineraries(limitItineraries(data).slice(0, 14))
+                        if (location.pathname === '/displayExtended') {
+                            setDobleDisplay(limitItineraries(data).slice(15, 29))
                         }
                     }
                 }
-            } catch (error) {
-                if (!axios.isCancel(error) && !controller.signal.aborted) {
-                    handleError(error);
-                }
-            } finally {
-                if (!controller.signal.aborted) {
-                    setLoading(false);
-                }
             }
-        };
-
-        fetchData();
-
-        return () => {
-            controller.abort();
-        };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+        } catch (error) {
+            if (!axios.isCancel(error) && !signal.aborted) {
+                handleError(error);
+            }
+        } finally {
+            if (!signal.aborted) {
+                setLoading(false);
+            }
+        }      
+    };
 
     useEffect(() => {
         const intervalo = setInterval(() => {
@@ -119,6 +110,7 @@ export const useItineraries = () => {
         selectedTransport,
         isVisible,
         loadItineraries,
+        fetchInitialData,
         reset
     }
 

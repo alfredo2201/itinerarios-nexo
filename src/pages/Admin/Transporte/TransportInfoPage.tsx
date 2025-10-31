@@ -10,19 +10,22 @@ import useCompanyId from "../../../hooks/useCompanyId";
 import useCompanyLogo from "../../../hooks/useCompanyLogo";
 import useFileUpload from "../../../hooks/useFileUpload";
 import { useItineraries } from "../../../hooks/useItineraries";
-import { ALLOWED_FILE_TYPES } from "../../../interfaces/types";
+import { ALLOWED_FILE_TYPES } from "../../../types/types";
 import type { Trasport } from "../../../models/Trasportation";
 import { usePagination } from "../../../hooks/usePagination";
 import { useTransportData } from "../../../hooks/useTransportData";
+import { useUser } from "../../../hooks/useUser";
+import { UserRole } from "../../../models/User";
 
 function BusInfoPage() {
     const companyId = useCompanyId();
+    const { user } = useUser()
 
     // Hooks personalizados
     const { logo } = useCompanyLogo(companyId);
 
     // Paginación local
-    const pagination = usePagination({ itemsPerPage: 10 });
+    const pagination = usePagination({ itemsPerPage: 8 });
 
     // Hook que automáticamente refetch cuando cambia pagination.currentPage
     const {
@@ -30,7 +33,7 @@ function BusInfoPage() {
         loading,
         totalItems,
         totalPages,
-    } = useTransportData(companyId, pagination.currentPage);
+    } = useTransportData(companyId, pagination.currentPage, pagination.itemsPerPage);
 
     const {
         itineraries,
@@ -47,7 +50,7 @@ function BusInfoPage() {
         fileInputRef,
         handleFileChange,
         handleSubmit,
-        openFilePicker,             
+        openFilePicker,
     } = useFileUpload(companyId, () => {
         resetItineraries();
         // Recargar la página actual
@@ -72,25 +75,28 @@ function BusInfoPage() {
             {/* Header */}
             <div className="mb-5 flex justify-center justify-start sm:justify-between px-7">
                 <img src={logo} alt="Company Logo" className="h-10 2xl:h-15" />
-                <FileUploadButton onClick={openFilePicker} disabled={uploading} />
-                <input
-                    className="hidden"
-                    ref={fileInputRef}
-                    onChange={handleFileChange}
-                    type="file"
-                    accept={ALLOWED_FILE_TYPES.join(', ')}
-                />
+                {(user?.role === UserRole.ADMINISTRADOR || user?.role === UserRole.EDITOR) && (<>
+                    <FileUploadButton onClick={openFilePicker} disabled={uploading} />
+                    <input
+                        className="hidden"
+                        ref={fileInputRef}
+                        onChange={handleFileChange}
+                        type="file"
+                        accept={ALLOWED_FILE_TYPES.join(', ')}
+                    />
+                </>)}
+
             </div>
 
             {/* Main Content */}
             <div className="flex flex-col sm:flex-row w-full h-auto gap-5 px-5 pb-5">
                 {/* Transport Status Panel */}
-                <div className="bg-white w-full sm:w-1/2 h-120 2xl:h-180 rounded-lg p-8 shadow-xl/10">
+                <div className="bg-white w-full sm:w-1/2 h-155 2xl:h-180 rounded-lg p-8 shadow-xl/10">
                     <h2 className="text-base text-[16px] 2xl:text-[20px] font-bold pb-2 pl-3">
                         Estado del transporte
                     </h2>
 
-                    <div className={`flex justify-center ${transportData.length === 0 ? 'items-center' : ''} w-full bg-white h-70 2xl:h-130 rounded-lg overflow-auto scrollbar-hide`}>
+                    <div className={`flex justify-center ${transportData.length === 0 ? 'items-center' : ''} w-full h-115 2xl:h-130 rounded-lg overflow-auto scrollbar-hide`}>
                         <TransportTable
                             data={transportData}
                             loading={loading}
@@ -116,14 +122,14 @@ function BusInfoPage() {
                 </div>
 
                 {/* Itinerary Panel */}
-                <div className="bg-white w-full sm:w-1/2 h-120 2xl:h-180 rounded-lg p-8 shadow-xl/10">
+                <div className="bg-white w-full sm:w-1/2 h-155 2xl:h-180 rounded-lg p-8 shadow-xl/10">
                     <h2 className="text-[16px] 2xl:text-[20px] text-base font-bold pb-1 pt-2 pl-3">
                         Itinerarios de Hoy
                     </h2>
 
                     {isVisibleItinerarios && selectedTransport && (
                         <div key="animation-container" className="space-y-4 animate-fade-in">
-                            <div className="w-full bg-white h-35 2xl:h-80 rounded-lg overflow-auto scrollbar-hide animate-slide-down">
+                            <div className="w-full bg-white h-75 2xl:h-80 rounded-lg overflow-auto scrollbar-hide animate-slide-down">
                                 <table className="table-auto md:table-fixed">
                                     <thead>
                                         <tr className="bg-[#A3C0E2] text-black w-full">
@@ -140,8 +146,10 @@ function BusInfoPage() {
                                     </tbody>
                                 </table>
                             </div>
+                            {(user?.role === UserRole.ADMINISTRADOR || user?.role === UserRole.EDITOR) && (<>
+                                <TransportDetails transport={selectedTransport} />
+                            </>)}
 
-                            <TransportDetails transport={selectedTransport} />
                         </div>
                     )}
 
@@ -157,7 +165,7 @@ function BusInfoPage() {
                         <FileUploadConfirmation
                             file={file}
                             onSubmit={handleSubmit}
-                            uploading={uploading}                                                        
+                            uploading={uploading}
                         />
                     )}
                 </div>

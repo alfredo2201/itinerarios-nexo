@@ -1,14 +1,18 @@
 import axios from "axios";
 import { handleError } from "../helpers/ErrorHandler";
-//import type { ItineraryTable } from "../interfaces/types";
-//import { convertirHora24, validateShowItinerary } from "../utils/validations";
 import type { Company, PaginatedResponseTransport, Trasport } from "../models/Trasportation";
 
 const URL = import.meta.env.VITE_URL_BASE!
+
+const api = axios.create({
+    baseURL: URL,
+    withCredentials: true 
+})
+
 //Servicio para obtener todos los nombres de las empresas con su logo
 export const getAllCompanies = async (): Promise<Company[]> => {
     try {
-        const response = await axios.get(`${URL}/companies`, {
+        const response = await api.get(`/companies`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
@@ -27,7 +31,7 @@ export const getAllCompanies = async (): Promise<Company[]> => {
 //Servicio para obtener la compañia por su id
 export const getTransportsByCompanyId = async (id: string): Promise<Trasport[] | undefined> => {
     try {
-        const response = await axios.get(`${URL}/transports/company/`, {
+        const response = await api.get(`/transports/company/`, {
             params: { companyId: id },
             headers: {
                 'Content-Type': 'application/json',
@@ -46,7 +50,7 @@ export const getTransportsByCompanyId = async (id: string): Promise<Trasport[] |
 
 export const getAllItineraries = async (signal: AbortSignal) => {
     try {
-        const response = await axios.get(`${URL}/itineraries`, {
+        const response = await api.get(`/itineraries`, {
             signal: signal,
             headers: {
                 'Content-Type': 'application/json',
@@ -72,7 +76,7 @@ export const createCompany = async (formData: FormData) => {
         if (!formData) {
             throw new Error("No form data provided");
         }
-        const response = await axios.post(`${URL}/transport`, formData, {
+        const response = await api.post(`/transport`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 'Access-Control-Allow-Origin': '*',
@@ -91,12 +95,12 @@ export const createCompany = async (formData: FormData) => {
     }
 }
 
-export const getTransportsForPagination = async (page: number, companyId:string): Promise<PaginatedResponseTransport> => {
+export const getTransportsForPagination = async (page: number, companyId:string, limit:number): Promise<PaginatedResponseTransport> => {
    try {                
-        const response = await axios.get(`${URL}/transports/pages`, {            
+        const response = await api.get(`/transports/pages`, {
             params:{
                 page:page,
-                limit:10,
+                limit:limit,
                 companyId:companyId
             },
             headers: {

@@ -5,6 +5,7 @@ import type { Advertisement } from "../../models/Advertisement";
 import { useAdvertisement } from "../../hooks/useAdvertisment";
 import VideoFlowManager from "../../classes/VideoFlowManager";
 import TableVerticalDisplay from "../../components/TableDisplay/TableVerticalDisplay";
+import { useItineraries } from "../../hooks/useItineraries";
 
 // Instancia global del manager
 const flowManager: VideoFlowManager = new VideoFlowManager();
@@ -12,11 +13,11 @@ function DisplayVerticalPage() {
     const playerRef = useRef(null);
 
     const { loading, firstGroup, secondGroup, thirdGroup, fourthGroup, getVideosForStep } = useAdvertisement();
+    const { fetchInitialData,itineraries } = useItineraries();
 
     const [mostrarVideo, setMostrarVideo] = useState<boolean>(false);
     const [currentAds, setCurrentAds] = useState<Advertisement[]>([]);
-    const [totalReproducido, setTotalReproducido] = useState<number>(0);
-    //const [currentStep, setCurrentStep] = useState<number>(0);
+    const [totalReproducido, setTotalReproducido] = useState<number>(0);    
 
     // Cuando termina un video
     const handleVideoEnded = (): void => {
@@ -31,6 +32,8 @@ function DisplayVerticalPage() {
 
     // useEffect principal - controla el flujo pantalla/video
     useEffect(() => {
+        const abortController = new AbortController();
+        fetchInitialData(abortController.signal);
         if (loading) return;
 
         let timeout: ReturnType<typeof setTimeout>;
@@ -70,6 +73,7 @@ function DisplayVerticalPage() {
         }
 
         return () => {
+            abortController.abort();
             if (timeout) {
                 clearTimeout(timeout);
             }
@@ -125,7 +129,7 @@ function DisplayVerticalPage() {
                         />
                 </div>
                 :
-                <TableVerticalDisplay></TableVerticalDisplay>
+                <TableVerticalDisplay itineraries={itineraries}></TableVerticalDisplay>
             }
         </div>
     )

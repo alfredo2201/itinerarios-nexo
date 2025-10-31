@@ -1,8 +1,10 @@
 import { Outlet, useMatches } from "react-router";
 import BoxAsidebar from "../../components/BoxSidebar/BoxAsidebar";
-import type { RouterHandle } from "../../interfaces/types";
-import { useAuth } from "../../context/userContext";
-import { useEffect, useState } from "react";
+import type { RouterHandle } from "../../types/types";
+import { useUser } from "../../hooks/useUser";
+import { logoutAPI } from "../../services/AuthService";
+import useDashboardAnimation from "../../hooks/UseDashboardAnimation";
+import { UserRole } from "../../models/User";
 interface BoxInfoProps {
     title: string,
     url: string
@@ -44,7 +46,7 @@ const infoAdmin: BoxInfoProps[] = [
         icon: "M14 2.58711L1.85163 13H13.5C13.7761 13 14 12.7761 14 12.5V2.58711ZM0.762879 13.8067L0.825396 13.8796L0.854717 13.8545C1.05017 13.9478 1.26899 14 1.5 14H13.5C14.3284 14 15 13.3284 15 12.5V2.5C15 1.93949 14.6926 1.45078 14.2371 1.19331L14.1746 1.12037L14.1453 1.1455C13.9498 1.05222 13.731 1 13.5 1H1.5C0.671573 1 0 1.67157 0 2.5V12.5C0 13.0605 0.307435 13.5492 0.762879 13.8067ZM1 12.4129L13.1484 2H1.5C1.22386 2 1 2.22386 1 2.5V12.4129Z"
     },
 ]
-const navUsers = infoUsers.map(item =>
+const navUsers = infoUsers.map(item =>     
     <BoxAsidebar key={item.url} title={item.title} url={item.url} pathIcon={item.icon} />
 )
 const navAdmin = infoDisplay.map(item =>
@@ -54,43 +56,26 @@ const navItinerario = infoAdmin.map(item =>
     <BoxAsidebar key={item.url} title={item.title} url={item.url} pathIcon={item.icon} />
 )
 
-// Hook para animaciones de entrada del dashboard
-const useDashboardAnimation = () => {
-    const [isLoaded, setIsLoaded] = useState(false);
-    const [sidebarVisible, setSidebarVisible] = useState(false);
-    const [headerVisible, setHeaderVisible] = useState(false);
-    const [contentVisible, setContentVisible] = useState(false);
 
-    useEffect(() => {
-        // Secuencia de animaciones
-        const timers = [
-            setTimeout(() => setIsLoaded(true), 100),
-            setTimeout(() => setSidebarVisible(true), 200),
-            setTimeout(() => setHeaderVisible(true), 400),
-            setTimeout(() => setContentVisible(true), 600)
-        ];
-
-        return () => timers.forEach(timer => clearTimeout(timer));
-    }, []);
-
-    return {
-        isLoaded,
-        sidebarVisible,
-        headerVisible,
-        contentVisible
-    };
-};
 
 function MainLayout() {
-    const { logout,user } = useAuth();
+    const { user, setUserContext } = useUser()    
     const busCentralName = localStorage.getItem("busCentralName") || "Central Faustino Félix Serna";
     const matches = useMatches();
-    
     // Hook para animaciones
     const { isLoaded, sidebarVisible, headerVisible, contentVisible } = useDashboardAnimation();
 
-    const handleLogout = () => {
-        logout();
+    const handleLogout = async () => {
+        await logoutAPI().then(
+            () => {
+                setTimeout(() => {
+                    setUserContext(undefined);
+                    window.location.href = '/';
+                }, 100);
+            }
+        );
+
+
     }
 
     const currentTitle = matches
@@ -99,67 +84,61 @@ function MainLayout() {
         .pop();
 
     return (
-        <div className={`flex min-h-screen flex-row transition-all duration-700 ${
-            isLoaded ? 'opacity-100' : 'opacity-0'
-        }`}>
-            
+        <div className={`flex min-h-screen flex-row transition-all duration-700 ${isLoaded ? 'opacity-100' : 'opacity-0'
+            }`}>
+
             {/* Sidebar con animación de entrada desde la izquierda */}
-            <div className={`sticky w-auto transition-all duration-500 ${
-                sidebarVisible 
-                    ? 'translate-x-0 opacity-100' 
-                    : '-translate-x-full opacity-0'
-            } hidden lg:block`}>
-                <aside 
-                    id="logo-sidebar" 
-                    className="top-0 left-0 z-40 w-60 h-screen pt-20 bg-white border-r border-gray-200 dark:bg-[#023672] dark:border-gray-700" 
+            <div className={`sticky w-auto transition-all duration-500 ${sidebarVisible
+                ? 'translate-x-0 opacity-100'
+                : '-translate-x-full opacity-0'
+                } hidden lg:block`}>
+                <aside
+                    id="logo-sidebar"
+                    className="top-0 left-0 z-40 w-60 h-screen pt-20 bg-white border-r border-gray-200 dark:bg-[#023672] dark:border-gray-700"
                     aria-label="Sidebar"
                 >
                     <div className="w-auto px-3 pb-4 overflow-y-auto bg-white dark:bg-[#023672]">
-                        
+
                         {/* Sección Admin con animación escalonada */}
-                        <div className={`transform transition-all duration-500 ${
-                            sidebarVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-                        }`} style={{ transitionDelay: '0.1s' }}>
+                        <div className={`transform transition-all duration-500 ${sidebarVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+                            }`} style={{ transitionDelay: '0.1s' }}>
                             <ul className="space-y-2 font-medium">
                                 {navAdmin}
                             </ul>
                         </div>
-                        
-                        <hr className={`h-px my-4 bg-white border-0 dark:bg-white transition-all duration-300 ${
-                            sidebarVisible ? 'opacity-100 scale-x-100' : 'opacity-0 scale-x-0'
-                        }`} style={{ transitionDelay: '0.2s' }} />
-                        
+
+                        <hr className={`h-px my-4 bg-white border-0 dark:bg-white transition-all duration-300 ${sidebarVisible ? 'opacity-100 scale-x-100' : 'opacity-0 scale-x-0'
+                            }`} style={{ transitionDelay: '0.2s' }} />
+
                         {/* Sección Administrar */}
-                        <div className={`transform transition-all duration-500 ${
-                            sidebarVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-                        }`} style={{ transitionDelay: '0.3s' }}>
+                        <div className={`transform transition-all duration-500 ${sidebarVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+                            }`} style={{ transitionDelay: '0.3s' }}>
                             <p className="text-white font-medium p-2">Administrar</p>
                             <ul className="space-y-2 font-medium">
                                 {navItinerario}
                             </ul>
                         </div>
-                        
-                        <hr className={`h-px my-4 bg-white border-0 dark:bg-white transition-all duration-300 ${
-                            sidebarVisible ? 'opacity-100 scale-x-100' : 'opacity-0 scale-x-0'
-                        }`} style={{ transitionDelay: '0.4s' }} />
-                        
+
+                        <hr className={`h-px my-4 bg-white border-0 dark:bg-white transition-all duration-300 ${sidebarVisible ? 'opacity-100 scale-x-100' : 'opacity-0 scale-x-0'
+                            }`} style={{ transitionDelay: '0.4s' }} />
+
                         {/* Sección Usuarios */}
-                        <div className={`transform transition-all duration-500 ${
-                            sidebarVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-                        }`} style={{ transitionDelay: '0.5s' }}>
-                            <p className="text-white font-medium p-2">Usuarios</p>
-                            <ul>
-                                {navUsers}
-                            </ul>
-                        </div>
+                        {user?.role === UserRole.ADMINISTRADOR && (
+                            <div className={`transform transition-all duration-500 ${sidebarVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+                                }`} style={{ transitionDelay: '0.5s' }}>
+                                <p className="text-white font-medium p-2">Usuarios</p>
+                                <ul>
+                                    {navUsers}
+                                </ul>
+                            </div>
+                        )}
                     </div>
-                    
+
                     {/* Botón de logout con animación */}
-                    <div className={`flex items-end transform transition-all duration-500 ${
-                        sidebarVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-                    }`} style={{ transitionDelay: '0.6s' }}>
-                        <div 
-                            onClick={handleLogout} 
+                    <div className={`flex items-end transform transition-all duration-500 ${sidebarVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+                        }`} style={{ transitionDelay: '0.6s' }}>
+                        <div
+                            onClick={handleLogout}
                             className="flex flex-row justify-start items-center gap-2 py-2 px-4 w-40 ml-3 text-white rounded-full cursor-pointer hover:bg-[#4185D4] dark:hover:bg-[#4185D4] group transition-all duration-200 ease-in-out hover:scale-105 active:scale-95"
                         >
                             <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -173,36 +152,33 @@ function MainLayout() {
 
             {/* Contenedor de la segunda columna */}
             <div className="h-screen flex-1 overflow-y-auto scrollbar-hide">
-                
+
                 {/* Header con animación de entrada desde arriba */}
-                <div className={`w-full h-1/15 lg:h-1/15 p-1 2xl:p-3 lg:px-8 lg:pl-8 bg-white transform transition-all duration-500 ${
-                    headerVisible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
-                }`}>
+                <div className={`w-full h-1/15 py-4 px-5 md:p-1 md:px-5 2xl:py-3 bg-white transform transition-all duration-500 ${headerVisible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
+                    }`}>
                     <div className="flex items-center justify-between">
                         <div className="flex items-center justify-start rtl:justify-end">
-                            <span className={`self-center text-lg font-semibold 2xl:text-2xl text-[#023672] transform transition-all duration-500 ${
-                                headerVisible ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
-                            }`} style={{ transitionDelay: '0.1s' }}>
+                            <span className={`self-center text-lg font-semibold 2xl:text-[22px] xl:text-[18px] text-[18px] text-[#023672] transform transition-all duration-500 ${headerVisible ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
+                                }`} style={{ transitionDelay: '0.1s' }}>
                                 {currentTitle} - {busCentralName}
                             </span>
                         </div>
 
-                        <div className={`flex items-center ms-3 transform transition-all duration-500 ${
-                            headerVisible ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
-                        }`} style={{ transitionDelay: '0.2s' }}>
+                        <div className={`flex items-center ms-3 transform transition-all duration-500 ${headerVisible ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
+                            }`} style={{ transitionDelay: '0.2s' }}>
                             <div className="flex flex-row gap-2 justify-center items-center">
-                                <p className="text-center">{user?.userName}</p>
-                                <button 
-                                    type="button" 
-                                    className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600 transition-all duration-200 hover:scale-110 active:scale-95" 
-                                    aria-expanded="false" 
+                                <p className="text-center hidden lg:inline">{user ? `${user?.firstName} ${user?.lastName}` : ''}</p>
+                                <button
+                                    type="button"
+                                    className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600 transition-all duration-200 hover:scale-110 active:scale-95"
+                                    aria-expanded="false"
                                     data-dropdown-toggle="dropdown-user"
                                 >
                                     <span className="sr-only">Open user menu</span>
-                                    <img 
-                                        className="w-7 h-7 sm:w-8 sm:h-8 rounded-full" 
-                                        alt="user photo" 
-                                        src="https://www.reshot.com/preview-assets/icons/F3N5JXHBEG/user-F3N5JXHBEG.svg" 
+                                    <img
+                                        className="w-7 h-7 sm:w-8 sm:h-8 rounded-full"
+                                        alt="user photo"
+                                        src="https://www.reshot.com/preview-assets/icons/F3N5JXHBEG/user-F3N5JXHBEG.svg"
                                     />
                                 </button>
                             </div>
@@ -211,11 +187,10 @@ function MainLayout() {
                 </div>
 
                 {/* Contenedor del Outlet con animación de fade in */}
-                <div className={`w-full h-14/15 transform transition-all duration-700 ${
-                    contentVisible 
-                        ? 'translate-y-0 opacity-100 scale-100' 
-                        : 'translate-y-4 opacity-0 scale-98'
-                } `}>
+                <div className={`w-full h-14/15 transform transition-all duration-700 ${contentVisible
+                    ? 'translate-y-0 opacity-100 scale-100'
+                    : 'translate-y-4 opacity-0 scale-98'
+                    } `}>
                     <Outlet />
                 </div>
             </div>

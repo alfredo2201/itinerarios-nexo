@@ -1,9 +1,11 @@
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { UserProvider } from '../../context/useAuth';
-import { useAuth } from '../../context/userContext';
+import {  } from '../../hooks/useAuth';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
+import { loginAPI } from '../../services/AuthService';
+import { useUser } from '../../hooks/useUser';
+
 type LoginFormValues = {
     username: string;
     password: string;
@@ -27,7 +29,8 @@ const usePageAnimation = () => {
 };
 
 function LoginPage() {
-    const { loginUser } = useAuth();
+    // Agrega el contexto de autenticación
+    const { setUserContext } = useUser();
     const { register, handleSubmit, formState: { errors } } = useForm<LoginFormValues>({ resolver: yupResolver(validation) });
     const [isLoading, setIsLoading] = useState(false);
     const isLoaded = usePageAnimation();
@@ -35,14 +38,15 @@ function LoginPage() {
     const handleLogin = async (form: LoginFormValues) => {
         setIsLoading(true);
         try {
-            await loginUser(form.username, form.password);
+            const user = await loginAPI({ email: form.username, password: form.password });        
+            setUserContext(user);
         } finally {
             setIsLoading(false);
         }
     };
 
     return (
-        <UserProvider>
+        <>
             <div className={`h-screen bg-[#F2F4F7] flex flex-col items-center transition-all duration-700`}>
             
                 <div className={`w-full bg-[#04386c] p-4 flex justify-between items-center text-white pe-8 justify-end`}>
@@ -72,14 +76,14 @@ function LoginPage() {
                                 isLoaded ? 'translate-x-0 opacity-100' : '-translate-x-4 opacity-0'
                             }`} style={{ transitionDelay: '0.4s' }}>
                                 <label htmlFor='username' className="block font-[Arial] text-sm mb-1">
-                                    Nombre de Usuario
+                                    Correo Electrónico y/o Usuario
                                 </label>
                                 <input
                                     id="username"
                                     {...register('username')}
                                     type="text"
                                     autoComplete='username'
-                                    placeholder="Ej. jorgegal_663"
+                                    placeholder="Ej. jorgegal_663@ejemplo.com"
                                     className="w-full px-3 py-2 border-2 border-[#D9D9D9] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#04386c] focus:border-[#04386c] transition-all duration-300 hover:border-[#04386c]/50 hover:shadow-sm"
                                 />
                                 {errors.username && (
@@ -149,7 +153,7 @@ function LoginPage() {
                     </div>
                 </div>
             </div>
-        </UserProvider>
+        </>
     );
 }
 

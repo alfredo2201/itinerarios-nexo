@@ -1,8 +1,34 @@
 export type UserProfileToken = {
-    user:User;
-    token: string;
+    id?:string,
+    user:UserResponseDto;    
 }
+
+export interface PaginatedUsersResponse {
+    users: UserResponseDto[];
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+}
+
+export interface UserResponseDto {
+    id: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    fullName: string;
+    phone?: string;
+    role: UserRole;
+    empresaInfo: CompanyInfo;
+    preferencias: UserPreferences;
+    actividad: Omit<UserActivity, 'lastLogin' | 'loginCount'>; // Datos sensibles omitidos
+    isActive: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
 export type UserProfile = {
+    id:string,
     userName: string;
     email: string;
 }

@@ -3,12 +3,15 @@ import { handleError } from "../helpers/ErrorHandler";
 import type { Itinerary, PaginatedResponse } from "../models/Trasportation";
 
 const URL = import.meta.env.VITE_URL_BASE!
-// const URL = 'http://localhost:4000/api';
+const api = axios.create({
+    baseURL: URL,
+    withCredentials: true 
+})
 export const getItinerariesByCompany = async (companyId: string): Promise<Itinerary[]> => {
     try {
         // Simulamos una llamada a una API con un retraso
         await new Promise(resolve => setTimeout(resolve, 500));
-        const response = await axios.get(`${URL}/itineraries/company`, {
+        const response = await api.get(`/itineraries/company`, {
             params: { companyId },
             headers: {
                 'Content-Type': 'application/json',
@@ -29,7 +32,7 @@ export const getItinerariesByTransport = async (transportId: string): Promise<It
     try {
         // Simulamos una llamada a una API con un retraso
         await new Promise(resolve => setTimeout(resolve, 500));
-        const response = await axios.get(`${URL}/itineraries/transport`, {
+        const response = await api.get(`/itineraries/transport`, {
             params: { transportId },
             headers: {
                 'Content-Type': 'application/json',
@@ -48,10 +51,10 @@ export const getItinerariesByTransport = async (transportId: string): Promise<It
 
 export const getItinerariesForPagination = async (page: number): Promise<PaginatedResponse> => {
     try {
-        const response = await axios.get(`${URL}/itineraries/pages`, {
+        const response = await api.get(`/itineraries/pages`, {
             params: {
                 page: page,
-                limit: 14
+                limit: 10
             },
             headers: {
                 'Content-Type': 'application/json',
@@ -71,7 +74,7 @@ export const getItinerariesForPagination = async (page: number): Promise<Paginat
 // Guardar Itinerario de una compañía
 export const saveItineraryForCompany = async (data: FormData): Promise<{ message: string }> => {
     try {
-        const response = await axios.post(`${URL}/itineraries/company/add`, data, {
+        const response = await api.post(`/itineraries/company/add`, data, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 'Access-Control-Allow-Origin': '*',

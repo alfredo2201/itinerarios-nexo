@@ -50,7 +50,7 @@
 import { useState, useCallback, useMemo } from "react";
 
 import { PAGINATION_CONSTANTS } from "../constants/pagination.constants";
-import type { PaginationRange, UsePaginationReturn } from "../interfaces/pagination.types";
+import type { PaginationRange, UsePaginationReturn } from "../types/pagination.types";
 
 interface UsePaginationOptions {
   itemsPerPage?: number;

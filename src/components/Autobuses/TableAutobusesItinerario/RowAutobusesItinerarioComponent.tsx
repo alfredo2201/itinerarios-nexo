@@ -11,7 +11,7 @@ function RowAutobusesItinerarioComponent({ horaSalida, origen, destino, duracion
 
     return (
         <tr className="bg-white text-black border-b-1 border-gray-100">
-            <td className="py-2 text-center">{formatTimeInSonoraCustom(horaSalida)}</td>
+            <td className="py-2 text-center text-[13px] sm:text-[14px]">{formatTimeInSonoraCustom(horaSalida)}</td>
             <td className="py-2 text-center text-[13px] sm:text-[14px]">{origen} - {destino}</td>
             <td className="py-2 text-center text-[13px] sm:text-[14px]">{duracion}</td>
         </tr>

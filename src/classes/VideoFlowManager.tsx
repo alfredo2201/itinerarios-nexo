@@ -1,4 +1,4 @@
-import type { FlowStep, GroupAvailability } from '../interfaces/types'
+import type { FlowStep, GroupAvailability } from '../types/types'
 import type { Advertisement } from '../models/Advertisement';
 
 // ===== SISTEMA DE PROGRAMACIÓN DE VIDEOS =====
