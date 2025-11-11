@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { PaginatedUsersResponse, UserProfileToken, UserResponseDto } from "../models/User";
+import type { User, UserProfileToken, UserResponseDto } from "../models/User";
 import { handleError } from "../helpers/ErrorHandler";
 import type { FormDataUser } from "../types/user.types";
 const URL = import.meta.env.VITE_URL_BASE!
@@ -88,53 +88,32 @@ export const getProfileAPI = async () => {
     }       
 }
 
-// Get All users (Admin)
-export const getAllUsersAPI = async () => {
+export const getUserProfilePageAPI = async () => {
     try {
-        const data = await api.get<PaginatedUsersResponse>(`/users`,{
+        const response = await api.get<User>(`/user/profile`, {            
             headers: {                  
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
                 'origin': 'x-requested-with',
                 'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
             }
-        });
-        return data
+        });                
+        if (response.status == 401) return undefined;
+        return response
     } catch (error) {
-        console.error("Error en getAllUsersAPI:", error);
+        if (
+            typeof error === "object" &&
+            error !== null &&
+            "response" in error &&
+            typeof (error as any).response === "object" &&
+            (error as any).response !== null &&
+            "status" in (error as any).response &&
+            (error as any).response.status === 401
+        ) {
+            return undefined;
+        }
         handleError(error);
-    }   
+        return null
+    }       
 }
 
-// Delete User (Admin)      
-export const deleteUserAPI = async (userId: string) => {
-    try {
-        const data = await api.delete<UserResponseDto>(`/users/${userId}`, {
-            headers: {
-               
-            }
-        });
-        return data
-    } catch (error) {
-        console.error("Error en deleteUserAPI:", error);
-        handleError(error);
-    }
-}
-
-// Update User (Admin)  
-export const updateUserAPI = async (userId: string, userData: any) => {
-    try {
-        const data = await api.put<UserResponseDto>(`/users/${userId}`, userData, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-                'origin': 'x-requested-with',
-                'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
-            }
-        });
-        return data
-    } catch (error) {
-        console.error("Error en updateUserAPI:", error);
-        handleError(error);
-    }   
-}

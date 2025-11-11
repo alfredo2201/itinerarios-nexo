@@ -24,20 +24,20 @@ function AdsRow({ id, fileName, URL, rep, state, userRole, onUrlChange, deleteVi
     }
 
     return (
-        <div className="flex flex-row px-3 py-2 border-b border-gray-300 items-center">
-            <div className="w-xs text-[13px] 2xl:text-[16px] font-normal">{fileName}</div>
-            <div className="w-xs text-[13px] 2xl:text-[16px] font-normal text-center">{rep}</div>
-            <div className="w-xs text-[13px] 2xl:text-[16px] font-normal text-center">{state == "active" ? "Activo" : "Inactivo"}</div>
-            <div className="w-xs text-center">
+        <div className="flex flex-row px-3 py-2 border-b border-gray-300 items-center dark:border-gray-700 dark:bg-gray-700 transition duration-150 ease-in-out text-[13px] 2xl:text-[14px]">
+            <div className="w-1/5 font-normal dark:text-white">{fileName}</div>
+            <div className="w-1/5 text-center dark:text-white">{rep}</div>
+            <div className="w-1/5 text-center dark:text-white">{state == "active" ? "Activo" : "Inactivo"}</div>
+            <div className="w-1/5 text-center">
                 <button
                     onClick={handleOnClickVideo}
-                    className="bg-[#023672] w-25 rounded-full text-white text-[13px] 2xl:text-[14px] p-1 hover:bg-[#4185D4] cursor-pointer transition duration-150 ease-in-out"
+                    className="bg-[#023672] w-25 rounded-full text-white p-1 hover:bg-[#4185D4] cursor-pointer transition duration-150 ease-in-out"
                 >
                     Ver Video
                 </button>
             </div>
             {(userRole === UserRole.ADMINISTRADOR || userRole === UserRole.EDITOR) && (
-                <div className="w-xs flex items-center justify-center h-12 text-[14px]" onClick={handleOnDeleteVideo}>
+                <div className="w-1/5 flex items-center justify-center h-12 text-[14px]" onClick={handleOnDeleteVideo}>
                     <TrashIcon className="cursor-pointer" />
                 </div>
             )}

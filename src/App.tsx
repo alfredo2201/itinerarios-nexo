@@ -8,7 +8,7 @@ import "@fontsource/roboto/700.css";
 import "sweetalert2/src/sweetalert2.scss";
 
 /* Imports de páginas */
-import MainPage from "./pages/Admin/Inicio/MainPage.tsx";
+import MainPage from "./pages/Admin/Itinerarios/MainPage.tsx";
 import MainLayout from "./pages/layouts/MainLayout.tsx";
 import NotFoundPage from "./pages/NotFoundPage.tsx";
 import AdminBusesPage from "./pages/Admin/Transporte/TransportPage.tsx";
@@ -24,11 +24,15 @@ import UserPage from "./pages/Admin/Usuarios/UsersPage.tsx";
 import Unauthorized from "./components/Unauthorized.tsx";
 import LoginRoute from "./components/Login/LoginRoute.tsx";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
+import ProfileUserPage from "./pages/Admin/Usuarios/ProfileUserPage.tsx";
+import SettingsPage from "./pages/Admin/Usuarios/settingsPage.tsx";
 
 /* Contexto y tipos */
 import { UserProvider } from "./hooks/useAuth.tsx";
 import { UserRole } from "./models/User.ts";
 import type { RouterHandle } from "./types/types.ts";
+import MaintenancePage from "./pages/MaintenancePage.tsx";
+
 
 const router = createBrowserRouter([
   {
@@ -97,6 +101,24 @@ const router = createBrowserRouter([
               },
             ],
           },
+          // 🔒 Solo admin, editor, visualizador
+          {
+            element: (
+              <ProtectedRoute allowedRoles={[UserRole.ADMINISTRADOR, UserRole.EDITOR, UserRole.VISUALIZADOR]} />
+            ),
+            children: [
+              {
+                path: "/dashboard/users/profile",
+                element: <ProfileUserPage />,
+                handle: { title: "Perfil de Usuario" as RouterHandle },
+              },
+              {
+                path: "/dashboard/users/settings",
+                element: <MaintenancePage />,
+                handle: { title: "Configuraciones" as RouterHandle },
+              },
+            ],
+          },
           // 🔒 Admin y Editor
           {
             element: (
@@ -134,7 +156,7 @@ const router = createBrowserRouter([
                 children: [
                   {
                     path: "/dashboard/tracking",
-                    element: <TrackingPage />,
+                    element: <MaintenancePage />,
                     handle: { title: "Rastreo" as RouterHandle },
                   },
                 ],
@@ -183,8 +205,7 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <React.StrictMode>
-      {/* ✅ Ahora el UserProvider envuelve TODO el router */}
+    <React.StrictMode>      
       <RouterProvider router={router} />
       <Toaster position="top-right" />
     </React.StrictMode>

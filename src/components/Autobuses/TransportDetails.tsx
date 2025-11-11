@@ -7,7 +7,7 @@ interface TransportDetailsProps {
 
 export default function TransportDetails({ transport }: TransportDetailsProps) {
   return (
-    <div className="h-50 mt-5 rounded-lg px-4 py-2 shadow-inner bg-[#F3F6F9] animate-slide-down animation-delay-100">
+    <div className="h-50 mt-5 rounded-lg px-4 py-2 shadow-inner bg-[#F3F6F9] animate-slide-down animation-delay-100 dark:bg-gray-800 dark:text-white">
       <p className="text-[16px] font-bold text-center">Información adicional</p>
       <div className="text-[13px] justify-center flex flex-col gap-1 pt-2">
         <p><span className="font-bold">Registro:</span> {transport.registration}</p>

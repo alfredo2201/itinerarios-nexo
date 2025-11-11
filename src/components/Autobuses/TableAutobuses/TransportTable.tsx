@@ -30,7 +30,7 @@ export default function TransportTable({ data, loading, onSelectTransport }: Tra
   return (
     <table className="table-auto md:table-fixed">
       <thead>
-        <tr className="bg-[#A3C0E2] text-black w-full">
+        <tr className="bg-[#A3C0E2] text-black w-full dark:bg-gray-600 dark:text-white">
           <th className="text-[13px] 2xl:text-[16px] w-2xs p-2">Numero</th>
           <th className="text-[13px] 2xl:text-[16px] w-lg p-2">Estado</th>
           <th className="text-[13px] 2xl:text-[16px] w-2xs p-2">Ultima vez visto</th>

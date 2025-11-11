@@ -112,7 +112,7 @@ function TrackingPage() {
                         */}
                 </div>
             </div>
-            <div className="w-5/7 h-full">
+            <div className="w-5/7 h-full relative">
                 {error && <p>Error: {error}</p>}
 
                 <MapContainer center={ubicacion} zoom={15} scrollWheelZoom={false} doubleClickZoom={true} >

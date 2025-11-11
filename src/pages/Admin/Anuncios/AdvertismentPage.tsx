@@ -109,75 +109,73 @@ function AdvertismentPage() {
 
 
     return (
-        <div className="flex flex-row sm:flex-col w-full h-full p-5 2xl:p-10 gap-5">
-            <div className="flex flex-col sm:flex-row h-full w-full">
-                <div className="flex justify-center bg-white h-full w-3/5 rounded-lg p-3 sm:p-8">
+        <div className="flex flex-row sm:flex-col w-full">
+            <div className="flex flex-col sm:flex-row h-full w-full p-8 gap-4">
+                <div className="flex justify-center h-full w-1/2">
                     {loading ?
                         <SpinnerSvg size={100} className="text-blue-100 sefl-center" /> :
-                        <div className="w-full">
-                            <div className="">
-                                <div className="flex flex-col w-full bg-[#B1C7E2] rounded-tr-lg rounded-tl-lg overflow-auto">
-                                    <div className="flex flex-row px-3 py-2 font-semibold text-[13px] 2xl:text-[18px]">
-                                        <div className="w-xs text-start">Nombre del archivo</div>
-                                        <div className="w-xs text-center">Repeticiones al dia</div>
-                                        <div className="w-xs text-center">Estado</div>
-                                        <div className="w-xs text-center">Vista previa</div>
-                                        {(user?.role === UserRole.ADMINISTRADOR || user?.role === UserRole.EDITOR) && (
-                                            <div className="w-xs text-center">Eliminar</div>
-                                        )}
-                                    </div>
-                                </div>
-                                <div className="flex flex-col w-full bg-white overflow-auto">
-                                    {videosList.map(item =>
-                                        <AdsRow
-                                            key={item._id}
-                                            id={item._id}
-                                            fileName={item.fileName}
-                                            state={item.status}
-                                            rep={item.repetitions}
-                                            userRole={user?.role}
-                                            URL={item.URL}
-                                            onUrlChange={setURLVideo}
-                                            deleteVideo={handleDeleteAds}
-                                        />
+                        <div className="flex flex-col w-full h-full rounded-lg shadow-lg">
+                            <div className="flex flex-col w-full bg-[#B1C7E2] rounded-tr-lg rounded-tl-lg">
+                                <div className="flex flex-row px-3 w-full py-2 font-semibold text-[14px] 2xl:text-[16px]">
+                                    <div className="w-1/5 text-start">Nombre del archivo</div>
+                                    <div className="w-1/5 text-center">Repeticiones al dia</div>
+                                    <div className="w-1/5 text-center">Estado</div>
+                                    <div className="w-1/5 text-center">Vista previa</div>
+                                    {(user?.role === UserRole.ADMINISTRADOR || user?.role === UserRole.EDITOR) && (
+                                        <div className="w-1/5 text-center">Eliminar</div>
                                     )}
                                 </div>
+                            </div>
+                            <div className="flex flex-col w-full bg-white overflow-auto">
+                                {videosList.map(item =>
+                                    <AdsRow
+                                        key={item._id}
+                                        id={item._id}
+                                        fileName={item.fileName}
+                                        state={item.status}
+                                        rep={item.repetitions}
+                                        userRole={user?.role}
+                                        URL={item.URL}
+                                        onUrlChange={setURLVideo}
+                                        deleteVideo={handleDeleteAds}
+                                    />
+                                )}
                             </div>
                         </div>
                     }
                 </div>
-
-                <div className="bg-black 2xl:w-200 w-150 2xl:h-82 xl:h-59 justify-center 2xl:ml-15 ml-5">
-                    {videoName != '' ?
-                        <ReactPlayer
-                            ref={playerRef}
-                            src={videoName}
-                            playing={false}
-                            muted={false}
-                            volume={0.3}
-                            controls={true}
-                            style={{
-                                width: "100%",
-                                height: "100%",
-                                aspectRatio: "16/9",
-                            }} /> :
-                        <div className="flex flex-col justify-center h-full items-center">
-                            <p className="text-white font-bold">Vista previa no disponible</p>
-                        </div>
-                    }
-
+                {/* Contenedor del Reproductor de video */}
+                <div className="bg-white w-1/2">
+                    <div className="bg-black w-full h-full justify-center">
+                        {videoName != '' ?
+                            <ReactPlayer
+                                ref={playerRef}
+                                src={videoName}
+                                playing={false}
+                                muted={false}
+                                volume={0.3}
+                                controls={true}
+                                style={{
+                                    width: "100%",
+                                    height: "100%",
+                                    aspectRatio: "16/9",
+                                }} /> :
+                            <div className="flex flex-col justify-center h-full items-center 2xl:h-114 h-74">
+                                <p className="text-white font-bold">Vista previa no disponible</p>
+                            </div>
+                        }
+                    </div>
                 </div>
             </div>
             {(user?.role === UserRole.ADMINISTRADOR || user?.role === UserRole.EDITOR) && (<>
-                <div className="flex flex-col w-full items-end px-20 2xl:px-50">
-                    <Link to={"/dashboard/advertisement/add"} className="flex justify-center bg-[#023672] h-10 2xl:w-1/5 w-1/4 rounded-full text-white text-[13px] 2xl:text-[15px] hover:bg-[#4185D4] cursor-pointer transition duration-150 ease-in-out">
+                <div className="grid grid-cols-6 w-full h-1/4 justify-center items-end ">
+                    <Link to={"/dashboard/advertisement/add"} className="flex justify-center bg-[#023672] h-10 w-full col-start-5 rounded-full text-white text-[13px] 2xl:text-[15px] hover:bg-[#4185D4] cursor-pointer transition duration-150 ease-in-out">
                         <button className="cursor-pointer">
                             Subir video
                         </button>
                     </Link>
                 </div>
             </>)}
-
         </div>
     )
 }

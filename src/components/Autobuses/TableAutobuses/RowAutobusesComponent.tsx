@@ -7,7 +7,7 @@ interface Props {
 }
 function RowAutobusesComponent({ id, numero, estado, ultimaVista, toggleItinerarios }: Props) {
     return (
-        <tr className="bg-white text-black border-b-1 border-gray-100 hover:bg-gray-200 cursor-pointer transition duration-150 ease-in-out"
+        <tr className="bg-white text-black border-b-1 border-gray-100 hover:bg-gray-200 cursor-pointer transition duration-150 ease-in-out dark:bg-gray-800 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700"
             onClick={() => toggleItinerarios(id)}>
             <td className="py-2 text-center">Num.{numero}</td>
             {estado ?

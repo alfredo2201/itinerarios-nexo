@@ -11,6 +11,14 @@ export interface PaginatedUsersResponse {
     totalPages: number;
 }
 
+export interface PaginatedUsersResponseForAdmin {
+    users: User[];
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+}
+
 export interface UserResponseDto {
     id: string;
     email: string;
@@ -50,6 +58,25 @@ export enum InitialView {
     ANUNCIOS = "advertisements"
 }
 
+export interface SavedFilter {
+    nombre: string;
+    filtros: {
+        empresa?: string;
+        ruta?: string;
+        fecha_desde?: Date;
+        fecha_hasta?: Date;
+    };
+}
+
+export interface UserPreferences {
+    tema: Theme;
+    vista_inicial: InitialView;
+    filtros_guardados: SavedFilter[];
+    notificaciones: {
+        nuevos_archivos: boolean;
+        actualizaciones_sistema: boolean;
+    };
+}
 export enum Department {
     OPERACIONES = "operaciones",
     ADMINISTRACION = "administracion",
@@ -88,24 +115,8 @@ export interface CompanyInfo {
     acceso_restringido: boolean;
     empresas_permitidas: string[];
 }
-export interface UserPreferences {
-    tema: Theme;
-    vista_inicial: InitialView;
-    filtros_guardados: SavedFilter[];
-    notificaciones: {
-        nuevos_archivos: boolean;
-        actualizaciones_sistema: boolean;
-    };
-}
-export interface SavedFilter {
-    nombre: string;
-    filtros: {
-        empresa?: string;
-        ruta?: string;
-        fecha_desde?: Date;
-        fecha_hasta?: Date;
-    };
-}
+
+
 
 export interface UserActivity {
     archivos_subidos: number;

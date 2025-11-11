@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { saveItineraryForCompany } from "../services/ItineraryService";
 import { ALLOWED_FILE_TYPES, MAX_FILE_SIZE } from "../types/types";
+import toast from "react-hot-toast";
 
 export default function useFileUpload(companyId: string, onSuccess: () => void) {
   const [file, setFile] = useState<File | null>(null);  
@@ -23,7 +24,7 @@ export default function useFileUpload(companyId: string, onSuccess: () => void) 
 
     const validation = validateFile(selectedFile);
     if (!validation.valid) {
-      alert(validation.error);
+      toast.error(validation.error || 'Error de validación del archivo');
       return;
     }
 
@@ -32,7 +33,7 @@ export default function useFileUpload(companyId: string, onSuccess: () => void) 
 
   const handleSubmit = async (date:string) => {
     if (!file) {
-      alert('No hay ningún archivo seleccionado');
+      toast.error('No hay ningún archivo seleccionado');
       return;
     }
 
@@ -47,15 +48,15 @@ export default function useFileUpload(companyId: string, onSuccess: () => void) 
       const response = await saveItineraryForCompany(formData);
 
       if (response.message === 'Datos guardado exitosamente') {
-        alert('Itinerarios guardados exitosamente');
+        toast.success('Itinerarios guardados exitosamente');
         setFile(null);
         onSuccess();
       } else {
-        alert('Error al guardar los itinerarios');
+        toast.error('Error al guardar los itinerarios');
       }
     } catch (error) {
       console.error('Error uploading file:', error);
-      alert('Error al guardar los itinerarios');
+      toast.error('Error al guardar los itinerarios');
     } finally {
       setUploading(false);
     }

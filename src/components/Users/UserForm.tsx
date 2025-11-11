@@ -195,57 +195,60 @@ export default function UserForm({ isOpen, onClose }: ModalFormProps) {
                     {currentStep === 1 && (
                         <div className="h-64 grid grid-cols-2 gap-4 animate-fadeIn">
                             <div>
-                                <label>Nombre:</label>
+                                <label htmlFor="firstName">Nombre:</label>
                                 <input
                                     className="h-10 w-full rounded-md border border-gray-300 px-3"
                                     type="text"
-                                    name="firstName"
+                                    id="firstName"
                                     value={formData.firstName}
                                     onChange={handleInputChange}
                                     required
                                 />
                             </div>
                             <div>
-                                <label>Apellido:</label>
+                                <label htmlFor="lastName">Apellido:</label>
                                 <input
                                     className="h-10 w-full rounded-md border border-gray-300 px-3"
                                     type="text"
-                                    name="lastName"
+                                    id="lastName"
                                     value={formData.lastName}
                                     onChange={handleInputChange}
                                     required
                                 />
                             </div>
                             <div>
-                                <label>Teléfono:</label>
+                                <label htmlFor="phone">Teléfono:</label>
                                 <input
                                     className="h-10 w-full rounded-md border border-gray-300 px-3"
                                     type="tel"
-                                    name="phone"
+                                    id="phone"
+                                    autoComplete="off"
                                     value={formData.phone}
                                     onChange={handleInputChange}
                                 />
                             </div>
                             <div>
-                                <label>Correo Electrónico:</label>
+                                <label htmlFor="email">Correo Electrónico:</label>
                                 <input
                                     className="h-10 w-full rounded-md border border-gray-300 px-3"
                                     type="email"
-                                    name="email"
+                                    id="email"
                                     value={formData.email}
                                     onChange={handleInputChange}
+                                    autoComplete="off"
                                     required
                                 />
                             </div>
                             <div>
-                                <label>Contraseña:</label>
+                                <label htmlFor="password">Contraseña:</label>
                                 <div className="relative">
                                     <input
                                         className="h-10 w-full rounded-md border border-gray-300 px-3 pr-10"
                                         type={showPassword ? "text" : "password"}
-                                        name="password"
+                                        id="password"
                                         value={formData.password}
                                         onChange={handleInputChange}
+                                        autoComplete="off"
                                         required
                                     />
                                     <button
@@ -274,15 +277,16 @@ export default function UserForm({ isOpen, onClose }: ModalFormProps) {
                                 )}
                             </div>
                             <div>
-                                <label>Confirmar Contraseña:</label>
+                                <label htmlFor="confirmPassword">Confirmar Contraseña:</label>
                                 <div className="relative">
                                     <input
                                         className="h-10 w-full rounded-md border border-gray-300 px-3 pr-10"
                                         type={showConfirmPassword ? "text" : "password"}
-                                        name="confirmPassword"
+                                        id="confirmPassword"
                                         value={formData.confirmPassword || ""}
                                         onChange={handleInputChange}
                                         required
+                                        autoComplete="off"
                                     />
                                     <button
                                         type="button"
@@ -318,10 +322,10 @@ export default function UserForm({ isOpen, onClose }: ModalFormProps) {
                     {currentStep === 2 && (
                         <div className="grid grid-cols-2 gap-4 mb-4 animate-fadeIn">
                             <div className="flex flex-col">
-                                <label>Rol:</label>
+                                <label htmlFor="role">Rol:</label>
                                 <select
                                     className="h-10 rounded-md border border-gray-300 px-3"
-                                    name="role"
+                                    id="role"
                                     value={formData.role}
                                     onChange={handleInputChange}
                                     required
@@ -332,7 +336,7 @@ export default function UserForm({ isOpen, onClose }: ModalFormProps) {
                                 </select>
                             </div>
                             <div>
-                                <label>Permisos:</label>
+                                <label htmlFor="permissions">Permisos:</label>
                                 <div className="grid grid-cols-2 gap-4">
                                     <div className="gap-2">
                                         Archivos:
@@ -478,8 +482,9 @@ export default function UserForm({ isOpen, onClose }: ModalFormProps) {
                         <div>
                             <div className="h-64 grid grid-cols-2 gap-4 animate-fadeIn">
                                 <div>
-                                    <label>Empresa:</label>
+                                    <label htmlFor="empresa">Empresa:</label>
                                     <input
+                                        id="empresa"
                                         className="h-10 w-full rounded-md border border-gray-300 px-3"
                                         type="text"
                                         value={formData.empresaInfo.empresa || ''}
@@ -487,8 +492,9 @@ export default function UserForm({ isOpen, onClose }: ModalFormProps) {
                                     />
                                 </div>
                                 <div>
-                                    <label>Cargo:</label>
+                                    <label htmlFor="cargo">Cargo:</label>
                                     <input
+                                        id="cargo"
                                         className="h-10 w-full rounded-md border border-gray-300 px-3"
                                         type="text"
                                         value={formData.empresaInfo.cargo || ''}
@@ -496,8 +502,9 @@ export default function UserForm({ isOpen, onClose }: ModalFormProps) {
                                     />
                                 </div>
                                 <div>
-                                    <label>Departamento:</label>
+                                    <label htmlFor="department">Departamento:</label>
                                     <select
+                                        id="department"
                                         className="h-10 w-full rounded-md border border-gray-300 px-3"
                                         value={formData.empresaInfo.departamento || ''}
                                         onChange={(e) => handleEmpresaInfoChange('departamento', e.target.value as Department)}
@@ -509,8 +516,9 @@ export default function UserForm({ isOpen, onClose }: ModalFormProps) {
                                     </select>
                                 </div>
                                 <div className="flex">
-                                    <label className="flex self-center gap-2">
+                                    <label htmlFor="acceso_restringido" className="flex self-center gap-2">
                                         <input
+                                            id="acceso_restringido"
                                             type="checkbox"
                                             checked={formData.empresaInfo.acceso_restringido}
                                             onChange={(e) => handleEmpresaInfoChange('acceso_restringido', e.target.checked)}
@@ -519,8 +527,9 @@ export default function UserForm({ isOpen, onClose }: ModalFormProps) {
                                     </label>
                                 </div>
                                 <div className="col-span-2">
-                                    <label>Empresas Permitidas (separadas por coma):</label>
+                                    <label htmlFor="empresas_permitidas">Empresas Permitidas (separadas por coma):</label>
                                     <input
+                                        id="empresas_permitidas"
                                         className="h-10 w-full rounded-md border border-gray-300 px-3"
                                         type="text"
                                         value={formData.empresaInfo.empresas_permitidas.join(', ')}

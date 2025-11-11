@@ -1,7 +1,5 @@
 import { Link } from "react-router";
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
-
 import BoxBuses from "../../../components/Autobuses/BoxBuses/BoxBuses";
 import { getAllCompanies, getCompanyByName } from "../../../services/CompanyService";
 import type { Company } from "../../../models/Trasportation";
@@ -24,7 +22,7 @@ function AdminBusesPage() {
             if (!allowedCompaniesIds || allowedCompaniesIds.length === 0) {
                 setCompanies([]);
                 return;
-            }            
+            }
             const allCompanies = await getCompanyByName(allowedCompaniesIds[0]);
             setCompanies([allCompanies]);
         } catch (error) {
@@ -54,23 +52,6 @@ function AdminBusesPage() {
         }
     };
 
-    useEffect(() => {
-        const formSuccess = sessionStorage.getItem('formSuccess');
-        if (formSuccess === 'true') {
-            toast.success(
-                <span>
-                    <b>Agregado correctamente</b>
-                    <p>Se agrego una nueva linea de autobuses a la base de datos</p>
-                </span>,
-                {
-                    duration: 4000,
-                    position: "bottom-right"
-                }
-            );
-            sessionStorage.removeItem('formSuccess');
-        }
-    }, []);
-
     //UseEffect para obtener los datos de las lineas de autobuses
     useEffect(() => {
         if (user?.role === UserRole.ADMINISTRADOR) {
@@ -82,15 +63,15 @@ function AdminBusesPage() {
 
 
     return (
-        <div className="flex flex-col h-full">
+        <>
             <>
                 {loading ?
 
-                    <div className="flex justify-center items-center h-150 pt-15 px-5 gap-5 md:gap-10">
+                    <div className="flex justify-center items-center h-150 pt-15 px-5 gap-5 md:gap-10 dark:bg-gray-900">
                         <SpinnerSvg size={100} className="text-blue-600" />
                     </div>
                     :
-                    <div className="flex flex-col md:flex-row md:flex-wrap items-center h-5/6 2xl:h-150 py-15 px-5 gap-5 md:gap-10 justify-center">
+                    <div className="flex flex-col md:flex-row md:flex-wrap items-center h-5/6 2xl:h-150 py-15 px-5 gap-5 md:gap-10 justify-center dark:bg-gray-900 overflow-y-auto scrollbar-hide">
                         {companies && companies.length > 0 ? (
                             companies.map((company) => (
                                 <BoxBuses key={company._id} foto={company.image} id={company._id} />
@@ -103,14 +84,14 @@ function AdminBusesPage() {
             </>
 
             {user?.role === UserRole.ADMINISTRADOR && (
-                <div className="flex justify-end items-center pr-10 h-1/6 ">
+                <div className="flex justify-end items-center pr-10 h-1/6 dark:bg-gray-900">
                     <button
                         className="bg-[#023672] text-white w-1/8 h-10 rounded-lg justify-end min-w-30 hover:bg-[#0251B3] cursor-pointer transition duration-150 ease-in-out">
                         <Link to={"/dashboard/transports_info/add"}>Agregar</Link>
                     </button>
                 </div>
             )}
-        </div>
+        </>
 
     )
 }

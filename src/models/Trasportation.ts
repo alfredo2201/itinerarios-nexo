@@ -1,8 +1,17 @@
+export enum SubscriptionPlan {
+    BASIC = 'BASIC',
+    PREMIUM = 'PREMIUM',
+    ENTERPRISE = 'ENTERPRISE'
+}
+
 export type Company = {
     _id?: string;
     companyName: string;
     image: string;
-    isActive?: boolean;
+    webPage?: string;
+    numberContact?: string;
+    suscriptionPlan?: SubscriptionPlan;
+    isActive: boolean;    
     createdAt?: Date;
     updatedAt?: Date;
 }

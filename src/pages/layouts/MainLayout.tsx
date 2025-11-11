@@ -1,10 +1,10 @@
-import { Outlet, useMatches } from "react-router";
+import { Outlet } from "react-router";
 import BoxAsidebar from "../../components/BoxSidebar/BoxAsidebar";
-import type { RouterHandle } from "../../types/types";
 import { useUser } from "../../hooks/useUser";
 import { logoutAPI } from "../../services/AuthService";
 import useDashboardAnimation from "../../hooks/UseDashboardAnimation";
 import { UserRole } from "../../models/User";
+import Header from "../../components/MainLayout/Header";
 interface BoxInfoProps {
     title: string,
     url: string
@@ -46,7 +46,7 @@ const infoAdmin: BoxInfoProps[] = [
         icon: "M14 2.58711L1.85163 13H13.5C13.7761 13 14 12.7761 14 12.5V2.58711ZM0.762879 13.8067L0.825396 13.8796L0.854717 13.8545C1.05017 13.9478 1.26899 14 1.5 14H13.5C14.3284 14 15 13.3284 15 12.5V2.5C15 1.93949 14.6926 1.45078 14.2371 1.19331L14.1746 1.12037L14.1453 1.1455C13.9498 1.05222 13.731 1 13.5 1H1.5C0.671573 1 0 1.67157 0 2.5V12.5C0 13.0605 0.307435 13.5492 0.762879 13.8067ZM1 12.4129L13.1484 2H1.5C1.22386 2 1 2.22386 1 2.5V12.4129Z"
     },
 ]
-const navUsers = infoUsers.map(item =>     
+const navUsers = infoUsers.map(item =>
     <BoxAsidebar key={item.url} title={item.title} url={item.url} pathIcon={item.icon} />
 )
 const navAdmin = infoDisplay.map(item =>
@@ -59,12 +59,8 @@ const navItinerario = infoAdmin.map(item =>
 
 
 function MainLayout() {
-    const { user, setUserContext } = useUser()    
-    const busCentralName = localStorage.getItem("busCentralName") || "Central Faustino Félix Serna";
-    const matches = useMatches();
-    // Hook para animaciones
-    const { isLoaded, sidebarVisible, headerVisible, contentVisible } = useDashboardAnimation();
-
+    const { user, setUserContext } = useUser()
+    const { isLoaded, sidebarVisible, contentVisible } = useDashboardAnimation();
     const handleLogout = async () => {
         await logoutAPI().then(
             () => {
@@ -74,14 +70,9 @@ function MainLayout() {
                 }, 100);
             }
         );
-
-
     }
 
-    const currentTitle = matches
-        .filter((match) => (match.handle as RouterHandle)?.title)
-        .map((match) => (match.handle as RouterHandle).title!)
-        .pop();
+
 
     return (
         <div className={`flex min-h-screen flex-row transition-all duration-700 ${isLoaded ? 'opacity-100' : 'opacity-0'
@@ -94,10 +85,10 @@ function MainLayout() {
                 } hidden lg:block`}>
                 <aside
                     id="logo-sidebar"
-                    className="top-0 left-0 z-40 w-60 h-screen pt-20 bg-white border-r border-gray-200 dark:bg-[#023672] dark:border-gray-700"
+                    className="top-0 left-0 z-40 w-60 h-screen pt-20 border-r border-gray-600 bg-[#023672]"
                     aria-label="Sidebar"
                 >
-                    <div className="w-auto px-3 pb-4 overflow-y-auto bg-white dark:bg-[#023672]">
+                    <div className="w-auto px-3 pb-4 overflow-y-auto bg-[#023672]">
 
                         {/* Sección Admin con animación escalonada */}
                         <div className={`transform transition-all duration-500 ${sidebarVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
@@ -133,64 +124,21 @@ function MainLayout() {
                             </div>
                         )}
                     </div>
-
-                    {/* Botón de logout con animación */}
-                    <div className={`flex items-end transform transition-all duration-500 ${sidebarVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-                        }`} style={{ transitionDelay: '0.6s' }}>
-                        <div
-                            onClick={handleLogout}
-                            className="flex flex-row justify-start items-center gap-2 py-2 px-4 w-40 ml-3 text-white rounded-full cursor-pointer hover:bg-[#4185D4] dark:hover:bg-[#4185D4] group transition-all duration-200 ease-in-out hover:scale-105 active:scale-95"
-                        >
-                            <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M3 1C2.44771 1 2 1.44772 2 2V13C2 13.5523 2.44772 14 3 14H10.5C10.7761 14 11 13.7761 11 13.5C11 13.2239 10.7761 13 10.5 13H3V2L10.5 2C10.7761 2 11 1.77614 11 1.5C11 1.22386 10.7761 1 10.5 1H3ZM12.6036 4.89645C12.4083 4.70118 12.0917 4.70118 11.8964 4.89645C11.7012 5.09171 11.7012 5.40829 11.8964 5.60355L13.2929 7H6.5C6.22386 7 6 7.22386 6 7.5C6 7.77614 6.22386 8 6.5 8H13.2929L11.8964 9.39645C11.7012 9.59171 11.7012 9.90829 11.8964 10.1036C12.0917 10.2988 12.4083 10.2988 12.6036 10.1036L14.8536 7.85355C15.0488 7.65829 15.0488 7.34171 14.8536 7.14645L12.6036 4.89645Z" fill="currentColor" fillRule="evenodd" clipRule="evenodd"></path>
-                            </svg>
-                            <p>Cerrar Sesion</p>
-                        </div>
-                    </div>
                 </aside>
             </div>
 
             {/* Contenedor de la segunda columna */}
-            <div className="h-screen flex-1 overflow-y-auto scrollbar-hide">
-
-                {/* Header con animación de entrada desde arriba */}
-                <div className={`w-full h-1/15 py-4 px-5 md:p-1 md:px-5 2xl:py-3 bg-white transform transition-all duration-500 ${headerVisible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
-                    }`}>
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center justify-start rtl:justify-end">
-                            <span className={`self-center text-lg font-semibold 2xl:text-[22px] xl:text-[18px] text-[18px] text-[#023672] transform transition-all duration-500 ${headerVisible ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
-                                }`} style={{ transitionDelay: '0.1s' }}>
-                                {currentTitle} - {busCentralName}
-                            </span>
-                        </div>
-
-                        <div className={`flex items-center ms-3 transform transition-all duration-500 ${headerVisible ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
-                            }`} style={{ transitionDelay: '0.2s' }}>
-                            <div className="flex flex-row gap-2 justify-center items-center">
-                                <p className="text-center hidden lg:inline">{user ? `${user?.firstName} ${user?.lastName}` : ''}</p>
-                                <button
-                                    type="button"
-                                    className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600 transition-all duration-200 hover:scale-110 active:scale-95"
-                                    aria-expanded="false"
-                                    data-dropdown-toggle="dropdown-user"
-                                >
-                                    <span className="sr-only">Open user menu</span>
-                                    <img
-                                        className="w-7 h-7 sm:w-8 sm:h-8 rounded-full"
-                                        alt="user photo"
-                                        src="https://www.reshot.com/preview-assets/icons/F3N5JXHBEG/user-F3N5JXHBEG.svg"
-                                    />
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+            <div className="h-screen w-full flex-1 bg-white dark:bg-gray-900">
+                {/* Header con overflow visible */}
+                <div className="relative z-50">
+                    <Header handleLogout={handleLogout}></Header>
                 </div>
 
-                {/* Contenedor del Outlet con animación de fade in */}
-                <div className={`w-full h-14/15 transform transition-all duration-700 ${contentVisible
+                {/* Contenedor del Outlet */}
+                <div className={`w-full h-14/15 transform transition-all duration-700 dark:bg-gray-900 bg-gray-100 overflow-y-auto scrollbar-hide ${contentVisible
                     ? 'translate-y-0 opacity-100 scale-100'
                     : 'translate-y-4 opacity-0 scale-98'
-                    } `}>
+                    }`}>
                     <Outlet />
                 </div>
             </div>
