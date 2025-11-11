@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
 import { Save, Moon, Sun, Monitor, Trash2, Plus } from 'lucide-react';
+import { useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 
 // Enums y tipos
