@@ -13,7 +13,7 @@ import MainLayout from "./pages/layouts/MainLayout.tsx";
 import NotFoundPage from "./pages/NotFoundPage.tsx";
 import AdminBusesPage from "./pages/Admin/Transporte/TransportPage.tsx";
 import DisplayPage from "./pages/Display/DisplayPage.tsx";
-import TrackingPage from "./pages/Admin/Rastreo/TrackingPage.tsx";
+// import TrackingPage from "./pages/Admin/Rastreo/TrackingPage.tsx";
 import AdvertismentPage from "./pages/Admin/Anuncios/AdvertismentPage.tsx";
 import BusInfoPage from "./pages/Admin/Transporte/TransportInfoPage.tsx";
 import ChildrenLayout from "./pages/layouts/ChildrenLayout.tsx";
@@ -25,7 +25,6 @@ import Unauthorized from "./components/Unauthorized.tsx";
 import LoginRoute from "./components/Login/LoginRoute.tsx";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
 import ProfileUserPage from "./pages/Admin/Usuarios/ProfileUserPage.tsx";
-import SettingsPage from "./pages/Admin/Usuarios/settingsPage.tsx";
 
 /* Contexto y tipos */
 import { UserProvider } from "./hooks/useAuth.tsx";
