@@ -13,7 +13,7 @@ export const insertNewCompanyAndInfo = async (data:FormData): Promise<CompanyRes
         const response = await api.post(`/companies`,data ,{
             headers: {
                 'Content-Type': 'multipart/form-data',                
-                'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
+               
             },
         });
         return response.data;
@@ -31,7 +31,7 @@ export const getAllCompanies = async (): Promise<Company[]> => {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
                 
-                'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
+               
             }
         });
         return response.data;
@@ -50,7 +50,7 @@ export const getCompanyById = async (id: string): Promise<Company> => {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
                 
-                'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
+               
             }
         });
         return response.data;
@@ -69,7 +69,7 @@ export const getCompanyByName = async (companyName: string): Promise<Company> =>
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
                 
-                'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
+               
             }
         });
         return response.data;

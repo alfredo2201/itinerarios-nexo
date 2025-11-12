@@ -16,7 +16,7 @@ export const getVideos = async () => {
         const response = await api.get(`/videos/ads`, {
             headers: {
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
+               
             }
         });
         return response.data;
@@ -32,7 +32,7 @@ export const getVideosByRepetitions = async (resolution: number) => {
         const response = await api.get(`/videos/ads/format/${resolution}`, {
             headers: {
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
+               
             }
         });
         return response.data;
@@ -52,7 +52,7 @@ export const getVideosByCompanyName = async (companyName: string) => {
             },
             headers: {
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
+               
             }
         });
         return response.data;   
@@ -79,7 +79,7 @@ export const getVideosByResolution = async (resolution: string, signal: AbortSig
                 signal: signal,
                 headers: {
                     'Content-Type': 'application/json',
-                    'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
+                   
                 }
             });            
             return response.data;
@@ -116,7 +116,7 @@ export async function addNewVideo(video: File): Promise<VideoData> {
         const response = await api.post(`/cloud/upload/video`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
-                'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
+               
             }
         });
         return response.data;
@@ -140,7 +140,7 @@ export async function deleteVideo(publicId: string | undefined): Promise<string>
             },
             headers: {
                 'Content-Type': 'multipart/form-data',
-                'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
+               
             }
         });
         return 'ok';
@@ -159,7 +159,7 @@ export async function createAdvertisement(data: Advertisement): Promise<VideoDat
         const response = await api.post(`/videos/ads`, data, {
             headers: {
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
+               
             }
         });
         return response.data;
@@ -177,7 +177,7 @@ export async function deletAds(id: string): Promise<VideoData> {
         const response = await api.delete(`/videos/ads/${id}`, {
             headers: {
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
+               
             }
         });
         return response.data;

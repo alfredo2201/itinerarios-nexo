@@ -15,7 +15,7 @@ export const getItinerariesByCompany = async (companyId: string): Promise<Itiner
             params: { companyId },
             headers: {
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
+               
             }
         });
         return response.data;
@@ -36,7 +36,7 @@ export const getItinerariesByTransport = async (transportId: string): Promise<It
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
                 
-                'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
+               
             }
         });
         return response.data;
@@ -58,7 +58,7 @@ export const getItinerariesForPagination = async (page: number): Promise<Paginat
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
                 
-                'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
+               
             },
         });
         return response.data;
@@ -77,7 +77,7 @@ export const saveItineraryForCompany = async (data: FormData): Promise<{ message
                 'Content-Type': 'multipart/form-data',
                 'Access-Control-Allow-Origin': '*',
                 
-                'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
+               
             },
         });
         return response.data;

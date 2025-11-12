@@ -31,7 +31,6 @@ export const deleteUserAPI = async (userId: string) => {
         const data = await api.delete<UserResponseDto>(`/users/${userId}`, {
             headers: {
               'Content-Type': 'application/json', 
-                'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin', 
             }
         });
         return data
@@ -46,8 +45,7 @@ export const updateUserAPI = async (userId: string, userData: any) => {
     try {
         const data = await api.put<UserResponseDto>(`/users/${userId}`, userData, {
             headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
+                'Content-Type': 'application/json',            
             }
         });
         return data

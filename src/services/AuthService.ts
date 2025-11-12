@@ -13,7 +13,7 @@ export const registerUserAPI = async (formData: FormDataUser) => {
         const response = await api.post(`/users`, formData, {
             headers: {
                 'Content-Type': 'application/json',                
-                'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
+               
             }
         });
         return response.data;   
@@ -29,7 +29,7 @@ export const loginAPI = async (user: { email: string; password: string }) => {
         const data = await api.post<UserProfileToken>(`/login`,user, {
             headers: {
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
+               
             },
         });
         if(data) return data.data.user
@@ -43,7 +43,7 @@ export const logoutAPI = async () => {
         const data = await api.post<UserResponseDto>(`/logout`, {
             headers: {
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
+               
             },
         });
         if(data) return data
@@ -58,7 +58,7 @@ export const getProfileAPI = async () => {
         const response = await api.get<UserResponseDto>(`/user/`, {            
             headers: {                  
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
+               
             }
         });                
         if (response.status == 401) return undefined;
@@ -85,7 +85,7 @@ export const getUserProfilePageAPI = async () => {
         const response = await api.get<User>(`/user/profile`, {            
             headers: {                  
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
+               
             }
         });                
         if (response.status == 401) return undefined;

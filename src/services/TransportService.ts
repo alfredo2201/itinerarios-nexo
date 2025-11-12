@@ -15,7 +15,7 @@ export const getAllCompanies = async (): Promise<Company[]> => {
         const response = await api.get(`/companies`, {
             headers: {
                 'Content-Type': 'application/json',              
-                'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
+               
             }
         });
         return response.data;
@@ -34,7 +34,7 @@ export const getTransportsByCompanyId = async (id: string): Promise<Trasport[] |
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',                
-                'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
+               
             }
         });
         return response.data;
@@ -76,7 +76,7 @@ export const createCompany = async (formData: FormData) => {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 'Access-Control-Allow-Origin': '*',                
-                'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
+               
             }
         });
         return response.data;
@@ -101,7 +101,7 @@ export const getTransportsForPagination = async (page: number, companyId:string,
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',                
-                'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
+               
             },            
         });
         return response.data;
