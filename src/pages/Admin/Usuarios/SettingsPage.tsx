@@ -1,39 +1,8 @@
 import { Save, Moon, Sun, Monitor, Trash2, Plus } from 'lucide-react';
 import { useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
+import { InitialView, Theme, type SavedFilter, type UserPreferences } from '../../../models/User';
 
-// Enums y tipos
-enum Theme {
-  LIGHT = "light",
-  DARK = "dark",
-  SYSTEM = "system"
-}
-
-enum InitialView {
-  LISTA_ITINERARIOS = "itineraries",
-  MAPA = "tracking",
-  ANUNCIOS = "advertisements"
-}
-
-interface SavedFilter {
-  nombre: string;
-  filtros: {
-    empresa?: string;
-    ruta?: string;
-    fecha_desde?: string;
-    fecha_hasta?: string;
-  };
-}
-
-interface UserPreferences {
-  tema: Theme;
-  vista_inicial: InitialView;
-  filtros_guardados: SavedFilter[];
-  notificaciones: {
-    nuevos_archivos: boolean;
-    actualizaciones_sistema: boolean;
-  };
-}
 
 const SettingsPage = () => {
   const [preferences, setPreferences] = useState<UserPreferences>({
@@ -44,8 +13,7 @@ const SettingsPage = () => {
         nombre: "Ruta Principal",
         filtros: {
           empresa: "Transportes del Norte",
-          ruta: "Ruta 101",
-          fecha_desde: "2024-01-01"
+          ruta: "Ruta 101",          
         }
       }
     ],
@@ -252,26 +220,6 @@ const SettingsPage = () => {
                   })}
                   className="px-3 py-2 text-sm border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 rounded-lg focus:outline-none focus:border-[#1e3a5f] dark:focus:border-blue-500 focus:ring-1 focus:ring-[#1e3a5f] dark:focus:ring-blue-500"
                 />
-                <input
-                  type="date"
-                  placeholder="Fecha desde"
-                  value={newFilter.filtros.fecha_desde || ''}
-                  onChange={(e) => setNewFilter({
-                    ...newFilter,
-                    filtros: { ...newFilter.filtros, fecha_desde: e.target.value }
-                  })}
-                  className="px-3 py-2 text-sm border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 rounded-lg focus:outline-none focus:border-[#1e3a5f] dark:focus:border-blue-500 focus:ring-1 focus:ring-[#1e3a5f] dark:focus:ring-blue-500"
-                />
-                <input
-                  type="date"
-                  placeholder="Fecha hasta"
-                  value={newFilter.filtros.fecha_hasta || ''}
-                  onChange={(e) => setNewFilter({
-                    ...newFilter,
-                    filtros: { ...newFilter.filtros, fecha_hasta: e.target.value }
-                  })}
-                  className="px-3 py-2 text-sm border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 rounded-lg focus:outline-none focus:border-[#1e3a5f] dark:focus:border-blue-500 focus:ring-1 focus:ring-[#1e3a5f] dark:focus:ring-blue-500"
-                />
               </div>
               <button
                 onClick={handleAddFilter}
@@ -305,17 +253,7 @@ const SettingsPage = () => {
                     <span className="px-2 py-1 bg-[#1e3a5f]/10 dark:bg-blue-500/20 text-[#1e3a5f] dark:text-blue-300 rounded">
                       {filter.filtros.ruta}
                     </span>
-                  )}
-                  {filter.filtros.fecha_desde && (
-                    <span className="px-2 py-1 bg-gray-100 dark:bg-gray-600 text-gray-700 dark:text-gray-200 rounded">
-                      {filter.filtros.fecha_desde}
-                    </span>
-                  )}
-                  {filter.filtros.fecha_hasta && (
-                    <span className="px-2 py-1 bg-gray-100 dark:bg-gray-600 text-gray-700 dark:text-gray-200 rounded">
-                      {filter.filtros.fecha_hasta}
-                    </span>
-                  )}
+                  )}                
                 </div>
               </div>
             ))}

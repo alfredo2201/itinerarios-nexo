@@ -15,8 +15,6 @@ export const getItinerariesByCompany = async (companyId: string): Promise<Itiner
             params: { companyId },
             headers: {
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-                'origin': 'x-requested-with',
                 'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
             }
         });
@@ -37,7 +35,7 @@ export const getItinerariesByTransport = async (transportId: string): Promise<It
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
-                'origin': 'x-requested-with',
+                
                 'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
             }
         });
@@ -59,7 +57,7 @@ export const getItinerariesForPagination = async (page: number): Promise<Paginat
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
-                'origin': 'x-requested-with',
+                
                 'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
             },
         });
@@ -78,7 +76,7 @@ export const saveItineraryForCompany = async (data: FormData): Promise<{ message
             headers: {
                 'Content-Type': 'multipart/form-data',
                 'Access-Control-Allow-Origin': '*',
-                'origin': 'x-requested-with',
+                
                 'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
             },
         });

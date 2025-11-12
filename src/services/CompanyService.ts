@@ -12,9 +12,7 @@ export const insertNewCompanyAndInfo = async (data:FormData): Promise<CompanyRes
      try {
         const response = await api.post(`/companies`,data ,{
             headers: {
-                'Content-Type': 'multipart/form-data',
-                'Access-Control-Allow-Origin': '*',
-                'origin': 'x-requested-with',
+                'Content-Type': 'multipart/form-data',                
                 'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
             },
         });
@@ -32,7 +30,7 @@ export const getAllCompanies = async (): Promise<Company[]> => {
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
-                'origin': 'x-requested-with',
+                
                 'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
             }
         });
@@ -51,7 +49,7 @@ export const getCompanyById = async (id: string): Promise<Company> => {
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
-                'origin': 'x-requested-with',
+                
                 'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
             }
         });
@@ -70,7 +68,7 @@ export const getCompanyByName = async (companyName: string): Promise<Company> =>
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
-                'origin': 'x-requested-with',
+                
                 'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
             }
         });

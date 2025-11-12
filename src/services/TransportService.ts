@@ -14,9 +14,7 @@ export const getAllCompanies = async (): Promise<Company[]> => {
     try {
         const response = await api.get(`/companies`, {
             headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-                'origin': 'x-requested-with',
+                'Content-Type': 'application/json',              
                 'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
             }
         });
@@ -35,8 +33,7 @@ export const getTransportsByCompanyId = async (id: string): Promise<Trasport[] |
             params: { companyId: id },
             headers: {
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-                'origin': 'x-requested-with',
+                'Access-Control-Allow-Origin': '*',                
                 'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
             }
         });
@@ -54,8 +51,7 @@ export const getAllItineraries = async (signal: AbortSignal) => {
             signal: signal,
             headers: {
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-                'origin': 'x-requested-with',
+                'Access-Control-Allow-Origin': '*',                
                 'Access-Control-Allow-Headers': 
                 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
             }
@@ -79,8 +75,7 @@ export const createCompany = async (formData: FormData) => {
         const response = await api.post(`/transport`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
-                'Access-Control-Allow-Origin': '*',
-                'origin': 'x-requested-with',
+                'Access-Control-Allow-Origin': '*',                
                 'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
             }
         });
@@ -105,8 +100,7 @@ export const getTransportsForPagination = async (page: number, companyId:string,
             },
             headers: {
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-                'origin': 'x-requested-with',
+                'Access-Control-Allow-Origin': '*',                
                 'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
             },            
         });

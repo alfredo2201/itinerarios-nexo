@@ -12,13 +12,11 @@ export const registerUserAPI = async (formData: FormDataUser) => {
     try {
         const response = await api.post(`/users`, formData, {
             headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-                'origin': 'x-requested-with',
+                'Content-Type': 'application/json',                
                 'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
             }
         });
-        return response.data;
+        return response.data;   
     } catch (error) {
         console.error("Error en UserService:", error);
         handleError(error);
@@ -31,8 +29,6 @@ export const loginAPI = async (user: { email: string; password: string }) => {
         const data = await api.post<UserProfileToken>(`/login`,user, {
             headers: {
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-                'origin': 'x-requested-with',
                 'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
             },
         });
@@ -47,8 +43,6 @@ export const logoutAPI = async () => {
         const data = await api.post<UserResponseDto>(`/logout`, {
             headers: {
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-                'origin': 'x-requested-with',
                 'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
             },
         });
@@ -64,8 +58,6 @@ export const getProfileAPI = async () => {
         const response = await api.get<UserResponseDto>(`/user/`, {            
             headers: {                  
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-                'origin': 'x-requested-with',
                 'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
             }
         });                
@@ -93,8 +85,6 @@ export const getUserProfilePageAPI = async () => {
         const response = await api.get<User>(`/user/profile`, {            
             headers: {                  
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-                'origin': 'x-requested-with',
                 'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
             }
         });                
