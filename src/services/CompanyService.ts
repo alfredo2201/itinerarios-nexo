@@ -29,7 +29,7 @@ export const getAllCompanies = async (): Promise<Company[]> => {
         const response = await api.get(`/companies`, {
             headers: {
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
+                
                 
                
             }
@@ -48,7 +48,7 @@ export const getCompanyById = async (id: string): Promise<Company> => {
             params: { id },
             headers: {
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
+                
                 
                
             }
@@ -67,7 +67,7 @@ export const getCompanyByName = async (companyName: string): Promise<Company> =>
             params: { companyName },
             headers: {
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
+                
                 
                
             }

@@ -34,7 +34,7 @@ export const getItinerariesByTransport = async (transportId: string): Promise<It
             params: { transportId },
             headers: {
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
+                
                 
                
             }
@@ -56,7 +56,7 @@ export const getItinerariesForPagination = async (page: number): Promise<Paginat
             },
             headers: {
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
+                
                 
                
             },
@@ -75,7 +75,7 @@ export const saveItineraryForCompany = async (data: FormData): Promise<{ message
         const response = await api.post(`/itineraries/company/add`, data, {
             headers: {
                 'Content-Type': 'multipart/form-data',
-                'Access-Control-Allow-Origin': '*',
+                
                 
                
             },

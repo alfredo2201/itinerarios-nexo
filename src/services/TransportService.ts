@@ -32,9 +32,7 @@ export const getTransportsByCompanyId = async (id: string): Promise<Trasport[] |
         const response = await api.get(`/transports/company/`, {
             params: { companyId: id },
             headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',                
-               
+                'Content-Type': 'application/json',               
             }
         });
         return response.data;
@@ -50,10 +48,7 @@ export const getAllItineraries = async (signal: AbortSignal) => {
         const response = await api.get(`/itineraries`, {
             signal: signal,
             headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',                
-                'Access-Control-Allow-Headers': 
-                'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
+                'Content-Type': 'application/json',            
             }
         });
         return response.data
@@ -75,8 +70,7 @@ export const createCompany = async (formData: FormData) => {
         const response = await api.post(`/transport`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
-                'Access-Control-Allow-Origin': '*',                
-               
+                
             }
         });
         return response.data;
@@ -100,8 +94,7 @@ export const getTransportsForPagination = async (page: number, companyId:string,
             },
             headers: {
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',                
-               
+                
             },            
         });
         return response.data;
