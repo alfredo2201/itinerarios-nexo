@@ -3,7 +3,7 @@ import type { Itinerary, Trasport } from "../models/Trasportation"
 import { handleError } from "../helpers/ErrorHandler"
 import { useLocation } from "react-router"
 import axios from "axios"
-import { getAllItineraries } from "../services/TransportService"
+import { getAllItinerariesToDisplays } from "../services/TransportService"
 import { getItinerariesByTransport } from "../services/ItineraryService"
 
 export const useItineraries = () => {
@@ -58,12 +58,11 @@ export const useItineraries = () => {
 
 
 
-    const fetchInitialData = async (signal:AbortSignal) => {        
-        console.log('Entra a hacer fetch')
+    const fetchInitialData = async (signal:AbortSignal) => {                
         try {
             setLoading(true);
             if (itineraries.length === 0) {
-                const data = await getAllItineraries(signal)
+                const data = await getAllItinerariesToDisplays(signal)
                 // Verificar si la petición no fue cancelada antes de actualizar el estado
                 if (!signal.aborted && data && data.length > 0) {
                     if (location.pathname === '/vertical-display') {

@@ -56,9 +56,7 @@ export const getItinerariesForPagination = async (page: number): Promise<Paginat
             },
             headers: {
                 'Content-Type': 'application/json',
-                
-                
-               
+   
             },
         });
         return response.data;

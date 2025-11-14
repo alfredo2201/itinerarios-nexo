@@ -75,7 +75,7 @@ function MainLayout() {
 
 
     return (
-        <div className={`flex min-h-screen flex-row transition-all duration-700 ${isLoaded ? 'opacity-100' : 'opacity-0'
+        <div className={`flex min-h-screen dark:bg-gray-900 flex-row transition-all duration-700 ${isLoaded ? 'opacity-100' : 'opacity-0'
             }`}>
 
             {/* Sidebar con animación de entrada desde la izquierda */}

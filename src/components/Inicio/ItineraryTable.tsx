@@ -10,10 +10,10 @@ type Props = {
 };
 
 export const ItineraryTableDisplay = ({ itineraries, loading }: Props) => {
-  if (loading) {
+  if (loading ) {
     return (
-      <div className="flex justify-center items-center w-full h-full">
-        <SpinnerSvg size={95} className="text-blue-100" />
+      <div className="flex justify-center items-center w-full h-80 2xl:h-105">
+        <SpinnerSvg size={85} className="text-blue-100" />
       </div>
     );
   }
@@ -25,14 +25,15 @@ export const ItineraryTableDisplay = ({ itineraries, loading }: Props) => {
             No hay itinerarios disponibles
           </p>
         </div>
-      ) : (<table className="table-auto md:table-fixed">
+      ) : (
+      <table className="table-auto md:table-fixed h-80 2xl:h-105">
         <thead>
           <tr className="text-[#C3D000] w-full">
-            <th className="w-2xs text-[12px] md:text-[16px] p-3">Salida</th>
-            <th className="w-lg text-[12px] md:text-[16px] p-3">Destino</th>
-            <th className="w-2xs text-[12px] md:text-[16px] p-3">Linea</th>
-            <th className="w-xs text-[12px] md:text-[16px] p-3">Número</th>
-            <th className="w-xs text-[12px] md:text-[16px] p-3">Localización</th>
+            <th className="w-2xs text-[12px] xl:text-[16px] p-3">Salida</th>
+            <th className="w-lg text-[12px] xl:text-[16px] p-3">Destino</th>
+            <th className="w-2xs text-[12px] xl:text-[16px] p-3">Linea</th>
+            <th className="w-xs text-[12px] xl:text-[16px] p-3">Número</th>
+            <th className="w-xs text-[12px] xl:text-[16px] p-3">Localización</th>
           </tr>
         </thead>
         <tbody>

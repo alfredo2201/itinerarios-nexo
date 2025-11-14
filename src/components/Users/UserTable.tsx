@@ -4,6 +4,7 @@ import { useEffect, useState, useMemo } from "react";
 import { useUser } from "../../hooks/useUser";
 import { deleteUserAPI, getAllUsersAPI } from "../../services/UsersServices";
 import type { UserFilters } from "../../types/user-filters.types";
+import Swal from "sweetalert2";
 
 interface UserTableProps {
     filters: UserFilters;
@@ -13,35 +14,35 @@ export default function UserTable({ filters }: UserTableProps) {
     const { user } = useUser();
     const [users, setUser] = useState<User[]>([])
     const [loading, setLoading] = useState(true);
-    
+
     // Filtrar usuarios basado en los filtros aplicados
     const filteredUsers = useMemo(() => {
         if (!users) return [];
-        
+
         return users.filter(u => {
             // Solo mostrar usuarios activos
             if (!u.isActive) return false;
-            
+
             // Filtro por búsqueda de texto
             if (filters.search) {
                 const searchTerm = filters.search.toLowerCase();
                 const fullName = `${u.firstName} ${u.lastName}`.toLowerCase();
                 const email = u.email.toLowerCase();
                 const empresa = u.empresaInfo.empresa?.toLowerCase() || '';
-                
-                const matchesSearch = 
+
+                const matchesSearch =
                     fullName.includes(searchTerm) ||
                     email.includes(searchTerm) ||
                     empresa.includes(searchTerm);
-                    
+
                 if (!matchesSearch) return false;
             }
-            
+
             // Filtro por rol
             if (filters.role && u.role !== filters.role) {
                 return false;
             }
-            
+
             // Filtro por estado de verificación
             if (filters.verificationStatus) {
                 const isVerified = u.seguridad.isEmailVerified;
@@ -52,11 +53,11 @@ export default function UserTable({ filters }: UserTableProps) {
                     return false;
                 }
             }
-            
+
             return true;
         });
     }, [users, filters]);
-    
+
     // Peticion para obtener la lista de usuarios de la base de datos
     async function getAllUsers() {
         try {
@@ -78,21 +79,35 @@ export default function UserTable({ filters }: UserTableProps) {
 
     const handleDeleteUser = async (userId: string | undefined) => {
         if (!userId) return;
-        
-        try {
-            await toast.promise(
-                deleteUserAPI(userId),
-                {
-                    loading: 'Eliminando usuario...',
-                    success: <b>Usuario eliminado!</b>,
-                    error: <b>No se pudo eliminar el usuario.</b>,
+
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "Esta acción no se puede deshacer.",
+            icon: 'warning',
+
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Confirmar',
+            cancelButtonText: 'Cancelar'
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    await toast.promise(
+                        deleteUserAPI(userId),
+                        {
+                            loading: 'Eliminando usuario...',
+                            success: <b>Usuario eliminado!</b>,
+                            error: <b>No se pudo eliminar el usuario.</b>,
+                        }
+                    );
+                    // Refresh the user list after successful deletion
+                    await getAllUsers();
+                } catch (error) {
+                    console.error("Error deleting user:", error);
                 }
-            );
-            // Refresh the user list after successful deletion
-            await getAllUsers();
-        } catch (error) {
-            console.error("Error deleting user:", error);
-        }
+            }
+        })
     }
 
     useEffect(() => {
@@ -151,8 +166,8 @@ export default function UserTable({ filters }: UserTableProps) {
                         ) : filteredUsers.length === 0 ? (
                             <tr>
                                 <td colSpan={6} className="text-center py-8 text-gray-500 dark:text-gray-300">
-                                    {users.length === 0 
-                                        ? "No hay usuarios registrados" 
+                                    {users.length === 0
+                                        ? "No hay usuarios registrados"
                                         : "No se encontraron usuarios que coincidan con los filtros aplicados"
                                     }
                                 </td>

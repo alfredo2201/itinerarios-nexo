@@ -61,6 +61,24 @@ export const getAllItineraries = async (signal: AbortSignal) => {
     }
 }
 
+export const getAllItinerariesToDisplays = async (signal: AbortSignal) => {
+    try {
+        const response = await api.get(`/itineraries/toDisplays`, {
+            signal: signal,
+            headers: {
+                'Content-Type': 'application/json',            
+            }
+        });
+        return response.data
+    } catch (error) {
+        if (!axios.isCancel(error)) {
+            console.error('Error:', error);
+            handleError(error);
+        }
+        return [];
+    }
+}
+
 
 export const createCompany = async (formData: FormData) => {
     try {
