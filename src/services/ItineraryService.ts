@@ -74,10 +74,7 @@ export const saveItineraryForCompany = async (data: FormData): Promise<{ message
     try {
         const response = await api.post(`/itineraries/company/add`, data, {
             headers: {
-                'Content-Type': 'multipart/form-data',
-                
-                
-               
+                'Content-Type': 'multipart/form-data',   
             },
         });
         return response.data;

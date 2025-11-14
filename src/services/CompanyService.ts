@@ -12,8 +12,7 @@ export const insertNewCompanyAndInfo = async (data:FormData): Promise<CompanyRes
      try {
         const response = await api.post(`/companies`,data ,{
             headers: {
-                'Content-Type': 'multipart/form-data',                
-               
+                'Content-Type': 'multipart/form-data',                               
             },
         });
         return response.data;
@@ -28,10 +27,7 @@ export const getAllCompanies = async (): Promise<Company[]> => {
     try {
         const response = await api.get(`/companies`, {
             headers: {
-                'Content-Type': 'application/json',
-                
-                
-               
+                'Content-Type': 'application/json', 
             }
         });
         return response.data;
@@ -47,10 +43,7 @@ export const getCompanyById = async (id: string): Promise<Company> => {
         const response = await api.get(`/company/`, {
             params: { id },
             headers: {
-                'Content-Type': 'application/json',
-                
-                
-               
+                'Content-Type': 'application/json',               
             }
         });
         return response.data;
@@ -66,10 +59,7 @@ export const getCompanyByName = async (companyName: string): Promise<Company> =>
         const response = await api.get(`/company/name`, {
             params: { companyName },
             headers: {
-                'Content-Type': 'application/json',
-                
-                
-               
+                'Content-Type': 'application/json',   
             }
         });
         return response.data;

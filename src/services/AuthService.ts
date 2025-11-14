@@ -12,8 +12,7 @@ export const registerUserAPI = async (formData: FormDataUser) => {
     try {
         const response = await api.post(`/users`, formData, {
             headers: {
-                'Content-Type': 'application/json',                
-               
+                'Content-Type': 'application/json',                               
             }
         });
         return response.data;   
@@ -28,8 +27,7 @@ export const loginAPI = async (user: { email: string; password: string }) => {
     try {        
         const data = await api.post<UserProfileToken>(`/login`,user, {
             headers: {
-                'Content-Type': 'application/json',
-               
+                'Content-Type': 'application/json',               
             },
         });
         if(data) return data.data.user
@@ -42,8 +40,7 @@ export const logoutAPI = async () => {
     try {        
         const data = await api.post<UserResponseDto>(`/logout`, {
             headers: {
-                'Content-Type': 'application/json',
-               
+                'Content-Type': 'application/json',               
             },
         });
         if(data) return data
@@ -57,8 +54,7 @@ export const getProfileAPI = async () => {
     try {
         const response = await api.get<UserResponseDto>(`/user/`, {            
             headers: {                  
-                'Content-Type': 'application/json',
-               
+                'Content-Type': 'application/json',               
             }
         });                
         if (response.status == 401) return undefined;

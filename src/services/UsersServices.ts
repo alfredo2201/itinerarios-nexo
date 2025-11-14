@@ -13,7 +13,6 @@ export const getAllUsersAPI = async () => {
         const data = await api.get<PaginatedUsersResponseForAdmin>(`/users`,{
             headers: {                  
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*', 
             }
         });
         return data
