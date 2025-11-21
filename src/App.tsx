@@ -31,6 +31,7 @@ import { UserProvider } from "./hooks/useAuth.tsx";
 import { UserRole } from "./models/User.ts";
 import type { RouterHandle } from "./types/types.ts";
 import MaintenancePage from "./pages/MaintenancePage.tsx";
+import EditUserPage from "./pages/Admin/Usuarios/EditUserPage.tsx";
 
 
 const router = createBrowserRouter([
@@ -97,6 +98,11 @@ const router = createBrowserRouter([
                 path: "/dashboard/users",
                 element: <UserPage />,
                 handle: { title: "Usuarios" as RouterHandle },
+              },
+               {
+                path: "/dashboard/users/edit",
+                element: <EditUserPage />,
+                handle: { title: "Editar Usuario" as RouterHandle },
               },
             ],
           },

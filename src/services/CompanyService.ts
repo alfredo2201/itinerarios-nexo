@@ -1,13 +1,10 @@
-import axios from "axios";
 import { handleError } from "../helpers/ErrorHandler";
 import type { Company } from "../models/Trasportation";
 import type { CompanyResponse } from "../types/types";
+import { AxiosConnect } from "../constants/services.constants";
 
-const URL = import.meta.env.VITE_URL_BASE!
-const api = axios.create({
-    baseURL: URL,
-    withCredentials: true 
-})
+const api = AxiosConnect
+
 export const insertNewCompanyAndInfo = async (data:FormData): Promise<CompanyResponse> => {
      try {
         const response = await api.post(`/companies`,data ,{

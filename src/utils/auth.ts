@@ -47,17 +47,3 @@ export function hasRole(requiredRoles: UserRole[]): boolean {
   
   return hasRequiredRole;
 }
-
-/**
- * Verifica si el usuario es administrador
- */
-export function isAdmin(): boolean {
-  return hasRole([UserRole.ADMINISTRADOR]);
-}
-
-/**
- * Verifica si el usuario puede editar
- */
-export function canEdit(): boolean {
-  return hasRole([UserRole.ADMINISTRADOR, UserRole.EDITOR]);
-}

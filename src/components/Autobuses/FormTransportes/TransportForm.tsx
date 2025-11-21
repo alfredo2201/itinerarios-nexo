@@ -65,7 +65,7 @@ export default function TransportForm() {
             })
 
         } catch (error) {
-            // Puedes también agregar una notificación de error aquí
+            toast.error('Algo salió mal al crear la compañía');
             console.error(error);
         }
 

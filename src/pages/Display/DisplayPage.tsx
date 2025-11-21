@@ -49,8 +49,7 @@ const DisplayPage: React.FC = () => {
             }
 
             // Si no hay videos disponibles, mostrar solo tabla
-            if (flowManager.getCurrentState().pattern.length === 0) {
-                console.log('❌ No hay videos disponibles en ningún grupo');
+            if (flowManager.getCurrentState().pattern.length === 0) {                
                 return;
             }
 
@@ -66,13 +65,10 @@ const DisplayPage: React.FC = () => {
                         //setCurrentStep(nextStep.group);
                         setMostrarVideo(true);
                         setTotalReproducido(0);
-                    } else {
-                        console.warn(`⚠️  Grupo ${nextStep.group} sin videos, reinicializando...`);
+                    } else {                        
                         flowManager.reset();
                     }
-                } else {
-                    console.log('❌ No hay próximo grupo disponible');
-                }
+                } 
             }, tiempo);
         }
         return () => {
@@ -94,8 +90,7 @@ const DisplayPage: React.FC = () => {
                 (thirdGroup.length > 0) !== flowManager.getCurrentState().available.has50 ||
                 (fourthGroup.length > 0) !== flowManager.getCurrentState().available.hasAll;
 
-            if (hasChanged) {
-                console.log('🔄 Detectado cambio en disponibilidad, reinicializando...');
+            if (hasChanged) {                
                 flowManager.reset();
             }
         }

@@ -65,8 +65,7 @@ export default function ProfileUserPage() {
         });
     };
     useEffect(() => {
-        console.log("Fetching user profile data...");
-        const fetchUserData = async () => {
+            const fetchUserData = async () => {
             const response = await getUserProfilePageAPI();
             const data = response?.data;
             setUser(data!);

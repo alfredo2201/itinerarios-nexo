@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 
 interface FileUploadConfirmationProps {
   file: File;
-  onSubmit: (date:string) => void;
+  onSubmit: (date: string) => Promise<void>;
   uploading: boolean;
 
 }
@@ -11,7 +11,7 @@ export default function FileUploadConfirmation({ file, onSubmit, uploading }: Fi
   const dateStart = useRef<HTMLInputElement>(null);
   const [selectedDate, setSelectedDate] = useState<string>('');
 
-  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {    
     setSelectedDate(e.target.value);
   };
 

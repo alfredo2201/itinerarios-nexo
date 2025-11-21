@@ -2,14 +2,11 @@ import axios from "axios";
 import { handleError } from "../helpers/ErrorHandler";
 import type { Advertisement } from "../models/Advertisement";
 import type { VideoData } from "../types/types";
+import { AxiosConnect } from "../constants/services.constants";
 
-const URL = import.meta.env.VITE_URL_BASE!
 const apiKey = import.meta.env.VITE_API_KEY!
 const uploadPreset = import.meta.env.VITE_UPLOAD_PRESET!
-const api = axios.create({
-    baseURL: URL,
-    withCredentials: true 
-})
+const api = AxiosConnect
 
 export const getVideos = async () => {
     try {

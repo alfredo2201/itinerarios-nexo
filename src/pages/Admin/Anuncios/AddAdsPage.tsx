@@ -7,9 +7,10 @@ import type { VideoData, Video, SelectOption } from "../../../types/types";
 import Swal from 'sweetalert2'
 import type { Advertisement } from "../../../models/Advertisement";
 import { useUser } from "../../../hooks/useUser";
+import toast from "react-hot-toast";
 
 function AddAdsPage() {
-    const {user} = useUser()
+    const { user } = useUser()
     const [formVisible, setFormVisible] = useState(true)
     const playerRef = useRef(null)
     const [isAvailable, setIsAvailable] = useState('pointer-events-none')
@@ -73,7 +74,7 @@ function AddAdsPage() {
         setSelectedFormat(e.target.value); // Actualiza el estado con el nuevo valor
     };
     // Manejador para el evento de cambio en el input de fecha.
-    const handleDateChange = () => {        
+    const handleDateChange = () => {
         const dateObj = new Date().setMonth(new Date().getMonth() + 1); // Sumar un mes a la fecha actual
         const date = new Date(dateObj);
 
@@ -81,7 +82,7 @@ function AddAdsPage() {
         const month = (date.getMonth() + 1).toString().padStart(2, '0');
         const day = date.getDate().toString().padStart(2, '0');
         const formattedDate = `${year}-${month}-${day}`;
-        setSelectedDate(formattedDate);        
+        setSelectedDate(formattedDate);
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -98,13 +99,31 @@ function AddAdsPage() {
                     status: 'active'
                 }
                 createAdvertisement(ads).then((result) => {
-                    if (result) sessionStorage.setItem('formSuccess', 'true')
+                    toast.success(
+                        <span>
+                            <b>Agregado correctamente</b>
+                            <p>Se agrego un nuevo anuncio al sistema</p>
+                            <p>{result.message}</p>
+                        </span>,
+                        {
+                            duration: 4000,
+                            position: "top-right"
+                        }
+                    );
                     navigate('/dashboard/advertisement');
                 })
             }
         } catch (error) {
-            // Puedes también agregar una notificación de error aquí
-            console.error(error);
+            toast.error(
+                <span>
+                    <b>Error al agregar anuncio</b>
+                    <p>Intenta de nuevo mas tarde</p>
+                </span>,
+                {
+                    duration: 4000,
+                    position: "top-right"
+                }
+            );
         }
 
     }
@@ -128,13 +147,12 @@ function AddAdsPage() {
                     })
                 }
             });
-        } catch (error) {
-            console.error(error)
+        } catch (error) {            
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
                 text: "Algo Salio Mal!",
-                footer: '<a href="#">Why do I have this issue?</a>'
+                footer: '<a href="#">¿Por qué tengo este problema?</a>'
             });
         }
     }

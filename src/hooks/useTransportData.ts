@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { getTransportsForPagination } from "../services/TransportService";
-import type { Trasport } from "../models/Trasportation";
+import type { Transport } from "../models/Trasportation";
 
 interface UseTransportDataReturn {
-  transportData: Trasport[];
+  transportData: Transport[];
   loading: boolean;
   error: string | null;
   totalItems: number;
   totalPages: number;
+  setOrderBy?: (orderBy: string | undefined) => void;
+  setSearchTerm?: (searchTerm: string | undefined) => void;
   refetch: () => void;
 }
 
@@ -16,15 +18,16 @@ export function useTransportData(
   currentPage: number,
   itemsForPage: number = 8
 ): UseTransportDataReturn {
-  const [transportData, setTransportData] = useState<Trasport[]>([]);
+  const [transportData, setTransportData] = useState<Transport[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [totalItems, setTotalItems] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
+  const [orderBy, setOrderBy] = useState<string | undefined>(undefined);
+  const [searchTerm, setSearchTerm] = useState<string | undefined>(undefined);
   const itemsPerPage = itemsForPage;
 
-  // Función para hacer fetch (se puede llamar manualmente)
-  async function fetchData() {
+   async function fetchData() {
     if (!companyId) {
       setLoading(false);
       return;
@@ -34,7 +37,7 @@ export function useTransportData(
     setError(null);
 
     try {
-      const response = await getTransportsForPagination(currentPage, companyId, itemsPerPage);
+      const response = await getTransportsForPagination(currentPage, companyId, itemsPerPage, { orderBy: orderBy, searchTerm: searchTerm });
 
       if (response?.success && response.data) {
         const { transports = [], pagination } = response.data;
@@ -66,6 +69,8 @@ export function useTransportData(
     transportData,
     loading,
     error,
+    setOrderBy,
+    setSearchTerm,
     totalItems,
     totalPages,
     refetch: fetchData // Permite refrescar manualmente

@@ -16,14 +16,14 @@ export type Company = {
     updatedAt?: Date;
 }
 
-export type Trasport = {
+export type Transport = {
     _id?: string;
     companyId: string;
     registration?: string
     code?: string;
     gpsCode?: string;
     gpsStatus: string;
-    lastSeen: string;
+    lastSeen: Date;
     lastLocation: {
         type: 'Point';
         coordinates: [number, number];
@@ -51,7 +51,7 @@ export type Itinerary = {
         coordinates?: { latitude: number; longitude: number; };
     };
     company?:Company;
-    transport:Trasport;
+    transport:Transport;
     estimatedDuration: number;
     status: string;
     isActive?: boolean;
@@ -98,7 +98,7 @@ export interface PaginationInfo {
 export interface PaginatedResponseTransport {
   success: boolean;
   data: {
-    transports: Trasport[];
+    transports: Transport[];
     pagination: PaginationInfo;
   };
 }

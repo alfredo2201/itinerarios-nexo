@@ -22,7 +22,7 @@ export default function DropMenu({ user, headerVisible, handleLogout }: DropMenu
                 
                 <Menu as="div" className="relative">
                     {/* Button */}
-                    <Menu.Button className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600 transition-all duration-200 hover:scale-110 active:scale-95">
+                    <Menu.Button className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600 transition-all duration-200 hover:scale-110 active:scale-95  cursor-pointer">
                         <span className="sr-only">Open user menu</span>
                         <img
                             className="w-7 h-7 sm:w-8 sm:h-8 rounded-full"

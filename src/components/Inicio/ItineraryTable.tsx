@@ -20,7 +20,7 @@ export const ItineraryTableDisplay = ({ itineraries, loading }: Props) => {
   return (
     <div className="bg-[#32649D] rounded-t-lg">
       {itineraries.length === 0 ? (
-        <div className="flex justify-center items-center h-40">
+        <div className="flex justify-center items-center h-100">
           <p className="text-[16px] font-bold text-center text-white">
             No hay itinerarios disponibles
           </p>

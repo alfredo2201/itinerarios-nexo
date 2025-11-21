@@ -2,7 +2,7 @@ interface Props {
     id: string
     numero?: string;
     estado?: boolean;
-    ultimaVista: string;
+    ultimaVista: Date;
     toggleItinerarios: (id: string) => void;
 }
 function RowAutobusesComponent({ id, numero, estado, ultimaVista, toggleItinerarios }: Props) {
@@ -24,7 +24,9 @@ function RowAutobusesComponent({ id, numero, estado, ultimaVista, toggleItinerar
 
                 </td>
             }
-            <td className="py-2 text-center text-[12px] sm:text-[14px]">{ultimaVista}</td>
+            <td className="py-2 text-center text-[12px] sm:text-[14px]">
+                {new Date(ultimaVista).toLocaleString('es-ES')}
+            </td>
         </tr>
     )
 }

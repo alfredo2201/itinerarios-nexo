@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import type { Itinerary, Trasport } from "../models/Trasportation"
+import type { Itinerary, Transport } from "../models/Trasportation"
 import { handleError } from "../helpers/ErrorHandler"
 import { useLocation } from "react-router"
 import axios from "axios"
@@ -11,7 +11,7 @@ export const useItineraries = () => {
     const [itineraries, setItineraries] = useState<Itinerary[]>([])
     const [displayDoble, setDobleDisplay] = useState<Itinerary[]>([])
     const [loading, setLoading] = useState<boolean>(false);
-    const [selectedTransport, setSelectedTransport] = useState<Trasport | null>(null);
+    const [selectedTransport, setSelectedTransport] = useState<Transport | null>(null);
     const [isVisible, setIsVisible] = useState(false);
 
 
@@ -30,7 +30,7 @@ export const useItineraries = () => {
         });
     }
 
-    const loadItineraries = async (transportId: string, transport: Trasport) => {
+    const loadItineraries = async (transportId: string, transport: Transport) => {
         if (selectedTransport?._id === transportId) {
             setIsVisible(!isVisible);
             return;
@@ -62,7 +62,7 @@ export const useItineraries = () => {
         try {
             setLoading(true);
             if (itineraries.length === 0) {
-                const data = await getAllItinerariesToDisplays(signal)
+                const data = await getAllItinerariesToDisplays(signal);
                 // Verificar si la petición no fue cancelada antes de actualizar el estado
                 if (!signal.aborted && data && data.length > 0) {
                     if (location.pathname === '/vertical-display') {

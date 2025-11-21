@@ -5,13 +5,17 @@ import { useUser } from "../../hooks/useUser";
 import { deleteUserAPI, getAllUsersAPI } from "../../services/UsersServices";
 import type { UserFilters } from "../../types/user-filters.types";
 import Swal from "sweetalert2";
+import { useUserPermissions } from "../../hooks/useUserPermissions";
+import { useNavigate } from "react-router";
 
 interface UserTableProps {
-    filters: UserFilters;
+    filters: UserFilters;    
 }
 
 export default function UserTable({ filters }: UserTableProps) {
+    const navigate = useNavigate();
     const { user } = useUser();
+    const {isAdmin} = useUserPermissions()
     const [users, setUser] = useState<User[]>([])
     const [loading, setLoading] = useState(true);
 
@@ -110,9 +114,15 @@ export default function UserTable({ filters }: UserTableProps) {
         })
     }
 
+    const handleEditUser = (u: User) => {
+        // Lógica para editar el usuario
+        navigate('/dashboard/users/edit', { state: { user: u } });        
+    }
+
     useEffect(() => {
         getAllUsers();
     }, [])
+
     return (
         <>
             {/* Contador de resultados */}
@@ -193,10 +203,12 @@ export default function UserTable({ filters }: UserTableProps) {
                                         </div>
                                     </td>
                                     <td className="w-1/6 h-10 px-2 gap-2 flex p-1">
-                                        <button className="bg-[#023672] text-white px-2 py-1 rounded-md hover:bg-blue-600 cursor-pointer">
+                                        <button className="bg-[#023672] text-white px-2 py-1 rounded-md hover:bg-blue-600 cursor-pointer"        
+                                        onClick={() => handleEditUser(u)}                                    
+                                        >
                                             Editar
                                         </button>
-                                        {u?.role != UserRole.ADMINISTRADOR && (
+                                        {isAdmin && (
                                             <button
                                                 onClick={() => handleDeleteUser(u._id)}
                                                 className="bg-[#BF3115] text-white px-2 py-1 rounded-md hover:bg-[#D63C1A] cursor-pointer">

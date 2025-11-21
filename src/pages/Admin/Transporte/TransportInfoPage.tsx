@@ -1,25 +1,19 @@
 import { useEffect } from "react";
-import FileUploadButton from "../../../components/Autobuses/FileUploadButton";
-import FileUploadConfirmation from "../../../components/Autobuses/FileUploadConfirmation";
-import TransportTable from "../../../components/Autobuses/TableAutobuses/TransportTable";
-import TransportItineraryTable from "../../../components/Autobuses/TableAutobusesItinerario/TransportItineraryTable";
-import TransportDetails from "../../../components/Autobuses/TransportDetails";
-import { Pagination } from "../../../components/Pagination/Pagination";
-import PaginationInfo from "../../../components/Pagination/PaginationInfo";
+import TransportHeader from "../../../components/Transport/Header/TransportHeader";
+import TransportStatusPanel from "../../../components/Transport/StatusPanel/TransportStatusPanel";
+import ItineraryPanel from "../../../components/Transport/ItineraryPanel/ItineraryPanel";
 import useCompanyId from "../../../hooks/useCompanyId";
 import useCompanyLogo from "../../../hooks/useCompanyLogo";
 import useFileUpload from "../../../hooks/useFileUpload";
 import { useItineraries } from "../../../hooks/useItineraries";
-import { ALLOWED_FILE_TYPES } from "../../../types/types";
-import type { Trasport } from "../../../models/Trasportation";
+import type { Transport } from "../../../models/Trasportation";
 import { usePagination } from "../../../hooks/usePagination";
 import { useTransportData } from "../../../hooks/useTransportData";
-import { useUser } from "../../../hooks/useUser";
-import { UserRole } from "../../../models/User";
+import { useUserPermissions } from "../../../hooks/useUserPermissions";
 
 function BusInfoPage() {
     const companyId = useCompanyId();
-    const { user } = useUser()
+    const { canEdit } = useUserPermissions();
 
     // Hooks personalizados
     const { logo } = useCompanyLogo(companyId);
@@ -32,7 +26,7 @@ function BusInfoPage() {
         transportData,
         loading,
         totalItems,
-        totalPages,
+        totalPages,          
     } = useTransportData(companyId, pagination.currentPage, pagination.itemsPerPage);
 
     const {
@@ -52,12 +46,11 @@ function BusInfoPage() {
         handleSubmit,
         openFilePicker,
     } = useFileUpload(companyId, () => {
-        resetItineraries();
-        // Recargar la página actual
-        window.location.reload(); // Podrías mejorar esto refrescando solo los datos
+        resetItineraries();                
+        window.dispatchEvent(new CustomEvent('refreshTransportData'));
     });
 
-    const handleTransportSelect = (id: string, transport: Trasport) => {
+    const handleTransportSelect = (id: string, transport: Transport) => {
         loadItineraries(id, transport);
     };
 
@@ -71,104 +64,39 @@ function BusInfoPage() {
         }
     }, [totalItems, totalPages]);
     return (
-        <div className="h-14/15 w-full py-4 px-5 md:p-1 md:px-5 2xl:py-3 flex flex-col bg-gray-100 dark:bg-gray-900">
-            {/* Header */}
-            <div className="my-3 flex justify-center justify-start sm:justify-between px-7">
-                <img src={logo} alt="Company Logo" className="h-10 2xl:h-15" />
-                {(user?.role === UserRole.ADMINISTRADOR || user?.role === UserRole.EDITOR) && (<>
-                    <FileUploadButton onClick={openFilePicker} disabled={uploading} />
-                    <input
-                        className="hidden"
-                        ref={fileInputRef}
-                        onChange={handleFileChange}
-                        type="file"
-                        accept={ALLOWED_FILE_TYPES.join(', ')}
-                    />
-                </>)}
+        <div className="h-14/15 w-full py-4 px-3 md:p-1 md:px-2 2xl:py-3 flex flex-col bg-gray-100 dark:bg-gray-900">
+            <TransportHeader
+                logo={logo}
+                canEdit={canEdit}
+                uploading={uploading}
+                fileInputRef={fileInputRef}
+                onFileChange={handleFileChange}
+                onOpenFilePicker={openFilePicker}
+            />
 
-            </div>
-
-            {/* Main Content */}
             <div className="flex flex-col sm:flex-row w-full h-auto gap-5 px-5 pb-5">
-                {/* Transport Status Panel */}
-                <div className="bg-white w-full sm:w-1/2 h-155 2xl:h-180 rounded-lg px-8 py-4 shadow-xl/10 dark:bg-gray-700">
-                    <h2 className="text-base text-[16px] 2xl:text-[20px] font-bold pb-2 pl-3 dark:text-white">
-                        Estado del transporte
-                    </h2>
+                <TransportStatusPanel
+                    transportData={transportData}
+                    loading={loading}
+                    onSelectTransport={handleTransportSelect}
+                    fromIndex={fromIndex}
+                    toIndex={toIndex}
+                    totalItems={pagination.totalItems}
+                    currentPage={pagination.currentPage}
+                    totalPages={pagination.totalPages}
+                    onPageChange={pagination.setPage}
+                />
 
-                    <div className={`flex justify-center ${transportData.length === 0 ? 'items-center' : ''} w-full h-115 2xl:h-130 rounded-lg overflow-auto scrollbar-hide`}>
-                        <TransportTable
-                            data={transportData}
-                            loading={loading}
-                            onSelectTransport={handleTransportSelect}
-                        />
-                    </div>
-
-                    {/* Pagination */}
-                    {transportData.length > 0 && (
-                        <div className="flex flex-col xl:flex-row justify-between items-center px-4 py-6">
-                            <PaginationInfo
-                                fromIndex={fromIndex}
-                                toIndex={toIndex}
-                                total={pagination.totalItems}
-                            />
-                            <Pagination
-                                page={pagination.currentPage}
-                                setPage={pagination.setPage}
-                                numberPagination={pagination.totalPages}
-                            />
-                        </div>
-                    )}
-                </div>
-
-                {/* Itinerary Panel */}
-                <div className="bg-white w-full sm:w-1/2 h-155 2xl:h-180 rounded-lg px-8 py-2 shadow-xl/10 dark:bg-gray-700">
-                    <h2 className="text-[16px] 2xl:text-[20px] text-base font-bold pb-2 pt-2 pl-3 dark:text-white">
-                        Itinerarios de Hoy
-                    </h2>
-
-                    {isVisibleItinerarios && selectedTransport && (
-                        <div key="animation-container" className="space-y-4 animate-fade-in">
-                            <div className="w-full bg-white h-75 2xl:h-80 rounded-lg overflow-auto scrollbar-hide animate-slide-down dark:bg-gray-800 dark:text-white dark:border-gray-600">
-                                <table className="table-auto md:table-fixed">
-                                    <thead>
-                                        <tr className="bg-[#A3C0E2] text-black w-full dark:bg-gray-600 dark:text-white">
-                                            <th className="text-[13px] 2xl:text-[16px] w-2xs p-2">Hora de salida</th>
-                                            <th className="text-[13px] 2xl:text-[16px] w-lg p-2">Ruta</th>
-                                            <th className="text-[13px] 2xl:text-[16px] w-2xs p-2">Duración</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <TransportItineraryTable
-                                            itineraries={itineraries}
-                                            loading={itineraryLoading}
-                                        />
-                                    </tbody>
-                                </table>
-                            </div>
-                            {(user?.role === UserRole.ADMINISTRADOR || user?.role === UserRole.EDITOR) && (<>
-                                <TransportDetails transport={selectedTransport} />
-                            </>)}
-
-                        </div>
-                    )}
-
-                    {!isVisibleItinerarios && !file && (
-                        <div className="flex flex-col justify-center items-center h-full">
-                            <p className="text-[16px] font-bold text-center dark:text-white">
-                                Seleccione un autobus para ver sus itinerarios
-                            </p>
-                        </div>
-                    )}
-
-                    {file && !isVisibleItinerarios && (
-                        <FileUploadConfirmation
-                            file={file}
-                            onSubmit={handleSubmit}
-                            uploading={uploading}
-                        />
-                    )}
-                </div>
+                <ItineraryPanel
+                    isVisible={isVisibleItinerarios}
+                    selectedTransport={selectedTransport}
+                    itineraries={itineraries}
+                    itineraryLoading={itineraryLoading}
+                    canEdit={canEdit}
+                    file={file}
+                    uploading={uploading}
+                    onSubmitFile={handleSubmit}
+                />
             </div>
         </div>
     );

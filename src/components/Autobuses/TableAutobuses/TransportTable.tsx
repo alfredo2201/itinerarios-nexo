@@ -1,11 +1,11 @@
-import type { Trasport } from "../../../models/Trasportation";
+import type { Transport } from "../../../models/Trasportation";
 import SpinnerSvg from "../../SpinnerSvg";
 import RowAutobusesComponent from "./RowAutobusesComponent";
 
 interface TransportTableProps {
-  data: Trasport[];
+  data: Transport[];
   loading: boolean;
-  onSelectTransport: (id: string, transport: Trasport) => void;
+  onSelectTransport: (id: string, transport: Transport) => void;
 }
 
 export default function TransportTable({ data, loading, onSelectTransport }: TransportTableProps) {
@@ -20,7 +20,7 @@ export default function TransportTable({ data, loading, onSelectTransport }: Tra
   if (data.length === 0) {
     return (
       <div className="flex justify-center items-center h-full">
-        <p className="text-[16px] font-bold text-center">
+        <p className="text-[16px] font-bold text-center dark:text-white">
           No hay transportes en el sistema
         </p>
       </div>

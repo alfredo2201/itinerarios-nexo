@@ -1,16 +1,21 @@
 import { Link } from "react-router";
 import { useEffect, useState } from "react";
+
 import BoxBuses from "../../../components/Autobuses/BoxBuses/BoxBuses";
-import { getAllCompanies, getCompanyByName } from "../../../services/CompanyService";
-import type { Company } from "../../../models/Trasportation";
 import SpinnerSvg from "../../../components/SpinnerSvg";
+
+import { getAllCompanies, getCompanyByName } from "../../../services/CompanyService";
+
+import type { Company } from "../../../models/Trasportation";
+
 import { useUser } from "../../../hooks/useUser";
-import { UserRole } from "../../../models/User";
+import { useUserPermissions } from "../../../hooks/useUserPermissions";
 
 
 
 function AdminBusesPage() {
     const { user } = useUser();
+    const { isAdmin } = useUserPermissions();
     const [companies, setCompanies] = useState<Company[] | undefined>([]);
     const [loading, setLoading] = useState(true);
 
@@ -54,7 +59,7 @@ function AdminBusesPage() {
 
     //UseEffect para obtener los datos de las lineas de autobuses
     useEffect(() => {
-        if (user?.role === UserRole.ADMINISTRADOR) {
+        if (isAdmin) {
             fetchDataAdmin();
         } else {
             fetchAllowedCompanies();
@@ -66,7 +71,6 @@ function AdminBusesPage() {
         <>
             <>
                 {loading ?
-
                     <div className="flex justify-center items-center h-150 pt-15 px-5 gap-5 md:gap-10 dark:bg-gray-900">
                         <SpinnerSvg size={100} className="text-blue-600" />
                     </div>
@@ -77,13 +81,13 @@ function AdminBusesPage() {
                                 <BoxBuses key={company._id} foto={company.image} id={company._id} />
                             ))
                         ) : (
-                            <p className="text-gray-500">No hay lineas de autobuses disponibles</p>
+                            <p className="text-gray-500 dark:text-white">No hay lineas de autobuses disponibles</p>
                         )}
                     </div>
                 }
             </>
 
-            {user?.role === UserRole.ADMINISTRADOR && (
+            {isAdmin && (
                 <div className="flex justify-end items-center pr-10 h-1/6 dark:bg-gray-900">
                     <button
                         className="bg-[#023672] text-white w-1/8 h-10 rounded-lg justify-end min-w-30 hover:bg-[#0251B3] cursor-pointer transition duration-150 ease-in-out">

@@ -1,13 +1,10 @@
 import axios from "axios";
 import { handleError } from "../helpers/ErrorHandler";
-import type { Company, PaginatedResponseTransport, Trasport } from "../models/Trasportation";
+import type { Company, PaginatedResponseTransport, Transport } from "../models/Trasportation";
+import type { TransportOptions } from "../types/transports.types";
+import { AxiosConnect } from "../constants/services.constants";
 
-const URL = import.meta.env.VITE_URL_BASE!
-
-const api = axios.create({
-    baseURL: URL,
-    withCredentials: true 
-})
+const api = AxiosConnect
 
 //Servicio para obtener todos los nombres de las empresas con su logo
 export const getAllCompanies = async (): Promise<Company[]> => {
@@ -27,7 +24,7 @@ export const getAllCompanies = async (): Promise<Company[]> => {
 }
 
 //Servicio para obtener la compañia por su id
-export const getTransportsByCompanyId = async (id: string): Promise<Trasport[] | undefined> => {
+export const getTransportsByCompanyId = async (id: string): Promise<Transport[] | undefined> => {
     try {
         const response = await api.get(`/transports/company/`, {
             params: { companyId: id },
@@ -102,17 +99,18 @@ export const createCompany = async (formData: FormData) => {
     }
 }
 
-export const getTransportsForPagination = async (page: number, companyId:string, limit:number): Promise<PaginatedResponseTransport> => {
+export const getTransportsForPagination = async (page: number, companyId:string, limit:number, options?:TransportOptions): Promise<PaginatedResponseTransport> => {
    try {                
         const response = await api.get(`/transports/pages`, {
             params:{
                 page:page,
                 limit:limit,
-                companyId:companyId
+                companyId:companyId,
+                orderBy: options?.orderBy,
+                searchTerm: options?.searchTerm
             },
             headers: {
-                'Content-Type': 'application/json',
-                
+                'Content-Type': 'application/json',                
             },            
         });
         return response.data;

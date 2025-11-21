@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import UserForm from "../../../components/Users/UserForm";
 import UserTable from "../../../components/Users/UserTable";
-import { UserRole } from "../../../models/User";
+import { UserRole, type User } from "../../../models/User";
 import type { UserFilters } from "../../../types/user-filters.types";
 import { useDebounce } from "../../../hooks/useDebounce";
 
 function UserPage() {
-    const [showModal, setShowModal] = useState(false);
+    const [showModal, setShowModal] = useState(false);    
     const [searchInput, setSearchInput] = useState("");
     const [filters, setFilters] = useState<UserFilters>({
         search: "",
@@ -42,11 +42,10 @@ function UserPage() {
             verificationStatus: ""
         });
     };
-
-
+  
 
     return (
-        <div className="w-full h-14/15 p-8 space-y-3 dark:bg-gray-900 bg-white">
+        <div className="w-full h-14/15 p-8 space-y-3 dark:bg-gray-900">
             {/* Barra superior para los filtros y busqueda */}
             <div className="flex gap-3 items-center">
                 <div onClick={() => setShowModal(true)} className="bg-[#023672] text-white h-10 hover:bg-[#4185D4] cursor-pointer rounded-lg  w-40 flex justify-center items-center">
@@ -99,6 +98,11 @@ function UserPage() {
                             onChange={(e) => handleSearchChange(e.target.value)}
                             className="w-full h-full outline-none"
                         />
+                        {searchInput && searchInput !== debouncedSearch && (
+                            <div className="ml-2 text-gray-400" title="Buscando...">
+                                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-400"></div>
+                            </div>
+                        )}
                         {searchInput && (
                             <button
                                 onClick={() => handleSearchChange("")}
@@ -111,7 +115,7 @@ function UserPage() {
                     </div>
                 </div>
             </div>
-            <UserTable filters={filters} />
+            <UserTable filters={filters}/>
             <UserForm isOpen={showModal} onClose={() => setShowModal(false)} />
         </div>
     )

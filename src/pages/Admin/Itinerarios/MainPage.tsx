@@ -31,8 +31,8 @@ function MainPage() {
   const { fromIndex, toIndex } = pagination.getPageRange();
 
   return (
-    <div className="w-full h-full sm:px-10 py-6 px-5 overflow-hidden dark:bg-gray-900">
-      <div className="bg-white dark:bg-gray-700 flex flex-col p-5 sm:p-8 rounded-lg h-165 2xl:h-160">
+    <div className="w-full h-full sm:px-10 py-6 px-5 overflow-hidden dark:bg-gray-900 overflow-y-auto scrollbar-hide">
+      <div className="bg-white dark:bg-gray-700 flex flex-col p-5 sm:p-8 rounded-lg xl:h-145 2xl:h-150">
         <h1 className="font-sans font-semibold text-xl pb-4 pl-3 dark:text-white text-gray-800">
           Vista Previa del Itinerario
         </h1>
@@ -48,8 +48,8 @@ function MainPage() {
         )}
 
         {/* Tabla de itinerarios */}
-        <ItineraryTableDisplay 
-          itineraries={itineraries} 
+        <ItineraryTableDisplay
+          itineraries={itineraries}
           loading={loading}
         />
 

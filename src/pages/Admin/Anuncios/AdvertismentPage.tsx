@@ -9,10 +9,12 @@ import Swal from "sweetalert2";
 import SpinnerSvg from "../../../components/SpinnerSvg";
 import { useUser } from "../../../hooks/useUser";
 import { UserRole } from "../../../models/User";
+import { useUserPermissions } from "../../../hooks/useUserPermissions";
 
 
 function AdvertismentPage() {
     const { user } = useUser()
+    const { isAdmin, canEdit } = useUserPermissions();
     const playerRef = useRef(null)
     const [videoName, setVideoName] = useState('');
     const [videosList, setVideoList] = useState<Advertisement[]>([]);
@@ -46,7 +48,7 @@ function AdvertismentPage() {
                                 </span>,
                                 {
                                     duration: 4000,
-                                    position: "bottom-right"
+                                    position: "top-right"
                                 }
                             );
                         })
@@ -61,33 +63,15 @@ function AdvertismentPage() {
                 icon: "error",
                 title: "Oops...",
                 text: "Algo Salio Mal!",
-                footer: '<a href="#">Why do I have this issue?</a>'
+                footer: '<a href="#">¿Por qué tengo este problema?</a>'
             });
         }
 
     }
 
-    useEffect(() => {
-        const formSuccess = sessionStorage.getItem('formSuccess');
-
-        if (formSuccess === 'true') {
-            toast.success(
-                <span>
-                    <b>Agregado correctamente</b>
-                    <p>Se agrego un nuevo anuncio al sistema</p>
-                </span>,
-                {
-                    duration: 4000,
-                    position: "bottom-right"
-                }
-            );
-            sessionStorage.removeItem('formSuccess');
-        }
-    }, []);
-
-    useEffect(() => {
+     useEffect(() => {
         setLoading(true)
-        if (user?.role === UserRole.ADMINISTRADOR) {
+        if (isAdmin) {
             getVideos().then((result) => {
                 if (result) {
                     setVideoList(result)
@@ -102,8 +86,6 @@ function AdvertismentPage() {
                 setLoading(false)
             }
         })
-
-
     }, [])
 
 
@@ -167,7 +149,7 @@ function AdvertismentPage() {
                     </div>
                 </div>
             </div>
-            {(user?.role === UserRole.ADMINISTRADOR || user?.role === UserRole.EDITOR) && (<>
+            {(isAdmin || canEdit) && (<>
                 <div className="grid grid-cols-6 w-full h-1/4 justify-center items-end ">
                     <Link to={"/dashboard/advertisement/add"} className="flex justify-center bg-[#023672] h-10 w-full col-start-5 rounded-full text-white text-[13px] 2xl:text-[15px] hover:bg-[#4185D4] cursor-pointer transition duration-150 ease-in-out">
                         <button className="cursor-pointer">

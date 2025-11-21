@@ -1,12 +1,9 @@
-import axios from "axios";
 import type { User, UserProfileToken, UserResponseDto } from "../models/User";
 import { handleError } from "../helpers/ErrorHandler";
 import type { FormDataUser } from "../types/user.types";
-const URL = import.meta.env.VITE_URL_BASE!
-const api = axios.create({
-    baseURL: URL,
-    withCredentials: true 
-})
+import { AxiosConnect } from "../constants/services.constants";
+
+const api = AxiosConnect
 
 export const registerUserAPI = async (formData: FormDataUser) => {
     try {
