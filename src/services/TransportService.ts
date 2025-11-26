@@ -107,7 +107,7 @@ export const getTransportsForPagination = async (page: number, companyId:string,
                 limit:limit,
                 companyId:companyId,
                 orderBy: options?.orderBy,
-                searchTerm: options?.searchTerm
+                code: options?.searchTerm
             },
             headers: {
                 'Content-Type': 'application/json',                

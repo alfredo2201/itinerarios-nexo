@@ -8,6 +8,7 @@ export interface UserContextType {
   setIsInitialized: Dispatch<SetStateAction<boolean>>;
   isLoading: boolean;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
+  darkMode: boolean;
 }
 
 export const UserContext = createContext<UserContextType | undefined>(undefined);

@@ -32,6 +32,7 @@ import { UserRole } from "./models/User.ts";
 import type { RouterHandle } from "./types/types.ts";
 import MaintenancePage from "./pages/MaintenancePage.tsx";
 import EditUserPage from "./pages/Admin/Usuarios/EditUserPage.tsx";
+import SettingsPage from "./pages/Admin/Usuarios/SettingsPage.tsx";
 
 
 const router = createBrowserRouter([
@@ -119,7 +120,7 @@ const router = createBrowserRouter([
               },
               {
                 path: "/dashboard/users/settings",
-                element: <MaintenancePage />,
+                element: <SettingsPage />,
                 handle: { title: "Configuraciones" as RouterHandle },
               },
             ],

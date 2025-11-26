@@ -8,8 +8,8 @@ interface UseTransportDataReturn {
   error: string | null;
   totalItems: number;
   totalPages: number;
-  setOrderBy?: (orderBy: string | undefined) => void;
-  setSearchTerm?: (searchTerm: string | undefined) => void;
+  setOrderedBy?: (orderBy: string | undefined) => void;
+  setSearchedByTerm?: (searchTerm: string | undefined) => void;
   refetch: () => void;
 }
 
@@ -23,7 +23,7 @@ export function useTransportData(
   const [error, setError] = useState<string | null>(null);
   const [totalItems, setTotalItems] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
-  const [orderBy, setOrderBy] = useState<string | undefined>(undefined);
+  const [orderBy, setOrderBy] = useState<string | undefined>('lastUpdate');
   const [searchTerm, setSearchTerm] = useState<string | undefined>(undefined);
   const itemsPerPage = itemsForPage;
 
@@ -60,17 +60,24 @@ export function useTransportData(
     }
   }
 
+  const setOrderedBy = (orderBy: string | undefined) => {
+    setOrderBy(orderBy);    
+  };
+  const setSearchedByTerm = (searchTerm: string | undefined) => {
+    setSearchTerm(searchTerm);
+  }
+
   // Effect que se ejecuta cuando cambian companyId o currentPage
   useEffect(() => {
     fetchData();
-  }, [companyId, currentPage]); // ✅ Se ejecuta cuando cambia la página
+  }, [companyId, currentPage,orderBy, searchTerm]); // ✅ Se ejecuta cuando cambia la página
 
   return {
     transportData,
     loading,
     error,
-    setOrderBy,
-    setSearchTerm,
+    setOrderedBy,
+    setSearchedByTerm,
     totalItems,
     totalPages,
     refetch: fetchData // Permite refrescar manualmente

@@ -1,6 +1,7 @@
 import { handleError } from "../helpers/ErrorHandler";
 import type { PaginatedUsersResponseForAdmin, UserResponseDto } from "../models/User";
 import { AxiosConnect } from "../constants/services.constants";
+import type { UpdateUserDto } from "../types/user.types";
 
 const api = AxiosConnect
 
@@ -45,6 +46,20 @@ export const updateUserAPI = async (userId: string, userData: any) => {
         return data
     } catch (error) {
         console.error("Error en updateUserAPI:", error);
+        handleError(error);
+    }
+}
+
+export const updateProfileAPI = async (userData: UpdateUserDto) => {
+    try {
+        const data = await api.put<UserResponseDto>(`/user/profile`, userData, {   
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+        return data
+    } catch (error) {
+        console.error("Error en updateProfileAPI:", error);
         handleError(error);
     }
 }

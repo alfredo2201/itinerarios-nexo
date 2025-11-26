@@ -3,12 +3,13 @@ import useDashboardAnimation from "../../hooks/UseDashboardAnimation";
 import type { RouterHandle } from "../../types/types";
 import { useUser } from "../../hooks/useUser";
 import DropMenu from "./DropMenu";
+import { Menu } from "lucide-react";
 
 interface HeaderProps {
-    handleLogout: () => void;
+    handleSidebarToggle?: () => void;
 }
 
-export default function Header({ handleLogout }: HeaderProps) {
+export default function Header({ handleSidebarToggle }: HeaderProps) {
     const { user } = useUser()
     const busCentralName = localStorage.getItem("busCentralName") || "Central Faustino Félix Serna";
     const matches = useMatches();
@@ -27,13 +28,17 @@ export default function Header({ handleLogout }: HeaderProps) {
                 }`}>
                 <div className="w-full flex items-center justify-between">
                     <div className="flex items-center justify-start rtl:justify-end">
+                        <Menu
+                            className="dark:text-white hover:text-gray-300 hover:cursor-pointer mr-4 block lg:hidden"
+                            onClick={handleSidebarToggle}>
+                        </Menu>
                         <span className={`self-center text-lg font-semibold 2xl:text-[22px] xl:text-[18px] text-[18px] text-[#023672] dark:text-white transform transition-all duration-500 ${headerVisible ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
                             }`} style={{ transitionDelay: '0.1s' }}>
                             {currentTitle} - {busCentralName}
                         </span>
                     </div>
-                        
-                    <DropMenu user={user} headerVisible={headerVisible} handleLogout={handleLogout}></DropMenu>
+
+                    <DropMenu user={user} headerVisible={headerVisible}></DropMenu>
                 </div>
             </div>
         </>

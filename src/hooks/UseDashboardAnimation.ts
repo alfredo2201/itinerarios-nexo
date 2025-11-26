@@ -19,10 +19,15 @@ export default function useDashboardAnimation() {
         return () => timers.forEach(timer => clearTimeout(timer));
     }, []);
 
+    const handleSidebarToggle = () => {
+        setSidebarVisible(!sidebarVisible);
+    }
+
     return {
         isLoaded,
         sidebarVisible,
         headerVisible,
-        contentVisible
+        contentVisible,
+        handleSidebarToggle
     };
 };

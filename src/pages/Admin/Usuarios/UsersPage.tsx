@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import UserForm from "../../../components/Users/UserForm";
 import UserTable from "../../../components/Users/UserTable";
-import { UserRole, type User } from "../../../models/User";
+import { UserRole} from "../../../models/User";
 import type { UserFilters } from "../../../types/user-filters.types";
 import { useDebounce } from "../../../hooks/useDebounce";
 
@@ -57,6 +57,7 @@ function UserPage() {
                         {/* Filtro por rol */}
                         <select 
                             value={filters.role}
+                            name="role"
                             onChange={(e) => handleRoleFilterChange(e.target.value)}
                             className="p-2 rounded-md border border-gray-300 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
                         >
@@ -69,6 +70,7 @@ function UserPage() {
                         {/* Filtro por estado de verificación */}
                         <select 
                             value={filters.verificationStatus}
+                            name="verification_status"
                             onChange={(e) => handleVerificationFilterChange(e.target.value)}
                             className="p-2 rounded-md border border-gray-300 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
                         >
@@ -94,6 +96,7 @@ function UserPage() {
                         <input
                             type="text"
                             placeholder="Buscar por nombre, email o empresa..."
+                            name="search"
                             value={searchInput}
                             onChange={(e) => handleSearchChange(e.target.value)}
                             className="w-full h-full outline-none"

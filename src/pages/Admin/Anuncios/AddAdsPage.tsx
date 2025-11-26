@@ -193,7 +193,7 @@ function AddAdsPage() {
                         <div className="flex h-full">
                             <div className="w-1/2 px-3">
                                 <h1 className="text-[25px] font-bold mb-8 dark:text-white">Informacion del Video-Anuncio</h1>
-                                <label htmlFor="" className="dark:text-white">Nombre de la empresa</label>
+                                <label htmlFor="company_name" className="dark:text-white">Nombre de la empresa</label>
                                 <br />
                                 <div className="border-2 border-[#0550AD] rounded-lg w-full h-10 dark:bg-gray-700 dark:text-white">
                                     <input
@@ -204,13 +204,13 @@ function AddAdsPage() {
                                         className="w-full h-full pl-4 dark:bg-gray-700" />
                                 </div>
                                 <br />
-                                <label htmlFor="" className="dark:text-white">Nombre del archivo</label>
+                                <label htmlFor="file_name" className="dark:text-white">Nombre del archivo</label>
                                 <br />
                                 <div className="border-2 border-[#0550AD] rounded-lg w-full h-10 dark:bg-gray-700 dark:text-white">
-                                    <input type="text" defaultValue={videoName} placeholder="Nombre del archivo" className="w-full h-full pl-4 dark:bg-gray-700" />
+                                    <input type="text" name="file_name" defaultValue={videoName} placeholder="Nombre del archivo" className="w-full h-full pl-4 dark:bg-gray-700" />
                                 </div>
                                 <br />
-                                <label htmlFor="" className="dark:text-white">Repeticiones por dia</label>
+                                <label htmlFor="repetitions_per_day" className="dark:text-white">Repeticiones por dia</label>
                                 <br />
                                 <div className="border-2 border-[#0550AD] rounded-lg w-1/2 h-10 cursor-pointer">
                                     <select value={selectedValue} onChange={handleChange} className="w-full h-full border-[#0550AD] pl-4 cursor-pointer dark:bg-gray-700 dark:text-white">
@@ -233,7 +233,7 @@ function AddAdsPage() {
                                         disabled={true} // Deshabilitado para evitar selección manual
                                         className="w-full h-full pl-4 border border-gray-300 rounded-lg p-2 focus:outline-none dark:bg-gray-700 dark:text-white" /></div>
                                 <br />
-                                <label htmlFor="" className="dark:text-white">Tipo de Formato</label>
+                                <label htmlFor="format_type" className="dark:text-white">Tipo de Formato</label>
                                 <br />
                                 <div className="border-2 border-[#0550AD] rounded-lg w-1/2 h-10">
                                     <select

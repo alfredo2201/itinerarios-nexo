@@ -91,9 +91,9 @@ function AdvertismentPage() {
 
 
     return (
-        <div className="flex flex-row sm:flex-col w-full">
-            <div className="flex flex-col sm:flex-row h-full w-full p-8 gap-4">
-                <div className="flex justify-center h-full w-1/2">
+        <div className="flex flex-col w-full h-full">
+            <div className="flex flex-col sm:flex-row h-3/4 w-full p-8 gap-4">
+                <div className="flex justify-center h-1/2 w-full sm:h-full sm:w-1/2">
                     {loading ?
                         <SpinnerSvg size={100} className="text-blue-100 sefl-center" /> :
                         <div className="flex flex-col w-full h-full rounded-lg shadow-lg">
@@ -127,7 +127,7 @@ function AdvertismentPage() {
                     }
                 </div>
                 {/* Contenedor del Reproductor de video */}
-                <div className="bg-white w-1/2">
+                <div className="bg-white h-1/2 sm:h-10/12 sm:w-1/2">
                     <div className="bg-black w-full h-full justify-center">
                         {videoName != '' ?
                             <ReactPlayer
@@ -150,8 +150,8 @@ function AdvertismentPage() {
                 </div>
             </div>
             {(isAdmin || canEdit) && (<>
-                <div className="grid grid-cols-6 w-full h-1/4 justify-center items-end ">
-                    <Link to={"/dashboard/advertisement/add"} className="flex justify-center bg-[#023672] h-10 w-full col-start-5 rounded-full text-white text-[13px] 2xl:text-[15px] hover:bg-[#4185D4] cursor-pointer transition duration-150 ease-in-out">
+                <div className="grid grid-cols-3 sm:grid-cols-6 w-full h-15 justify-center items-end ">
+                    <Link to={"/dashboard/advertisement/add"} className="flex justify-center bg-[#023672] h-10 w-full col-start-2 sm:col-start-5 rounded-full text-white text-[13px] 2xl:text-[15px] hover:bg-[#4185D4] cursor-pointer transition duration-150 ease-in-out">
                         <button className="cursor-pointer">
                             Subir video
                         </button>

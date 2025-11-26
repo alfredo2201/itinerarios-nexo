@@ -50,7 +50,7 @@ export enum UserRole {
 export enum Theme {
     LIGHT = "light",
     DARK = "dark",
-    SYSTEM = "SYSTEM"
+    SYSTEM = "system"
 }
 
 export enum InitialView {

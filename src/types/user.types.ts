@@ -1,4 +1,4 @@
-import type { Department, UserRole } from "../models/User";
+import type { CompanyInfo, Department, UserPermissions, UserPreferences, UserRole } from "../models/User";
 
 export type FormDataUser = {
     firstName: string;
@@ -38,3 +38,15 @@ export type FormDataUser = {
         empresas_permitidas: string[];
     };
 };
+
+export interface UpdateUserDto {
+    email?: string;
+    firstName?: string;
+    lastName?: string;
+    phone?: string;
+    role?: UserRole;
+    permissions?:UserPermissions;
+    empresaInfo?: CompanyInfo;
+    preferencias?: UserPreferences;
+    isActive?: boolean;
+}

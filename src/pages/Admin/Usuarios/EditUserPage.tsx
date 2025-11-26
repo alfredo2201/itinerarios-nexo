@@ -391,7 +391,7 @@ export default function EditUserPage() {
                         </div>
 
                         {/* Botones de Acción */}
-                        <div className="flex gap-4 pt-6 border-t border-gray-200">
+                        <div className="flex gap-4 pt-6 border-t border-gray-200 dark:border-gray-600">
                             <button
                                 type="submit"
                                 className="flex-1 bg-[#023672] text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition shadow-lg hover:shadow-xl"

@@ -2,24 +2,19 @@ import { Save, Moon, Sun, Monitor, Trash2, Plus } from 'lucide-react';
 import { useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { InitialView, Theme, type SavedFilter, type UserPreferences } from '../../../models/User';
+import { useUser } from '../../../hooks/useUser';
+import { updateProfileAPI } from '../../../services/UsersServices';
 
 
 const SettingsPage = () => {
+  const { user } = useUser();
   const [preferences, setPreferences] = useState<UserPreferences>({
-    tema: Theme.SYSTEM,
-    vista_inicial: InitialView.LISTA_ITINERARIOS,
-    filtros_guardados: [
-      {
-        nombre: "Ruta Principal",
-        filtros: {
-          empresa: "Transportes del Norte",
-          ruta: "Ruta 101",          
-        }
-      }
-    ],
+    tema: user?.preferencias.tema || Theme.SYSTEM,
+    vista_inicial: user?.preferencias.vista_inicial || InitialView.LISTA_ITINERARIOS,
+    filtros_guardados: user?.preferencias.filtros_guardados || [],
     notificaciones: {
-      nuevos_archivos: true,
-      actualizaciones_sistema: true
+      nuevos_archivos: user?.preferencias.notificaciones.nuevos_archivos || true,
+      actualizaciones_sistema: user?.preferencias.notificaciones.actualizaciones_sistema || true
     }
   });
 
@@ -31,6 +26,7 @@ const SettingsPage = () => {
 
   const handleThemeChange = (theme: Theme) => {
     setPreferences({ ...preferences, tema: theme });
+    console.log('Tema cambiado a:', theme);
     toast.success('Tema actualizado', {
       style: {
         background: '#1e3a5f',
@@ -97,14 +93,16 @@ const SettingsPage = () => {
   };
 
   const handleSave = () => {
-    console.log('Guardando preferencias:', preferences);
-    toast.success('Configuración guardada exitosamente', {
-      duration: 4000,
-      style: {
-        background: '#1e3a5f',
-        color: '#fff',
-      },
+    updateProfileAPI({ preferencias: preferences }).then(() => {
+      toast.success('Configuración guardada exitosamente', {
+        duration: 4000,
+        style: {
+          background: '#1e3a5f',
+          color: '#fff',
+        },
+      });
     });
+
   };
 
   const getThemeIcon = (theme: Theme) => {
@@ -141,11 +139,10 @@ const SettingsPage = () => {
               <button
                 key={theme}
                 onClick={() => handleThemeChange(theme)}
-                className={`flex items-center gap-2 px-4 py-2 text-sm border rounded-lg transition-colors ${
-                  preferences.tema === theme
-                    ? 'border-[#1e3a5f] bg-[#1e3a5f] text-white'
-                    : 'border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:border-gray-300 dark:hover:border-gray-500'
-                }`}
+                className={`flex items-center gap-2 px-4 py-2 text-sm border rounded-lg transition-colors ${preferences.tema === theme
+                  ? 'border-[#1e3a5f] bg-[#1e3a5f] text-white'
+                  : 'border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:border-gray-300 dark:hover:border-gray-500'
+                  }`}
               >
                 {getThemeIcon(theme)}
                 <span className="capitalize">
@@ -164,11 +161,10 @@ const SettingsPage = () => {
               <button
                 key={view}
                 onClick={() => handleInitialViewChange(view)}
-                className={`px-4 py-2 text-sm border rounded-lg transition-colors ${
-                  preferences.vista_inicial === view
-                    ? 'border-[#1e3a5f] bg-[#1e3a5f] text-white'
-                    : 'border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:border-gray-300 dark:hover:border-gray-500'
-                }`}
+                className={`px-4 py-2 text-sm border rounded-lg transition-colors ${preferences.vista_inicial === view
+                  ? 'border-[#1e3a5f] bg-[#1e3a5f] text-white'
+                  : 'border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:border-gray-300 dark:hover:border-gray-500'
+                  }`}
               >
                 {getViewLabel(view)}
               </button>
@@ -253,7 +249,7 @@ const SettingsPage = () => {
                     <span className="px-2 py-1 bg-[#1e3a5f]/10 dark:bg-blue-500/20 text-[#1e3a5f] dark:text-blue-300 rounded">
                       {filter.filtros.ruta}
                     </span>
-                  )}                
+                  )}
                 </div>
               </div>
             ))}

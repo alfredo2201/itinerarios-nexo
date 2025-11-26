@@ -2,24 +2,36 @@ import { Menu, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 import type { UserResponseDto } from "../../models/User";
 import { useNavigate } from 'react-router';
+import { logoutAPI } from '../../services/AuthService';
+import { useUser } from '../../hooks/useUser';
 
 interface DropMenuProps {
     user: UserResponseDto | undefined;
     headerVisible: boolean;
-    handleLogout: () => void;
 }
 
-export default function DropMenu({ user, headerVisible, handleLogout }: DropMenuProps) {
+export default function DropMenu({ user, headerVisible }: DropMenuProps) {
+    const { setUserContext } = useUser();
+
+    const handleLogout = async () => {
+        await logoutAPI().then(
+            () => {
+                setTimeout(() => {
+                    setUserContext(undefined);
+                    window.location.href = '/';
+                }, 100);
+            }
+        );
+    }
     const navigate = useNavigate();
     return (
-        <div className={`flex items-center ms-3 transform transition-all duration-500 ${
-            headerVisible ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
-        }`} style={{ transitionDelay: '0.2s' }}>
+        <div className={`flex items-center ms-3 transform transition-all duration-500 ${headerVisible ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
+            }`} style={{ transitionDelay: '0.2s' }}>
             <div className="flex flex-row gap-2 justify-center items-center">
                 <p className="text-center hidden lg:inline dark:text-white text-gray-800 font-medium">
                     {user ? `${user?.firstName} ${user?.lastName}` : ''}
                 </p>
-                
+
                 <Menu as="div" className="relative">
                     {/* Button */}
                     <Menu.Button className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600 transition-all duration-200 hover:scale-110 active:scale-95  cursor-pointer">
@@ -59,41 +71,38 @@ export default function DropMenu({ user, headerVisible, handleLogout }: DropMenu
                                     {({ active }) => (
                                         <span
                                             onClick={() => navigate("/dashboard/users/profile")}
-                                            className={`block px-4 py-2 text-sm cursor-pointer ${
-                                                active
+                                            className={`block px-4 py-2 text-sm cursor-pointer ${active
                                                     ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white'
                                                     : 'text-gray-700 dark:text-gray-300'
-                                            }`}
+                                                }`}
                                         >
                                             Ver Perfil
                                         </span>
                                     )}
                                 </Menu.Item>
-                                
+
                                 <Menu.Item>
                                     {({ active }) => (
                                         <span
                                             onClick={() => navigate("/dashboard/users/settings")}
-                                            className={`block px-4 py-2 text-sm cursor-pointer ${
-                                                active
+                                            className={`block px-4 py-2 text-sm cursor-pointer ${active
                                                     ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white'
                                                     : 'text-gray-700 dark:text-gray-300'
-                                            }`}
+                                                }`}
                                         >
                                             Configuración
                                         </span>
                                     )}
                                 </Menu.Item>
-                                
+
                                 <Menu.Item>
                                     {({ active }) => (
                                         <button
                                             onClick={handleLogout}
-                                            className={`block w-full text-left px-4 py-2 text-sm cursor-pointer ${
-                                                active
+                                            className={`block w-full text-left px-4 py-2 text-sm cursor-pointer ${active
                                                     ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white'
                                                     : 'text-gray-700 dark:text-gray-300'
-                                            }`}
+                                                }`}
                                         >
                                             Cerrar Sesión
                                         </button>
@@ -107,3 +116,4 @@ export default function DropMenu({ user, headerVisible, handleLogout }: DropMenu
         </div>
     );
 }
+
