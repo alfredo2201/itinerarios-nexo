@@ -1,8 +1,8 @@
-import type { Trasport } from "../../models/Trasportation";
+import type { Transport } from "../../models/Trasportation";
 import { formatLastSeen, getStatusLabel } from "../../utils/validations";
 
 interface TransportDetailsProps {
-  transport: Trasport;
+  transport: Transport;
 }
 
 export default function TransportDetails({ transport }: TransportDetailsProps) {
