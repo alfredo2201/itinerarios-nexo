@@ -23,9 +23,11 @@ import { UserRole, Department, InitialView } from "../../../models/User";
 import type { User } from "../../../models/User";
 import { useEffect, useState } from "react";
 import { getUserProfilePageAPI } from "../../../services/AuthService";
+import { useUserPermissions } from "../../../hooks/useUserPermissions";
 
 export default function ProfileUserPage() {
     const [user, setUser] = useState<User | null>(null);
+    const { isAdmin } = useUserPermissions()
     const [loading, setLoading] = useState(true);
 
     const getRoleBadgeColor = (role: UserRole) => {
@@ -65,7 +67,7 @@ export default function ProfileUserPage() {
         });
     };
     useEffect(() => {
-            const fetchUserData = async () => {
+        const fetchUserData = async () => {
             const response = await getUserProfilePageAPI();
             const data = response?.data;
             setUser(data!);
@@ -84,9 +86,16 @@ export default function ProfileUserPage() {
                 <>
                     <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
                         <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
-                            <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-3xl font-bold shadow-lg">
+                            {user.photo != '' ? (
+                                <img
+                                    className="w-24 h-24 rounded-full object-cover"
+                                    alt="user photo"
+                                    src={user?.photo}
+                                />
+                            ) : (<div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-3xl font-bold shadow-lg">
                                 {user.firstName.charAt(0)}{user.lastName.charAt(0)}
-                            </div>
+                            </div>)}
+
 
                             <div className="flex-1">
                                 <div className="flex flex-wrap items-center gap-3 mb-2">
@@ -145,7 +154,7 @@ export default function ProfileUserPage() {
                                 {user.empresaInfo.departamento && (
                                     <div>
                                         <p className="text-sm text-gray-500 dark:text-gray-400">Departamento</p>
-                                        <div className="flex items-center gap-2 mt-1">
+                                        <div className="flex items-center dark:text-white gap-2 mt-1">
                                             {getDepartmentIcon(user.empresaInfo.departamento)}
                                             <p className="text-gray-900 dark:text-white font-medium capitalize">
                                                 {user.empresaInfo.departamento}
@@ -169,32 +178,35 @@ export default function ProfileUserPage() {
                         </div>
 
                         {/* Actividad */}
-                        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-                            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                                <Activity className="w-5 h-5 text-green-600 dark:text-green-400" />
-                                Actividad
-                            </h2>
-                            <div className="space-y-3">
-                                <div className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                                    <span className="text-gray-600 dark:text-gray-300">Archivos Subidos</span>
-                                    <span className="font-bold text-gray-900 dark:text-white text-lg">{user.actividad.archivos_subidos}</span>
-                                </div>
-                                <div className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                                    <span className="text-gray-600 dark:text-gray-300">Itinerarios Consultados</span>
-                                    <span className="font-bold text-gray-900 dark:text-white text-lg">{user.actividad.itinerarios_consultados}</span>
-                                </div>
-                                <div className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                                    <span className="text-gray-600 dark:text-gray-300">Inicios de Sesión</span>
-                                    <span className="font-bold text-gray-900 dark:text-white text-lg">{user.actividad.loginCount}</span>
-                                </div>
-                                {user.actividad.lastLogin && (
-                                    <div className="mt-4 pt-3 border-t border-gray-200 dark:border-gray-700">
-                                        <p className="text-sm text-gray-500 dark:text-gray-400">Último Acceso</p>
-                                        <p className="text-gray-900 dark:text-white text-sm mt-1">{formatDate(user.actividad.lastLogin)}</p>
+                        {isAdmin && (
+                            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                                <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                                    <Activity className="w-5 h-5 text-green-600 dark:text-green-400" />
+                                    Actividad
+                                </h2>
+                                <div className="space-y-3">
+                                    <div className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                                        <span className="text-gray-600 dark:text-gray-300">Archivos Subidos</span>
+                                        <span className="font-bold text-gray-900 dark:text-white text-lg">{user.actividad.archivos_subidos}</span>
                                     </div>
-                                )}
+                                    <div className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                                        <span className="text-gray-600 dark:text-gray-300">Itinerarios Consultados</span>
+                                        <span className="font-bold text-gray-900 dark:text-white text-lg">{user.actividad.itinerarios_consultados}</span>
+                                    </div>
+                                    <div className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                                        <span className="text-gray-600 dark:text-gray-300">Inicios de Sesión</span>
+                                        <span className="font-bold text-gray-900 dark:text-white text-lg">{user.actividad.loginCount}</span>
+                                    </div>
+                                    {user.actividad.lastLogin && (
+                                        <div className="mt-4 pt-3 border-t border-gray-200 dark:border-gray-700">
+                                            <p className="text-sm text-gray-500 dark:text-gray-400">Último Acceso</p>
+                                            <p className="text-gray-900 dark:text-white text-sm mt-1">{formatDate(user.actividad.lastLogin)}</p>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
-                        </div>
+                        )}
+
 
                         {/* Preferencias */}
                         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
@@ -262,17 +274,22 @@ export default function ProfileUserPage() {
                                         {user.seguridad.isEmailVerified ? '✓ Sí' : '✗ No'}
                                     </span>
                                 </div>
-                                <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                                    <span className="text-gray-600 dark:text-gray-300">Intentos Fallidos</span>
-                                    <span className="font-bold text-gray-900 dark:text-white">{user.seguridad.failedLoginAttempts}</span>
-                                </div>
-                                {user.seguridad.accountLockedUntil && (
-                                    <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
-                                        <p className="text-sm text-red-800 dark:text-red-200 font-medium">
-                                            Cuenta bloqueada hasta: {formatDate(user.seguridad.accountLockedUntil)}
-                                        </p>
-                                    </div>
+                                {isAdmin && (
+                                    <>
+                                        <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                                            <span className="text-gray-600 dark:text-gray-300">Intentos Fallidos</span>
+                                            <span className="font-bold text-gray-900 dark:text-white">{user.seguridad.failedLoginAttempts}</span>
+                                        </div>
+                                        {user.seguridad.accountLockedUntil && (
+                                            <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+                                                <p className="text-sm text-red-800 dark:text-red-200 font-medium">
+                                                    Cuenta bloqueada hasta: {formatDate(user.seguridad.accountLockedUntil)}
+                                                </p>
+                                            </div>
+                                        )}
+                                    </>
                                 )}
+
                             </div>
                         </div>
                     </div>
@@ -350,10 +367,13 @@ export default function ProfileUserPage() {
                                 <p className="text-sm text-gray-500 dark:text-gray-400">Fecha de Creación</p>
                                 <p className="text-gray-900 dark:text-white font-medium mt-1">{formatDate(user.createdAt)}</p>
                             </div>
-                            {/* <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                                <p className="text-sm text-gray-500 dark:text-gray-400">Última Actualización</p>
-                                <p className="text-gray-900 dark:text-white font-medium mt-1">{formatDate(user.updatedAt)}</p>
-                            </div> */}
+                            {isAdmin && (
+                                <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">Última Actualización</p>
+                                    <p className="text-gray-900 dark:text-white font-medium mt-1">{formatDate(user.updatedAt)}</p>
+                                </div>
+                            )}
+
                         </div>
                     </div>
                 </>

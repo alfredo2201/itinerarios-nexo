@@ -31,9 +31,11 @@ function AdsRow({ id, fileName, URL, rep, state, userRole, onUrlChange, deleteVi
             <div className="w-1/5 text-center">
                 <button
                     onClick={handleOnClickVideo}
-                    className="bg-[#023672] w-25 rounded-full text-white p-1 hover:bg-[#4185D4] cursor-pointer transition duration-150 ease-in-out"
+                    className="bg-[#023672] w-15 sm:w-25 rounded-full text-white p-1 hover:bg-[#4185D4] cursor-pointer transition duration-150 ease-in-out"
                 >
-                    Ver Video
+                    
+                    <p>Ver </p>
+                    <p className="hidden sm:block">Video</p>
                 </button>
             </div>
             {(userRole === UserRole.ADMINISTRADOR || userRole === UserRole.EDITOR) && (

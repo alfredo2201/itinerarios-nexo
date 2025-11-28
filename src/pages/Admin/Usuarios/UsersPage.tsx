@@ -47,13 +47,13 @@ function UserPage() {
     return (
         <div className="w-full h-14/15 p-8 space-y-3 dark:bg-gray-900">
             {/* Barra superior para los filtros y busqueda */}
-            <div className="flex gap-3 items-center">
+            <div className="grid grid-cols-1  sm:grid-cols-4 gap-2 items-center">
                 <div onClick={() => setShowModal(true)} className="bg-[#023672] text-white h-10 hover:bg-[#4185D4] cursor-pointer rounded-lg  w-40 flex justify-center items-center">
                     <p>Nuevo Usuario</p>
                 </div>
-                <div className="flex flex-row gap-2 items-center">
+                <div className="grid grid-cols-1 sm:grid-cols-2 sm:col-span-3 gap-2 items-center">
                     {/* Filtros */}
-                    <div className="flex flex-row gap-2">
+                    <div className="grid grid-cols-2 gap-2">
                         {/* Filtro por rol */}
                         <select 
                             value={filters.role}
@@ -92,7 +92,7 @@ function UserPage() {
                     </div>
                     
                     {/* Barra de búsqueda */}
-                    <div className="bg-white h-10 w-96 rounded-lg shadow-lg flex items-center px-3">
+                    <div className="bg-white h-10 w-full rounded-lg shadow-lg flex items-center px-3">
                         <input
                             type="text"
                             placeholder="Buscar por nombre, email o empresa..."

@@ -36,11 +36,18 @@ export default function DropMenu({ user, headerVisible }: DropMenuProps) {
                     {/* Button */}
                     <Menu.Button className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600 transition-all duration-200 hover:scale-110 active:scale-95  cursor-pointer">
                         <span className="sr-only">Open user menu</span>
-                        <img
-                            className="w-7 h-7 sm:w-8 sm:h-8 rounded-full"
+                        {user?.photo != ''? 
+                         <img
+                            className="w-6 h-6 sm:w-7 sm:h-7 rounded-full object-cover"
+                            alt="user photo"
+                            src={user?.photo}
+                        />: <img
+                            className="w-6 h-6 sm:w-7 sm:h-7 rounded-full"
                             alt="user photo"
                             src="https://www.reshot.com/preview-assets/icons/F3N5JXHBEG/user-F3N5JXHBEG.svg"
                         />
+                    }
+
                     </Menu.Button>
 
                     {/* Dropdown menu with transition */}

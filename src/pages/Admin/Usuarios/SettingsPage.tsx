@@ -134,7 +134,7 @@ const SettingsPage = () => {
         {/* Sección: Tema */}
         <div className="mb-8 bg-white dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-700">
           <h2 className="text-sm font-medium text-gray-900 dark:text-white mb-4">Apariencia</h2>
-          <div className="flex gap-2">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
             {Object.values(Theme).map((theme) => (
               <button
                 key={theme}
@@ -156,7 +156,7 @@ const SettingsPage = () => {
         {/* Sección: Vista Inicial */}
         <div className="mb-8 bg-white dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-700">
           <h2 className="text-sm font-medium text-gray-900 dark:text-white mb-4">Vista inicial</h2>
-          <div className="flex gap-2">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
             {Object.values(InitialView).map((view) => (
               <button
                 key={view}

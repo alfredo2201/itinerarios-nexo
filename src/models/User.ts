@@ -26,6 +26,7 @@ export interface UserResponseDto {
     lastName: string;
     fullName: string;
     phone?: string;
+    photo:string,
     role: UserRole;
     empresaInfo: CompanyInfo;
     preferencias: UserPreferences;
@@ -144,6 +145,7 @@ export interface User {
     lastName: string;
     phone?: string;
     role: UserRole;
+    photo:string;
     permissions: UserPermissions;
     empresaInfo: CompanyInfo;
     preferencias: UserPreferences;

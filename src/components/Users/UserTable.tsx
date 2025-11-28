@@ -9,13 +9,13 @@ import { useUserPermissions } from "../../hooks/useUserPermissions";
 import { useNavigate } from "react-router";
 
 interface UserTableProps {
-    filters: UserFilters;    
+    filters: UserFilters;
 }
 
 export default function UserTable({ filters }: UserTableProps) {
     const navigate = useNavigate();
     const { user } = useUser();
-    const {isAdmin} = useUserPermissions()
+    const { isAdmin } = useUserPermissions()
     const [users, setUser] = useState<User[]>([])
     const [loading, setLoading] = useState(true);
 
@@ -116,7 +116,7 @@ export default function UserTable({ filters }: UserTableProps) {
 
     const handleEditUser = (u: User) => {
         // Lógica para editar el usuario
-        navigate('/dashboard/users/edit', { state: { user: u } });        
+        navigate('/dashboard/users/edit', { state: { user: u } });
     }
 
     useEffect(() => {
@@ -151,7 +151,7 @@ export default function UserTable({ filters }: UserTableProps) {
             </div>
 
             {/* Tabla para visualizar los usuarios */}
-            <div className="bg-white h-6/7 w-full rounded-xl rounded-r-xl  shadow-2xl p-3 dark:bg-gray-700 overflow-y-auto scrollbar-hide">
+            <div className="bg-white h-6/8 sm:h-6/7 w-full rounded-xl rounded-r-xl  shadow-2xl p-3 dark:bg-gray-700 overflow-y-auto scrollbar-hide">
                 <table className="min-w-full px-5 py-3">
                     <thead>
                         <tr className="bg-gray-200 w-full py-2 px-4 rounded-t-xl dark:bg-gray-600">
@@ -189,8 +189,8 @@ export default function UserTable({ filters }: UserTableProps) {
                                     <td className="w-1/6 h-10 px-2 dark:text-gray-300">{`${u.firstName} ${u.lastName}`}</td>
                                     <td className="w-1/6 h-10 px-2 dark:text-gray-300">{u.email}</td>
                                     <td className="w-1/6 h-10 px-2 dark:text-gray-300">{`${u.role.charAt(0).toUpperCase()}${u.role.slice(1)}`}</td>
-                                    <td className="w-1/6 h-10 px-2">
-                                        <div className="flex justify-start">
+                                    <td className="w-1/6 h-10 px-2 py-3">
+                                        <div className="flex flex-row ">
                                             {u.seguridad.isEmailVerified ?
                                                 <div className="p-1 h-auto w-content bg-green-500 text-white text-center rounded-md">
                                                     <p>Verificado</p>
@@ -202,19 +202,21 @@ export default function UserTable({ filters }: UserTableProps) {
                                             }
                                         </div>
                                     </td>
-                                    <td className="w-1/6 h-10 px-2 gap-2 flex p-1">
-                                        <button className="bg-[#023672] text-white px-2 py-1 rounded-md hover:bg-blue-600 cursor-pointer"        
-                                        onClick={() => handleEditUser(u)}                                    
-                                        >
-                                            Editar
-                                        </button>
-                                        {isAdmin && (
-                                            <button
-                                                onClick={() => handleDeleteUser(u._id)}
-                                                className="bg-[#BF3115] text-white px-2 py-1 rounded-md hover:bg-[#D63C1A] cursor-pointer">
-                                                Eliminar
+                                    <td className="w-1/6 h-10 px-2 py-3 gap-2">
+                                        <div className="flex flex-row gap-3 ">
+                                            <button className="bg-[#023672] text-white px-2 py-1 rounded-md hover:bg-blue-600 cursor-pointer"
+                                                onClick={() => handleEditUser(u)}
+                                            >
+                                                Editar
                                             </button>
-                                        )}
+                                            {isAdmin && (
+                                                <button
+                                                    onClick={() => handleDeleteUser(u._id)}
+                                                    className="bg-[#BF3115] text-white px-2 py-1 rounded-md hover:bg-[#D63C1A] cursor-pointer">
+                                                    Eliminar
+                                                </button>
+                                            )}
+                                        </div>
                                     </td>
                                 </tr>
                             ))

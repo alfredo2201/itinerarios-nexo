@@ -43,7 +43,7 @@ export interface UpdateUserDto {
     email?: string;
     firstName?: string;
     lastName?: string;
-    phone?: string;
+    phone?: string;    
     role?: UserRole;
     permissions?:UserPermissions;
     empresaInfo?: CompanyInfo;

@@ -49,7 +49,7 @@ function BusInfoPage() {
     // Actualizar la paginación cuando lleguen los datos
 
     return (
-        <div className="h-14/15 w-full py-4 px-3 md:p-1 md:px-2 2xl:py-3 flex flex-col bg-gray-100 dark:bg-gray-900">
+        <div className="h-full w-full py-4 px-3 md:p-1 md:px-2 2xl:py-3 flex flex-col bg-gray-100 dark:bg-gray-900 overflow-hidden">
             <TransportHeader
                 logo={logo}
                 canEdit={canEdit}
@@ -59,7 +59,7 @@ function BusInfoPage() {
                 onOpenFilePicker={openFilePicker}
             />
 
-            <div className="flex flex-col sm:flex-row w-full h-auto gap-5 px-5 pb-5">
+            <div className="flex flex-col sm:flex-row w-full h-full gap-5 px-5 pb-5">
                 <TransportStatusPanel
                     onSelectTransport={handleTransportSelect}
                 />

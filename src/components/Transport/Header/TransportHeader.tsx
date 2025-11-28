@@ -19,7 +19,7 @@ function TransportHeader({
     onOpenFilePicker 
 }: TransportHeaderProps) {
     return (
-        <div className="my-3 flex justify-center justify-start sm:justify-between px-7">
+        <div className="my-3 flex justify-between px-7">
             <img src={logo} alt="Company Logo" className="h-10 2xl:h-15" />
             {canEdit && (
                 <>

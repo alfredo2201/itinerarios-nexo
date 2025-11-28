@@ -24,7 +24,7 @@ export default function FilterStatusPanel({ currentFilter, onFilterChange, onSea
         };
     }, [text]);
     return (
-        <div className="flex space-x-2 justify-center items-center">
+        <div className="grid grid-cols-2  gap-2 justify-center items-center">
             <select
                 className="px-3 py-1 border border-gray-300 rounded-md text-sm dark:bg-gray-600 dark:border-gray-500 dark:text-white"
                 name="filter"
@@ -40,7 +40,7 @@ export default function FilterStatusPanel({ currentFilter, onFilterChange, onSea
             <input
                 type="text"
                 name="search"
-                placeholder="Buscar por número"
+                placeholder="Código o número"
                 className="px-3 py-1 border border-gray-300 rounded-md text-sm dark:bg-gray-600 dark:border-gray-500 dark:text-white dark:placeholder-gray-400"
                 value={text}
                 onChange={(e) => setText(e.target.value)}

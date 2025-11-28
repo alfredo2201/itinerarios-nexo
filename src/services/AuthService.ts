@@ -54,7 +54,7 @@ export const getProfileAPI = async () => {
                 'Content-Type': 'application/json',               
             }
         });                
-        if (response.status == 401) return undefined;
+        if (response.status == 401) return undefined;        
         return response
     } catch (error) {
         if (
