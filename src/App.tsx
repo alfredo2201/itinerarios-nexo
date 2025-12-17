@@ -86,7 +86,7 @@ const router = createBrowserRouter([
         children: [
            {
             path: "/dashboard",
-            element: <MaintenancePage />,
+            element: <MaintenancePage/>,
             handle: { title: `Bienvenido/a` as RouterHandle },
           },
           {
