@@ -24,15 +24,15 @@ function RowVerticalDisplay({ itinerary }: Props) {
 
     return (
         <>
-            <tr className="bg-[#171717] text-white h-13 w-screen nth-[2n]:bg-[#023672]" onClick={handleToggle}>
-                <td className="text-[16px] text-[#C3D000] sm:text-[24px] font-bold py-2 px-2 text-center">
+            <tr className="bg-[#171717] text-white w-screen nth-[2n]:bg-[#023672]" onClick={handleToggle}>
+                <td className="text-[16px] text-[#C3D000] sm:text-[24px] font-bold py-3 px-2 text-center">
                     {formatTimeInSonoraCustom(itinerary.departureTime)}
                 </td>
-                <td className="text-[16px] sm:text-[24px] font-semibold py-2 text-center">{itinerary.destination.name}</td>
-                <td className="font-semibold pt-1 flex items-center justify-center pt-3">
-                    <img src={itinerary.company?.image} alt="Logotipo" className="h-8 sm:h-10 " />
+                <td className="text-[16px] sm:text-[24px] font-semibold py-1 text-center">{itinerary.destination.name}</td>
+                <td className="font-semibold">
+                    <img src={itinerary.company?.image} alt="Logotipo" className="h-7 sm:h-10 " />
                 </td>
-                <td className="text-[16px] sm:text-[24px] font-bold py-2 text-center" >{itinerary.transport.code}</td>
+                <td className="text-[16px] sm:text-[24px] font-bold py-1 text-center" >{itinerary.transport.code}</td>
             </tr>
             <tr></tr>
             <tr>
@@ -42,15 +42,12 @@ function RowVerticalDisplay({ itinerary }: Props) {
                             key={itinerary._id}
                             itinerary={itinerary}
                             animate={animate}
-                            uuid={itinerary._id}
-                            code={itinerary.transport.code}
-                            state={itinerary.transport.gpsStatus}
                             bg='112236'
                             text="white"
                             showTransport={
                                 () => console.log('Hola')//showTransport(transport.UUID,companyName,code)
                             }
-                            companyName={itinerary.company?.companyName}>
+                            >
                         </CardInfoItinerary>
                         :
                         <></>

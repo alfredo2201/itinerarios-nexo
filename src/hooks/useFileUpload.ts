@@ -46,8 +46,9 @@ export default function useFileUpload(companyId: string, onSuccess: () => void) 
       formData.append('startDate', date);
 
       const response = await saveItineraryForCompany(formData);
+      console.log(response.message)
 
-      if (response.message === 'Datos guardado exitosamente') {
+      if (response.message === "Datos guardados exitosamente") {
         toast.success('Itinerarios guardados exitosamente');
         setFile(null);
         onSuccess();
@@ -62,7 +63,9 @@ export default function useFileUpload(companyId: string, onSuccess: () => void) 
     }
   };
 
-  const openFilePicker = () => fileInputRef.current?.click();
+  const openFilePicker = () => {
+    fileInputRef.current?.click()
+  };
 
   return {
     file,
@@ -70,6 +73,6 @@ export default function useFileUpload(companyId: string, onSuccess: () => void) 
     fileInputRef,
     handleFileChange,
     handleSubmit,
-    openFilePicker,    
+    openFilePicker    
   };
 }

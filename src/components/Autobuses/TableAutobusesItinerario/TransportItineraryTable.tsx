@@ -30,6 +30,7 @@ export default function TransportItineraryTable({ itineraries, loading }: Itiner
           origen={item.origin.name}
           destino={item.destination.name}
           duracion={formatDuration(item.estimatedDuration)}
+          diaSalida={item.departureTime}
         />
       ))}
     </>

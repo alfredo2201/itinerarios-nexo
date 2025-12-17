@@ -104,23 +104,31 @@ export const getVideosByResolution = async (resolution: string, signal: AbortSig
  * incluyendo el archivo de video y las credenciales requeridas en un payload multipart/form-data.
  *
  */
-export async function addNewVideo(video: File): Promise<VideoData> {
+export async function addNewVideo(video: File, signal?: AbortSignal): Promise<VideoData> {
     try {
         const formData = new FormData();
         formData.append('file', video);
         formData.append('upload_preset', uploadPreset);
         formData.append('api_key', apiKey);
+        
         const response = await api.post(`/cloud/upload/video`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
-               
-            }
+            },
+            signal // Añadir el signal para poder cancelar
         });
+        
         return response.data;
     } catch (error) {
         console.error("Error en Advertisments:", error);
+        
+        // Verificar si el error fue por cancelación
+        if (axios.isCancel(error) || (error as any).name === 'AbortError' || (error as any).name === 'CanceledError') {
+            console.log('Subida cancelada por el usuario');
+            throw new Error('Upload cancelled');
+        }
+        
         handleError(error);
-        // Return a default value or throw to satisfy the return type
         throw error;
     }
 }

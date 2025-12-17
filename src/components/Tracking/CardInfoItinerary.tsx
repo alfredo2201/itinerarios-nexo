@@ -2,33 +2,26 @@ import { useLocation } from 'react-router';
 import GpsIcon from '../../img/marcador-de-posicion.png'
 import type { Itinerary } from '../../models/Trasportation';
 import { formatTimeInSonoraCustom } from '../../utils/validations';
+import { MessageCircle } from 'lucide-react';
 interface Props {
     itinerary: Itinerary
     animate: string;
-    state: string;
     uuid?: string,
-    companyName?: string
     bg: string
     text: string
-    code?: string
     showTransport: (id: string, name: string, code?: string) => void
 }
 
 function CardInfoItinerary(
     {
         itinerary,
-        state,
-       // showTransport,
         animate,
-      //  uuid,
-       // companyName,
-       // code,
         bg,
         text
     }: Props) {
-    const location = useLocation();
+    const location = useLocation();    
     return (
-        <div className={`flex flex-col min-h-70 bg-[#${bg}] text-${text} justify-center items-center ${animate}`} >
+        <div className={`flex flex-col min-h-70 w-screen bg-[#${bg}] text-${text} justify-center items-center ${animate}`} >
             <div className="flex flex-row" >
                 <div className="flex flex-col justify-center">
                     <div className="flex flex-row">
@@ -42,9 +35,9 @@ function CardInfoItinerary(
                         </div>
 
                     </div>
-                    <div className="flex py-2">
+                    <div className="flex py-2 gap-3">
                         <h1 className="px-6 text-[13px] text-[#B8B5B5]">{`${Math.floor(itinerary.estimatedDuration / 3600000).toString().padStart(2, '0')}` +
-                                                                    `h${Math.floor((itinerary.estimatedDuration % 3600000) / 60000).toString().padStart(2, '0')}m`}</h1>
+                            `h${Math.floor((itinerary.estimatedDuration % 3600000) / 60000).toString().padStart(2, '0')}m`}</h1>
                         <h1 className=" text-[13px] text-white">Escala:</h1>
                     </div>
                     <div className="flex flex-row">
@@ -59,19 +52,25 @@ function CardInfoItinerary(
                     </div>
                 </div>
             </div>
-            {location.pathname == '/vertical-display' ? 
-            <div className='w-full flex justify-between px-15 pt-6'>
-                <div className="w-25 h-8 px-2 py-1 bg-white flex items-center justify-center rounded-full self-center text-[12px] text-black text-center"> 
-                    <a className='text-center w-full'>Ir a comprar</a>
+            {location.pathname == '/vertical-display' ?
+                <div className='w-full flex justify-between px-15 pt-6'>
+                    <div className="w-25 h-8 px-2 py-1 bg-white flex items-center justify-center rounded-full self-center text-[12px] text-black text-center">
+                        <a className='text-center w-full' href={`${itinerary.company?.webPage}`}>Ir a comprar</a>
+                    </div>
+                    <div className="w-25 h-8 px-2 py-1 bg-green-500 flex items-center justify-center rounded-full self-center text-[12px] text-black text-center">
+                        <MessageCircle />
+                        <a className='text-center w-full' target='_blank' href={`https://wa.me/${itinerary.company?.numberContact?.replaceAll(' ','')}`}>                                                                               
+                            Whatsapp
+                        </a>
+                    </div>
+                    {itinerary.transport.gpsStatus === 'Activo' ?
+                        <button className=" text-[12px] px-4 py-1 bg-green-500 rounded-full cursor-pointer hover:bg-green-400"
+                        >A tiempo</button>
+                        : <button className="text-white text-[12px]  px-4 p-1 bg-red-500 rounded-full">Retrasado</button>
+                    }
                 </div>
-                {state === 'Activo' ?
-                    <button className=" text-[12px] px-4 py-1 bg-green-500 rounded-full cursor-pointer hover:bg-green-400"
-                    >A tiempo</button>
-                    : <button className="text-white text-[12px]  px-4 p-1 bg-red-500 rounded-full">Retrasado</button>
-                }
-            </div>
                 : <>
-                    {state === 'Activo' ?
+                    {itinerary.transport.gpsStatus === 'Activo' ?
                         <button className=" text-[12px] self-end px-4 p-1 bg-green-500 m-2 rounded-full cursor-pointer hover:bg-green-400"
                         >Rastrear</button>
                         : <button className="text-white text-[12px] self-end px-4 p-1 bg-red-500 m-2 rounded-full">Inactivo</button>

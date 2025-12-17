@@ -39,6 +39,7 @@ function ItineraryPanel({
                                     <th className="text-[13px] 2xl:text-[16px] w-2xs p-2">Hora de salida</th>
                                     <th className="text-[13px] 2xl:text-[16px] w-lg p-2">Ruta</th>
                                     <th className="text-[13px] 2xl:text-[16px] w-2xs p-2">Duración</th>
+                                    <th className="text-[13px] 2xl:text-[16px] w-2xs p-2">Fecha</th>
                                 </tr>
                             </thead>
                             <tbody>

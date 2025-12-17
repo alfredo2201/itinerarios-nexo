@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router";
 import { Toaster } from "react-hot-toast";
-import React from "react";
+// import React from "react";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
@@ -33,7 +33,7 @@ import type { RouterHandle } from "./types/types.ts";
 import MaintenancePage from "./pages/MaintenancePage.tsx";
 import EditUserPage from "./pages/Admin/Usuarios/EditUserPage.tsx";
 import SettingsPage from "./pages/Admin/Usuarios/SettingsPage.tsx";
-
+// import DashboardPage from "./pages/Admin/Inicio/DashboardPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -84,6 +84,11 @@ const router = createBrowserRouter([
         ),
         handle: { title: "Bienvenido/a" as RouterHandle },
         children: [
+           {
+            path: "/dashboard",
+            element: <MaintenancePage />,
+            handle: { title: `Bienvenido/a` as RouterHandle },
+          },
           {
             path: "/dashboard/itinerary",
             element: <MainPage />,
@@ -211,10 +216,10 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <React.StrictMode>      
+    <>      
       <RouterProvider router={router} />
       <Toaster position="top-right" />
-    </React.StrictMode>
+    </>
   );
 }
 

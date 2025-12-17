@@ -27,18 +27,18 @@ function TransportStatusPanel({
         totalItems,
         totalPages,
         setOrderedBy,
-        setSearchedByTerm,
+        setSearchedByTerm
     } = useTransportData(companyId, pagination.currentPage, pagination.itemsPerPage);
 
 
     const handleFilterChange = (filter: string) => {
         setCurrentFilter(filter);
-        setOrderedBy?.(filter);
+        setOrderedBy?.(filter);        
     }
 
     const handleSearchChange = (searchTerm: string) => {
         setSearchTerm(searchTerm);
-        setSearchedByTerm?.(searchTerm);
+        setSearchedByTerm?.(searchTerm);        
     }
 
     useEffect(() => {
