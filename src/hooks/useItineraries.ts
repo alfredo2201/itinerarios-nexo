@@ -26,7 +26,7 @@ export const useItineraries = () => {
                 0,
                 0
             );
-            return departureTime > currentDateTime;
+            return departureTime < currentDateTime;
         });
     }
 
@@ -86,6 +86,9 @@ export const useItineraries = () => {
         }      
     };
 
+    const changeVisibility = () =>{
+        setIsVisible(!isVisible)
+    }
     useEffect(() => {
         const intervalo = setInterval(() => {
             if (location.pathname === '/vertical-display') {
@@ -108,6 +111,7 @@ export const useItineraries = () => {
         loading,
         selectedTransport,
         isVisible,
+        changeVisibility,
         loadItineraries,
         fetchInitialData,
         reset

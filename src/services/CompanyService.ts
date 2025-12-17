@@ -51,10 +51,11 @@ export const getCompanyById = async (id: string): Promise<Company> => {
     }
 }
 
-export const getCompanyByName = async (companyName: string): Promise<Company> => {
+export const getCompanyByName = async (companyName: string | string[]): Promise<Company[]> => {
+    const companies = JSON.stringify(companyName)
     try {
         const response = await api.get(`/company/name`, {
-            params: { companyName },
+            params: { companies: companies },
             headers: {
                 'Content-Type': 'application/json',   
             }

@@ -5,8 +5,8 @@ export type FormDataUser = {
     lastName: string;
     phone: string;
     email: string;
-    password: string;
-    confirmPassword: string;
+    password?: string;
+    confirmPassword?: string;
     role: UserRole;
     permissions: {
         archivos: {

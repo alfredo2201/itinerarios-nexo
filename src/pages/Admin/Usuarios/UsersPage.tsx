@@ -34,16 +34,6 @@ function UserPage() {
         setFilters(prev => ({ ...prev, verificationStatus: value }));
     };
 
-    const clearFilters = () => {
-        setSearchInput("");
-        setFilters({
-            search: "",
-            role: "",
-            verificationStatus: ""
-        });
-    };
-  
-
     return (
         <div className="w-full h-14/15 p-8 space-y-3 dark:bg-gray-900">
             {/* Barra superior para los filtros y busqueda */}
@@ -77,18 +67,7 @@ function UserPage() {
                             <option value="">Todos los estados</option>
                             <option value="verified">Verificado</option>
                             <option value="unverified">No Verificado</option>
-                        </select>
-                        
-                        {/* Botón para limpiar filtros */}
-                        {(searchInput || filters.role || filters.verificationStatus) && (
-                            <button
-                                onClick={clearFilters}
-                                className="px-3 py-2 text-sm bg-gray-200 text-gray-700 hover:bg-gray-300 rounded-md transition-colors"
-                                title="Limpiar filtros"
-                            >
-                                Limpiar
-                            </button>
-                        )}
+                        </select>                        
                     </div>
                     
                     {/* Barra de búsqueda */}

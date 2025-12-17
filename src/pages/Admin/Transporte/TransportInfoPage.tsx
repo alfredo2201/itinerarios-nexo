@@ -17,13 +17,12 @@ function BusInfoPage() {
 
 
     // Hook que automáticamente refetch cuando cambia pagination.currentPage
-
-
     const {
         itineraries,
         loading: itineraryLoading,
         selectedTransport,
         isVisible: isVisibleItinerarios,
+        changeVisibility,
         loadItineraries,
         reset: resetItineraries
     } = useItineraries();
@@ -36,7 +35,7 @@ function BusInfoPage() {
         handleSubmit,
         openFilePicker,
     } = useFileUpload(companyId, () => {
-        resetItineraries();                
+        resetItineraries();
         window.dispatchEvent(new CustomEvent('refreshTransportData'));
     });
 
@@ -44,19 +43,23 @@ function BusInfoPage() {
         loadItineraries(id, transport);
     };
 
-   
+    const handleShow = () => {
+        openFilePicker()
+        if (isVisibleItinerarios) {
+            changeVisibility()
+        }
 
-    // Actualizar la paginación cuando lleguen los datos
+    }
 
     return (
-        <div className="h-full w-full py-4 px-3 md:p-1 md:px-2 2xl:py-3 flex flex-col bg-gray-100 dark:bg-gray-900 overflow-hidden">
+        <div className="h-full w-full py-4 px-3 md:p-1 md:px-2 2xl:py-3 flex flex-col bg-gray-100 dark:bg-gray-900 overflow-scroll sm:overflow-hidden">
             <TransportHeader
                 logo={logo}
                 canEdit={canEdit}
                 uploading={uploading}
                 fileInputRef={fileInputRef}
                 onFileChange={handleFileChange}
-                onOpenFilePicker={openFilePicker}
+                onOpenFilePicker={handleShow}
             />
 
             <div className="flex flex-col sm:flex-row w-full h-full gap-5 px-5 pb-5">

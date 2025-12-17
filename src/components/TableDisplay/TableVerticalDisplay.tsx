@@ -10,9 +10,9 @@ function TableVerticalDisplay({itineraries}: TableVerticalDisplayProps) {
             <table className="w-full">
                 <thead>
                     <tr className="bg-[#4053AE] text-[#C3D000]">
-                        <th className="text-[15px] sm:text-[24px] w-md px-3 py-1">Hora</th>
-                        <th className="text-[15px] sm:text-[24px] w-md px-3 py-1">Destino</th>
-                        <th className="text-[15px] sm:text-[24px] w-md px-3 py-1">Linea</th>
+                        <th className="text-[15px] sm:text-[24px] w-2xl px-3 py-1">Hora</th>
+                        <th className="text-[15px] sm:text-[24px] w-lg px-3 py-1">Destino</th>
+                        <th className="text-[15px] sm:text-[24px] w-xl px-3 py-1">Linea</th>
                         <th className="text-[15px] sm:text-[24px] w-2xs px-3 py-1">Número</th>
                     </tr>
                 </thead>

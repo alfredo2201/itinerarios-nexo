@@ -70,7 +70,7 @@ export function useTransportData(
   // Effect que se ejecuta cuando cambian companyId o currentPage
   useEffect(() => {
     fetchData();
-  }, [companyId, currentPage,orderBy, searchTerm]); // ✅ Se ejecuta cuando cambia la página
+  }, [currentPage,orderBy, searchTerm]); // ✅ Se ejecuta cuando cambia la página
 
   return {
     transportData,

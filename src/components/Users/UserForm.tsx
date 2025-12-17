@@ -62,7 +62,7 @@ export default function UserForm({ isOpen, onClose }: ModalFormProps) {
     if (!isOpen) return null;
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const { name, value } = e.target;
+        const { name, value } = e.target;        
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
@@ -90,8 +90,9 @@ export default function UserForm({ isOpen, onClose }: ModalFormProps) {
     };
 
     const handleNext = () => {
-        if (currentStep <= totalSteps) {
+        if (currentStep <= totalSteps) {            
             setCurrentStep(prev => prev + 1);
+            console.log(currentStep)
         }
     };
 
@@ -102,11 +103,9 @@ export default function UserForm({ isOpen, onClose }: ModalFormProps) {
     };
 
     const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        console.log('Datos del formulario:', formData);
+        e.preventDefault();     
         try {
             registerUserAPI(formData).then(() => {
-                // Aquí puedes agregar alguna notificación de éxito si lo deseas
                 toast.success('Usuario registrado con éxito');
             }).finally(() => {
                 onClose();
@@ -190,7 +189,7 @@ export default function UserForm({ isOpen, onClose }: ModalFormProps) {
                     </div>
                 </div>
 
-                <form onSubmit={handleSubmit}>
+                <form>
                     {/* Paso 1: Información Personal */}
                     {currentStep === 1 && (
                         <div className="h-64 grid grid-cols-2 gap-4 animate-fadeIn">
@@ -199,7 +198,7 @@ export default function UserForm({ isOpen, onClose }: ModalFormProps) {
                                 <input
                                     className="h-10 w-full rounded-md border border-gray-300 px-3"
                                     type="text"
-                                    id="firstName"
+                                    name="firstName"
                                     value={formData.firstName}
                                     onChange={handleInputChange}
                                     required
@@ -210,7 +209,7 @@ export default function UserForm({ isOpen, onClose }: ModalFormProps) {
                                 <input
                                     className="h-10 w-full rounded-md border border-gray-300 px-3"
                                     type="text"
-                                    id="lastName"
+                                    name="lastName"
                                     value={formData.lastName}
                                     onChange={handleInputChange}
                                     required
@@ -221,9 +220,9 @@ export default function UserForm({ isOpen, onClose }: ModalFormProps) {
                                 <input
                                     className="h-10 w-full rounded-md border border-gray-300 px-3"
                                     type="tel"
-                                    id="phone"
-                                    autoComplete="off"
+                                    name="phone"
                                     value={formData.phone}
+                                    autoComplete="off"
                                     onChange={handleInputChange}
                                 />
                             </div>
@@ -232,7 +231,7 @@ export default function UserForm({ isOpen, onClose }: ModalFormProps) {
                                 <input
                                     className="h-10 w-full rounded-md border border-gray-300 px-3"
                                     type="email"
-                                    id="email"
+                                    name="email"
                                     value={formData.email}
                                     onChange={handleInputChange}
                                     autoComplete="off"
@@ -245,7 +244,7 @@ export default function UserForm({ isOpen, onClose }: ModalFormProps) {
                                     <input
                                         className="h-10 w-full rounded-md border border-gray-300 px-3 pr-10"
                                         type={showPassword ? "text" : "password"}
-                                        id="password"
+                                        name="password"
                                         value={formData.password}
                                         onChange={handleInputChange}
                                         autoComplete="off"
@@ -282,8 +281,8 @@ export default function UserForm({ isOpen, onClose }: ModalFormProps) {
                                     <input
                                         className="h-10 w-full rounded-md border border-gray-300 px-3 pr-10"
                                         type={showConfirmPassword ? "text" : "password"}
-                                        id="confirmPassword"
-                                        value={formData.confirmPassword || ""}
+                                        name="confirmPassword"
+                                        value={formData.confirmPassword}
                                         onChange={handleInputChange}
                                         required
                                         autoComplete="off"
@@ -307,7 +306,6 @@ export default function UserForm({ isOpen, onClose }: ModalFormProps) {
                                             />}
                                     </button>
                                 </div>
-                                {/* Mensaje de error de validación */}
                                 {formData.password && formData.confirmPassword !== undefined && (
                                     <div className="text-red-500 text-xs mt-1">
                                         {validateConfirmPassword(formData.password, formData.confirmPassword)}
@@ -315,7 +313,6 @@ export default function UserForm({ isOpen, onClose }: ModalFormProps) {
                                 )}
                             </div>
                         </div>
-
                     )}
 
                     {/* Paso 2: Permisos y Rol */}
@@ -325,7 +322,7 @@ export default function UserForm({ isOpen, onClose }: ModalFormProps) {
                                 <label htmlFor="role">Rol:</label>
                                 <select
                                     className="h-10 rounded-md border border-gray-300 px-3"
-                                    id="role"
+                                    name="role"
                                     value={formData.role}
                                     onChange={handleInputChange}
                                     required
@@ -378,7 +375,7 @@ export default function UserForm({ isOpen, onClose }: ModalFormProps) {
                                                 className="flex items-center gap-2"
                                                 htmlFor="itinerarios-ver-todos">
                                                 <input
-                                                    id="itinerarios-ver-todos"
+                                                    name="itinerarios-ver-todos"
                                                     type="checkbox"
                                                     checked={formData.permissions.itinerarios.ver_todos}
                                                     onChange={(e) => handlePermissionChange('itinerarios', 'ver_todos', e.target.checked)}
@@ -418,7 +415,6 @@ export default function UserForm({ isOpen, onClose }: ModalFormProps) {
                                             </label>
                                         </div>
                                         <div>
-
                                             <label className="flex items-center gap-2">
                                                 <input
                                                     type="checkbox"
@@ -439,7 +435,6 @@ export default function UserForm({ isOpen, onClose }: ModalFormProps) {
                                             </label>
                                         </div>
                                         <div>
-
                                             <label className="flex items-center gap-2">
                                                 <input
                                                     type="checkbox"
@@ -452,7 +447,6 @@ export default function UserForm({ isOpen, onClose }: ModalFormProps) {
                                     <div className="gap-2">
                                         Sistema:
                                         <div>
-
                                             <label className="flex items-center gap-2">
                                                 <input
                                                     type="checkbox"
@@ -462,7 +456,6 @@ export default function UserForm({ isOpen, onClose }: ModalFormProps) {
                                             </label>
                                         </div>
                                         <div>
-
                                             <label className="flex items-center gap-2">
                                                 <input
                                                     type="checkbox"
@@ -484,27 +477,27 @@ export default function UserForm({ isOpen, onClose }: ModalFormProps) {
                                 <div>
                                     <label htmlFor="empresa">Empresa:</label>
                                     <input
-                                        id="empresa"
+                                        name="empresa"
                                         className="h-10 w-full rounded-md border border-gray-300 px-3"
                                         type="text"
-                                        value={formData.empresaInfo.empresa || ''}
+                                        value={formData.empresaInfo.empresa}
                                         onChange={(e) => handleEmpresaInfoChange('empresa', e.target.value)}
                                     />
                                 </div>
                                 <div>
                                     <label htmlFor="cargo">Cargo:</label>
                                     <input
-                                        id="cargo"
+                                        name="cargo"
                                         className="h-10 w-full rounded-md border border-gray-300 px-3"
                                         type="text"
-                                        value={formData.empresaInfo.cargo || ''}
+                                        value={formData.empresaInfo.cargo}
                                         onChange={(e) => handleEmpresaInfoChange('cargo', e.target.value)}
                                     />
                                 </div>
                                 <div>
                                     <label htmlFor="department">Departamento:</label>
                                     <select
-                                        id="department"
+                                        name="department"
                                         className="h-10 w-full rounded-md border border-gray-300 px-3"
                                         value={formData.empresaInfo.departamento || ''}
                                         onChange={(e) => handleEmpresaInfoChange('departamento', e.target.value as Department)}
@@ -518,7 +511,7 @@ export default function UserForm({ isOpen, onClose }: ModalFormProps) {
                                 <div className="flex">
                                     <label htmlFor="acceso_restringido" className="flex self-center gap-2">
                                         <input
-                                            id="acceso_restringido"
+                                            name="acceso_restringido"
                                             type="checkbox"
                                             checked={formData.empresaInfo.acceso_restringido}
                                             onChange={(e) => handleEmpresaInfoChange('acceso_restringido', e.target.checked)}
@@ -529,12 +522,12 @@ export default function UserForm({ isOpen, onClose }: ModalFormProps) {
                                 <div className="col-span-2">
                                     <label htmlFor="empresas_permitidas">Empresas Permitidas (separadas por coma):</label>
                                     <input
-                                        id="empresas_permitidas"
+                                        name="empresas_permitidas"
                                         className="h-10 w-full rounded-md border border-gray-300 px-3"
                                         type="text"
                                         value={formData.empresaInfo.empresas_permitidas.join(', ')}
-                                        onChange={(e) => handleEmpresaInfoChange('empresas_permitidas', e.target.value.split(',').map(s => s.trim()))}
                                         placeholder="Empresa1, Empresa2, Empresa3"
+                                        onChange={(e) => handleEmpresaInfoChange('empresas_permitidas', e.target.value.split(',').map(s => s.trim()).filter(Boolean))}
                                     />
                                 </div>
                             </div>
@@ -555,20 +548,21 @@ export default function UserForm({ isOpen, onClose }: ModalFormProps) {
                             Anterior
                         </button>
 
-                        {currentStep <= totalSteps ? (
+                        {currentStep === 3 ? (
                             <button
                                 type="button"
-                                onClick={handleNext}
-                                className="px-6 py-2 bg-blue-600 text-white rounded-md font-medium hover:bg-blue-700"
+                                onClick={handleSubmit}
+                                className="px-6 py-2 bg-green-600 text-white rounded-md font-medium hover:bg-green-700 cursor-pointer"
                             >
-                                Siguiente
+                                Guardar
                             </button>
                         ) : (
                             <button
-                                type="submit"
-                                className="px-6 py-2 bg-green-600 text-white rounded-md font-medium hover:bg-green-700"
+                                type="button"
+                                onClick={handleNext}
+                                className="px-6 py-2 bg-blue-600 text-white rounded-md font-medium hover:bg-blue-700 cursor-pointer"
                             >
-                                Guardar
+                                Siguiente
                             </button>
                         )}
                     </div>

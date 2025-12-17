@@ -71,7 +71,6 @@ export default function ProfileUserPage() {
             const response = await getUserProfilePageAPI();
             const data = response?.data;
             setUser(data!);
-            console.log(data)
             setLoading(!loading);
 
         };

@@ -28,8 +28,8 @@ function AdminBusesPage() {
                 setCompanies([]);
                 return;
             }
-            const allCompanies = await getCompanyByName(allowedCompaniesIds[0]);
-            setCompanies([allCompanies]);
+            const allCompanies = await getCompanyByName(allowedCompaniesIds);
+            setCompanies(allCompanies);
         } catch (error) {
             console.error("Error fetching allowed companies:", error);
             setCompanies([]);
