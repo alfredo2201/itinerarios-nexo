@@ -2,15 +2,15 @@ import { useState } from "react";
 import type { Itinerary } from "../../models/Trasportation";
 import CardInfoItinerary from './CardInfoItinerary';
 interface itemListProps {
-    id:string
+    id: string
     imagen: string,
     nombreLinea: string,
     direccionOrigen?: string
     numeroCamion?: string
     estado: string,
-    ultimaVezVisto: string,    
+    ultimaVezVisto: string,
     itinerario: Itinerary,
-    showTransport: (id:string,name:string,code?:string) => void
+    showTransport: (id: string, name: string, code?: string) => void
 }
 function ItemListTrackingComponent({ id, imagen, nombreLinea, direccionOrigen, numeroCamion, estado, ultimaVezVisto, itinerario, showTransport }: itemListProps) {
     const [isVisible, setIsVisible] = useState(false);
@@ -47,17 +47,14 @@ function ItemListTrackingComponent({ id, imagen, nombreLinea, direccionOrigen, n
                 </div>
             </div>
             {isVisible ?
-            <CardInfoItinerary 
-                itinerary={itinerario} 
-                animate={animate} 
-                uuid={id} 
-                code={numeroCamion} 
-                state={estado} 
-                bg="ffffff"
-                text="black"
-                showTransport={()=>showTransport(id,nombreLinea,numeroCamion)
-                }
-                companyName={nombreLinea}></CardInfoItinerary>
+                <CardInfoItinerary
+                    itinerary={itinerario}
+                    animate={animate}
+                    uuid={id}
+                    bg="ffffff"
+                    text="black"
+                    showTransport={() => showTransport(id, nombreLinea, numeroCamion)
+                    }                ></CardInfoItinerary>
                 :
                 <></>}
         </>
