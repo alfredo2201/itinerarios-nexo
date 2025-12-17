@@ -1,7 +1,7 @@
 import { handleError } from "../helpers/ErrorHandler";
 import type { PaginatedUsersResponseForAdmin, UserResponseDto } from "../models/User";
 import { AxiosConnect } from "../constants/services.constants";
-import type { FormDataUser } from "../types/user.types";
+import type { UpdateUserDto } from "../types/user.types";
 
 const api = AxiosConnect
 
@@ -50,7 +50,7 @@ export const updateUserAPI = async (userId: string, userData: any) => {
     }
 }
 
-export const updateProfileAPI = async (formData: FormDataUser, id:string | undefined) => {
+export const updateProfileAPI = async (formData: UpdateUserDto, id?:string | undefined) => {
     try {
         const data = await api.put<UserResponseDto>(`/user/profile`, formData, {  
             params:{
