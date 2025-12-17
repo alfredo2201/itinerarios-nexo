@@ -3,6 +3,7 @@ import { useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { InitialView, Theme, type SavedFilter, type UserPreferences } from '../../../models/User';
 import { useUser } from '../../../hooks/useUser';
+import type { UpdateUserDto } from "../../../types/user.types";
 import { updateProfileAPI } from '../../../services/UsersServices';
 
 
@@ -93,7 +94,8 @@ const SettingsPage = () => {
   };
 
   const handleSave = () => {
-    updateProfileAPI({ preferencias: preferences }).then(() => {
+    const userUpdate:UpdateUserDto = {...user, preferencias: preferences }
+    updateProfileAPI(userUpdate).then(() => {
       toast.success('Configuración guardada exitosamente', {
         duration: 4000,
         style: {
